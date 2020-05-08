@@ -1,50 +1,79 @@
 <template>
-  <v-app dark>
-    <v-toolbar app>
-      <v-toolbar-title class="headline text-uppercase">
-        <span>Vuetify</span>
-        <span class="font-weight-light">MATERIAL DESIGN</span>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-toolbar-items class="hidden-sm-and-down">
-        <v-btn flat>
-          <router-link to="/">Home</router-link>
-        </v-btn>
-        <v-btn flat>
-          <router-link to="/designer">Designer</router-link>
-        </v-btn>
-        <v-btn flat>
-          <router-link to="/mapper">Mapper</router-link>
-        </v-btn>
-        <v-btn flat>
-          <router-link to="/about">About</router-link>
-        </v-btn>
-      </v-toolbar-items>
-    </v-toolbar>
+  <v-app id="betty">
+    <v-navigation-drawer
+      v-model="drawer.model"
+      :clipped="drawer.clipped"
+      :mini-variant="drawer.mini"
+      :expand-on-hover="drawer.mini"
+      mini-variant-width="42"
+      width="192"
+      app
+      overflow
+    >
+      <v-list nav dense>
+        <v-list-item
+          v-for="(link, index) in links"
+          :to="link.path"
+          :key="index"
+        >
+          <v-list-item-action>
+            <v-icon>{{ link.icon }}</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>{{ link.name }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+
+    <v-app-bar :clipped-left="drawer.clipped" app>
+      <v-app-bar-nav-icon @click.stop="drawer.model = !drawer.model" />
+      <v-toolbar-title>Betty</v-toolbar-title>
+    </v-app-bar>
 
     <v-content>
-      <!--HelloWorld /-->
       <v-container fluid>
-        <router-view></router-view>
+        <router-view />
       </v-container>
     </v-content>
+
+    <v-footer app>
+      <span class="px-4">&copy; {{ new Date().getFullYear() }}</span>
+    </v-footer>
   </v-app>
 </template>
 
 <script>
-/*
-import HelloWorld from "./components/HelloWorld";
-
 export default {
-  name: "App",
-
-  components: {
-    HelloWorld
-  },
-
+  name: "Betty",
   data: () => ({
-    //
+    drawer: {
+      model: false,
+      clipped: true,
+      mini: true
+    },
+    links: [
+      {
+        path: "/",
+        name: "Home",
+        icon: "mdi-home"
+      },
+      {
+        path: "/designer",
+        name: "Designer",
+        icon: "mdi-package"
+      },
+      {
+        path: "/mapper",
+        name: "Mapper",
+        icon: "mdi-map-outline"
+      },
+      {
+        path: "/about",
+        name: "About",
+        icon: "mdi-information"
+      }
+    ]
   })
 };
-*/
 </script>
