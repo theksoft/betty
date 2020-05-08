@@ -6,7 +6,7 @@
       :mini-variant="drawer.mini"
       :expand-on-hover="drawer.mini"
       mini-variant-width="42"
-      width="192"
+      width="160"
       app
       overflow
     >
@@ -17,18 +17,25 @@
           :key="index"
         >
           <v-list-item-action>
-            <v-icon>{{ link.icon }}</v-icon>
+            <v-icon color="brown lighten-2">{{ link.icon }}</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>{{ link.name }}</v-list-item-title>
+            <v-list-item-title class="brown--text text--lighten-3">
+              {{ link.name }}
+            </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
     <v-app-bar :clipped-left="drawer.clipped" app>
-      <v-app-bar-nav-icon @click.stop="drawer.model = !drawer.model" />
-      <v-toolbar-title>Betty</v-toolbar-title>
+      <v-app-bar-nav-icon
+        color="brown lighten-2"
+        @click.stop="drawer.model = !drawer.model"
+      />
+      <v-toolbar-title class="brown--text text--lighten-3">
+        Betty
+      </v-toolbar-title>
     </v-app-bar>
 
     <v-content>
