@@ -1,11 +1,11 @@
 <template>
-  <div class="home">
+  <div class="home" ref="home">
     <v-row class="flex-wrap">
       <HomeLink
         v-for="(link, index) in links.filter(e => e.image)"
         :route="link.path"
         :image="link.image"
-        :width="150"
+        :width="cardSize"
         :key="index"
       >
         {{ link.name }}
@@ -27,6 +27,30 @@ export default {
     links: {
       type: Array,
       required: true
+    },
+    cardSize: {
+      type: Number,
+      default: 0
+    }
+  },
+  mounted() {
+    window.addEventListener("resize", this.onResize);
+    this.onResize();
+  },
+  beforeDestroy() {
+    window.removeEventListener("resize", this.onResize);
+  },
+  methods: {
+    onResize() {
+      this.$nextTick(function() {
+        this.getCardSize();
+      });
+    },
+    getCardSize() {
+      this.cardSize = Math.round(
+        0.8 *
+          (this.$refs.home.clientWidth / this.links.filter(e => e.image).length)
+      );
     }
   }
 };
