@@ -51,6 +51,8 @@
 </template>
 
 <script>
+import { links } from "@/router/links.js";
+
 export default {
   name: "Betty",
   data: () => ({
@@ -59,28 +61,7 @@ export default {
       clipped: true,
       mini: true
     },
-    links: [
-      {
-        path: "/",
-        name: "Home",
-        icon: "mdi-home"
-      },
-      {
-        path: "/designer",
-        name: "Designer",
-        icon: "mdi-package"
-      },
-      {
-        path: "/mapper",
-        name: "Mapper",
-        icon: "mdi-map-outline"
-      },
-      {
-        path: "/about",
-        name: "About",
-        icon: "mdi-information"
-      }
-    ]
+    links
   })
 };
 </script>

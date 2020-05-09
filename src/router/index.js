@@ -1,43 +1,42 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
+import { links } from "./links.js";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: Home
+    component: Home,
+    props: { links }
   },
   {
     path: "/designer",
-    name: "Designer",
     component: () =>
       import(/* webpackChunkName: "designer" */ "../views/Designer.vue")
   },
   {
     path: "/mapper",
-    name: "Mapper",
     component: () =>
       import(/* webpackChunkName: "mapper" */ "../views/Mapper.vue")
   },
   {
-    path: "/",
-    name: "Hello",
-    component: () =>
-      import(/* webpackChunkName: "mapper" */ "../views/Hello.vue")
-  },
-  {
     path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/About.vue")
+  },
+  {
+    path: "/hello",
+    component: () =>
+      import(/* webpackChunkName: "mapper" */ "../views/Hello.vue")
   }
-];
+].map(a => {
+  return Object.assign(
+    a,
+    links.find(e => e.path === a.path)
+  );
+});
 
 const router = new VueRouter({
   mode: "history",
