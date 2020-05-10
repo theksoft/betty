@@ -1,18 +1,58 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+  <div class="home" ref="home">
+    <v-row class="flex-wrap">
+      <HomeLink
+        v-for="(link, index) in links.filter(e => e.image)"
+        :route="link.path"
+        :image="link.image"
+        :width="cardSize"
+        :key="index"
+      >
+        {{ link.name }}
+      </HomeLink>
+    </v-row>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import HomeLink from "@/components/HomeLink.vue";
 
 export default {
-  name: "Home",
+  name: "home",
   components: {
-    HelloWorld
+    HomeLink
+  },
+  props: {
+    links: {
+      type: Array,
+      required: true
+    },
+    cardSize: {
+      type: Number,
+      default: 130
+    }
+  } /*,
+  mounted() {
+    window.addEventListener("resize", this.onResize);
+    this.onResize();
+  },
+  beforeDestroy() {
+    window.removeEventListener("resize", this.onResize);
+  },
+  methods: {
+    onResize() {
+      this.$nextTick(function() {
+        this.getCardSize();
+      });
+    },
+    getCardSize() {
+      this.cardSize = Math.round(
+        0.8 *
+          (this.$refs.home.clientWidth / this.links.filter(e => e.image).length)
+      );
+    }
   }
+  */
 };
 </script>
