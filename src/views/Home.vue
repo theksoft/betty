@@ -30,9 +30,9 @@ export default {
     },
     cardSize: {
       type: Number,
-      default: 0
+      default: 130
     }
-  },
+  } /*,
   mounted() {
     window.addEventListener("resize", this.onResize);
     this.onResize();
@@ -53,5 +53,6 @@ export default {
       );
     }
   }
+  */
 };
 </script>

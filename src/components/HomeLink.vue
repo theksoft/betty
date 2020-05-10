@@ -23,7 +23,7 @@
 
 <script>
 export default {
-  name: "homelink",
+  name: "home-link",
   props: {
     width: {
       type: Number,
@@ -70,8 +70,7 @@ export default {
       let c = "pa-4",
         w = this.cardWidth;
       if (w < 80) c = "pa-1";
-      else if (w < 110) c = "pa-2";
-      else if (w < 150) c = "pa-3";
+      else if (w < 150) c = "pa-2";
       return c;
     },
     titlePresent() {

@@ -9,25 +9,25 @@ export const links = [
     <a href="https://www.vecteezy.com/free-vector/ancient-map">Ancient Map Vectors by Vecteezy</a>
   */
   {
-    path: "/designer",
     name: "Designer",
+    path: "/designer",
     icon: "mdi-package",
     image: "game-package.png"
   },
   {
-    path: "/mapper",
     name: "Mapper",
+    path: "/mapper",
     icon: "mdi-map-outline",
     image: "ancient-map.png"
   },
   {
-    path: "/about",
     name: "About",
+    path: "/about",
     icon: "mdi-information"
   },
   {
-    path: "/hello",
     name: "Hello",
+    path: "/hello",
     icon: "mdi-comment"
   }
 ];

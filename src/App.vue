@@ -17,10 +17,10 @@
           :key="index"
         >
           <v-list-item-action>
-            <v-icon color="brown lighten-2">{{ link.icon }}</v-icon>
+            <v-icon :color="theme.color">{{ link.icon }}</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title class="brown--text text--lighten-3">
+            <v-list-item-title :class="theme.classText">
               {{ link.name }}
             </v-list-item-title>
           </v-list-item-content>
@@ -28,15 +28,17 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar :clipped-left="drawer.clipped" app>
+    <component
+      :is="showAppBar"
+      :clipped="drawer.clipped"
+      :color="theme.color"
+      :classText="theme.classText"
+    >
       <v-app-bar-nav-icon
-        color="brown lighten-2"
+        :color="theme.color"
         @click.stop="drawer.model = !drawer.model"
       />
-      <v-toolbar-title class="brown--text text--lighten-3">
-        Betty
-      </v-toolbar-title>
-    </v-app-bar>
+    </component>
 
     <v-content>
       <v-container fluid>
@@ -52,16 +54,39 @@
 
 <script>
 import { links } from "@/router/links.js";
+import AppBarDefault from "@/components/AppBarDefault.vue";
+import AppBarDesigner from "@/components/AppBarDesigner.vue";
+import AppBarMapper from "@/components/AppBarMapper.vue";
 
 export default {
   name: "Betty",
+  components: {
+    AppBarDefault,
+    AppBarDesigner,
+    AppBarMapper
+  },
   data: () => ({
     drawer: {
       model: false,
       clipped: true,
       mini: true
     },
-    links
-  })
+    links,
+    theme: {
+      color: "brown lighten-2",
+      classText: "brown--text text--lighten-3"
+    }
+  }),
+  computed: {
+    showAppBar() {
+      if ("Designer" === this.$route.name || "Game" === this.$route.name) {
+        return "AppBarDesigner";
+      }
+      if ("Mapper" === this.$route.name || "Map" === this.$route.name) {
+        return "AppBarMapper";
+      }
+      return "AppBarDefault";
+    }
+  }
 };
 </script>
