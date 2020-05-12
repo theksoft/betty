@@ -33,6 +33,8 @@
       :clipped="drawer.clipped"
       :color="theme.color"
       :classText="theme.classText"
+      @new="newMap"
+      @close="closeMap"
     >
       <v-app-bar-nav-icon
         :color="theme.color"
@@ -54,6 +56,7 @@
 
 <script>
 import { links } from "@/router/links.js";
+import { mapActions } from "vuex";
 import AppBarDefault from "@/components/AppBarDefault.vue";
 import AppBarDesigner from "@/components/AppBarDesigner.vue";
 import AppBarMapper from "@/components/AppBarMapper.vue";
@@ -87,6 +90,12 @@ export default {
       }
       return "AppBarDefault";
     }
+  },
+  methods: {
+    closeMap(route) {
+      this.removeMapById(route.substring("/mapper/".length));
+    },
+    ...mapActions("maps", ["newMap", "removeMapById"])
   }
 };
 </script>

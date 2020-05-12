@@ -1,7 +1,7 @@
 <template>
   <v-app-bar dense :clipped-left="clipped" app>
     <slot></slot>
-    <v-btn icon>
+    <v-btn @click="$emit('new')" icon>
       <v-icon :color="color">mdi-map-plus</v-icon>
     </v-btn>
     <v-spacer />
@@ -10,19 +10,23 @@
       Mapper
     </v-toolbar-title>
     <template v-if="tabItems.length" v-slot:extension>
-      <v-tabs align-with-title show-arrows>
+      <v-tabs v-model="route" align-with-title show-arrows>
         <v-tab v-for="e in tabItems" :to="e.route" :key="e.id" exact>
           {{ e.name }}
         </v-tab>
       </v-tabs>
       <v-btn icon>
-        <v-icon :color="color">mdi-close-thick</v-icon>
+        <v-icon @click="$emit('close', route)" :color="color">
+          mdi-close-thick
+        </v-icon>
       </v-btn>
     </template>
   </v-app-bar>
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+
 export default {
   name: "app-bar-mapper",
   props: {
@@ -39,17 +43,39 @@ export default {
       default: ""
     }
   },
+  data: () => ({
+    route: null
+  }),
   computed: {
     classTitle() {
       return this.classText + " mx-2";
     },
     tabItems() {
-      return [
-        { id: 12, name: "Map 12", route: "/mapper/12" },
-        { id: 42, name: "Map 42", route: "/mapper/42" },
-        { id: 69, name: "Map 69", route: "/mapper/69" }
-      ];
+      return this.mapRoutes("/mapper/");
+    },
+    ...mapGetters("maps", ["mapRoutes", "data"])
+  },
+  watch: {
+    route(value) {
+      if (this.$route.name !== "Map" && this.data) {
+        this.$router.push(this.data);
+        return;
+      }
+      if (value && value !== this.$route.path) {
+        this.$router.push(value);
+      }
+      this.storeData(value);
+    },
+    tabItems(value) {
+      if (0 === value.length) {
+        this.storeData(null);
+        this.route = null;
+        this.$router.push("/mapper/");
+      }
     }
+  },
+  methods: {
+    ...mapActions("maps", ["storeData"])
   }
 };
 </script>
