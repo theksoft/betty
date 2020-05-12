@@ -46,13 +46,6 @@ const routes = [
     name: "About",
     // Use webpackChunkName: "about"
     component: () => import("../views/About.vue")
-  },
-  {
-    path: "/hello",
-    name: "HelloWorld",
-    // See above
-    component: () =>
-      import(/* webpackChunkName: "mapper" */ "../views/Hello.vue")
   }
 ];
 
