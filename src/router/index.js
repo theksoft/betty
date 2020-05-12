@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
-import { links } from "./links.js";
+import Links from "./links.js";
 
 Vue.use(VueRouter);
 
@@ -10,7 +10,7 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home,
-    props: { links }
+    props: { links: Links.home() }
   },
   {
     path: "/designer",

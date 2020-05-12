@@ -12,7 +12,7 @@
     >
       <v-list nav dense>
         <v-list-item
-          v-for="(link, index) in links"
+          v-for="(link, index) in links.nav()"
           :to="link.path"
           :key="index"
         >
@@ -48,7 +48,7 @@
 </template>
 
 <script>
-import { links } from "@/router/links.js";
+import links from "@/router/links.js";
 import { mapActions } from "vuex";
 import AppBarDefault from "@/components/AppBarDefault.vue";
 import AppBarDesigner from "@/components/AppBarDesigner.vue";
