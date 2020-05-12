@@ -32,27 +32,6 @@ export default {
       type: Number,
       default: 130
     }
-  } /*,
-  mounted() {
-    window.addEventListener("resize", this.onResize);
-    this.onResize();
-  },
-  beforeDestroy() {
-    window.removeEventListener("resize", this.onResize);
-  },
-  methods: {
-    onResize() {
-      this.$nextTick(function() {
-        this.getCardSize();
-      });
-    },
-    getCardSize() {
-      this.cardSize = Math.round(
-        0.8 *
-          (this.$refs.home.clientWidth / this.links.filter(e => e.image).length)
-      );
-    }
   }
-  */
 };
 </script>

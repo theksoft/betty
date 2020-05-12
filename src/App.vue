@@ -17,12 +17,10 @@
           :key="index"
         >
           <v-list-item-action>
-            <v-icon :color="theme.color">{{ link.icon }}</v-icon>
+            <v-icon>{{ link.icon }}</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title :class="theme.classText">
-              {{ link.name }}
-            </v-list-item-title>
+            <v-list-item-title>{{ link.name }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -31,15 +29,10 @@
     <component
       :is="showAppBar"
       :clipped="drawer.clipped"
-      :color="theme.color"
-      :classText="theme.classText"
       @new="newMap"
       @close="closeMap"
     >
-      <v-app-bar-nav-icon
-        :color="theme.color"
-        @click.stop="drawer.model = !drawer.model"
-      />
+      <v-app-bar-nav-icon @click.stop="drawer.model = !drawer.model" />
     </component>
 
     <v-content>
@@ -74,11 +67,7 @@ export default {
       clipped: true,
       mini: true
     },
-    links,
-    theme: {
-      color: "brown lighten-2",
-      classText: "brown--text text--lighten-3"
-    }
+    links
   }),
   computed: {
     showAppBar() {

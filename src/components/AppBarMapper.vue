@@ -2,11 +2,11 @@
   <v-app-bar dense :clipped-left="clipped" app>
     <slot></slot>
     <v-btn @click="$emit('new')" icon>
-      <v-icon :color="color">mdi-map-plus</v-icon>
+      <v-icon>$mapAdd</v-icon>
     </v-btn>
     <v-spacer />
     <v-divider vertical />
-    <v-toolbar-title :class="classTitle">
+    <v-toolbar-title class="mx-2">
       Mapper
     </v-toolbar-title>
     <template v-if="tabItems.length" v-slot:extension>
@@ -16,8 +16,8 @@
         </v-tab>
       </v-tabs>
       <v-btn icon>
-        <v-icon @click="$emit('close', route)" :color="color">
-          mdi-close-thick
+        <v-icon @click="$emit('close', route)">
+          $close
         </v-icon>
       </v-btn>
     </template>
@@ -33,23 +33,12 @@ export default {
     clipped: {
       type: Boolean,
       default: true
-    },
-    color: {
-      type: String,
-      default: "default"
-    },
-    classText: {
-      type: String,
-      default: ""
     }
   },
   data: () => ({
     route: null
   }),
   computed: {
-    classTitle() {
-      return this.classText + " mx-2";
-    },
     tabItems() {
       return this.mapRoutes("/mapper/");
     },

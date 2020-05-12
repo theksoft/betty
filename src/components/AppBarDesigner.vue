@@ -2,11 +2,11 @@
   <v-app-bar dense :clipped-left="clipped" app>
     <slot></slot>
     <v-btn icon>
-      <v-icon :color="color">mdi-package-variant</v-icon>
+      <v-icon>$gameAdd</v-icon>
     </v-btn>
     <v-spacer />
     <v-divider vertical />
-    <v-toolbar-title :class="classTitle">
+    <v-toolbar-title class="mx-2">
       Designer
     </v-toolbar-title>
     <template v-if="tabItems.length" v-slot:extension>
@@ -16,7 +16,7 @@
         </v-tab>
       </v-tabs>
       <v-btn icon>
-        <v-icon :color="color">mdi-close-thick</v-icon>
+        <v-icon>$close</v-icon>
       </v-btn>
     </template>
   </v-app-bar>
@@ -29,20 +29,9 @@ export default {
     clipped: {
       type: Boolean,
       default: true
-    },
-    color: {
-      type: String,
-      default: "default"
-    },
-    classText: {
-      type: String,
-      default: ""
     }
   },
   computed: {
-    classTitle() {
-      return this.classText + " mx-2";
-    },
     tabItems() {
       return [
         { id: 12, name: "Game 12", route: "/designer/12" },

@@ -3,7 +3,7 @@ export const links = [
   {
     path: "/",
     name: "Home",
-    icon: "mdi-home"
+    icon: "$home"
   },
   /* TODO: Give credits to image maker
     <a href="https://www.vecteezy.com/free-vector/ancient-map">Ancient Map Vectors by Vecteezy</a>
@@ -11,19 +11,19 @@ export const links = [
   {
     name: "Designer",
     path: "/designer",
-    icon: "mdi-package",
+    icon: "$games",
     image: "game-package.png"
   },
   {
     name: "Mapper",
     path: "/mapper",
-    icon: "mdi-map-outline",
+    icon: "$maps",
     image: "ancient-map.png"
   },
   {
     name: "About",
     path: "/about",
-    icon: "mdi-information"
+    icon: "$about"
   },
   {
     name: "Hello",
