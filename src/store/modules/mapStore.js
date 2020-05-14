@@ -1,5 +1,3 @@
-import { ImageMap } from "@/data/ImageMap.js";
-
 export const maps = {
   namespaced: true,
 
@@ -51,9 +49,6 @@ export const maps = {
   actions: {
     addMap({ commit }, map) {
       commit("ADD_MAP", map);
-    },
-    newMap({ commit }) {
-      commit("ADD_MAP", new ImageMap());
     },
     removeMapById({ commit }, id) {
       commit("REMOVE_MAP_BY_ID", id);

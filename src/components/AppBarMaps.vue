@@ -1,7 +1,7 @@
 <template>
   <v-app-bar dense :clipped-left="clipped" app>
     <slot></slot>
-    <v-btn @click="createMap" icon>
+    <v-btn @click="newMap" icon>
       <v-icon>$mapAdd</v-icon>
     </v-btn>
     <v-spacer />
@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import { ImageMap as imap } from "@/data/ImageMap.js";
 import maps from "@/router/modules/mapsLinks.js";
 import { mapActions } from "vuex";
 
@@ -53,11 +54,11 @@ export default {
       this.removeMapById(this.$route.params.id);
       this.$router.push(r);
     },
-    createMap() {
-      this.newMap();
+    newMap() {
+      this.addMap(new imap());
       this.$router.push(maps.lastRoute());
     },
-    ...mapActions("maps", ["newMap", "removeMapById"])
+    ...mapActions("maps", ["addMap", "removeMapById"])
   }
 };
 </script>
