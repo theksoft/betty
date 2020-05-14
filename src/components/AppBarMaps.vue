@@ -15,8 +15,8 @@
           {{ e.name }}
         </v-tab>
       </v-tabs>
-      <v-btn icon>
-        <v-icon @click="closeMap">
+      <v-btn @click="closeMap" icon>
+        <v-icon>
           $close
         </v-icon>
       </v-btn>
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { ImageMap as imap } from "@/data/ImageMap.js";
+import { ImageMap as Map } from "@/data/ImageMap.js";
 import maps from "@/router/modules/mapsLinks.js";
 import { mapActions } from "vuex";
 
@@ -55,7 +55,7 @@ export default {
       this.$router.push(r);
     },
     newMap() {
-      this.addMap(new imap());
+      this.addMap(new Map());
       this.$router.push(maps.lastRoute());
     },
     ...mapActions("maps", ["addMap", "removeMapById"])

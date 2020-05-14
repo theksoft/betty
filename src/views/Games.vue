@@ -1,6 +1,6 @@
 <template>
   <div class="games">
-    <h1>This is a designer page tab</h1>
+    <h1>This is a game page tab</h1>
     <p>I am {{ id }}!</p>
   </div>
 </template>
