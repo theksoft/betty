@@ -26,12 +26,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <component
-      :is="showAppBar"
-      :clipped="drawer.clipped"
-      @new="createMap"
-      @close="closeMap"
-    >
+    <component :is="showAppBar" :clipped="drawer.clipped">
       <v-app-bar-nav-icon @click.stop="drawer.model = !drawer.model" />
     </component>
 
@@ -49,7 +44,6 @@
 
 <script>
 import links from "@/router/links.js";
-import { mapActions } from "vuex";
 import AppBarDefault from "@/components/AppBarDefault.vue";
 import AppBarDesigner from "@/components/AppBarDesigner.vue";
 import AppBarMapper from "@/components/AppBarMapper.vue";
@@ -79,18 +73,6 @@ export default {
       }
       return "AppBarDefault";
     }
-  },
-  methods: {
-    closeMap() {
-      let r = this.links.maps.closestRoute(this.$route.params.id);
-      this.removeMapById(this.$route.params.id);
-      this.$router.push(r);
-    },
-    createMap() {
-      this.newMap();
-      this.$router.push(this.links.maps.lastRoute());
-    },
-    ...mapActions("maps", ["newMap", "removeMapById"])
   }
 };
 </script>

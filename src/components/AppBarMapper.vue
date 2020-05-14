@@ -1,7 +1,7 @@
 <template>
   <v-app-bar dense :clipped-left="clipped" app>
     <slot></slot>
-    <v-btn @click="$emit('new')" icon>
+    <v-btn @click="createMap" icon>
       <v-icon>$mapAdd</v-icon>
     </v-btn>
     <v-spacer />
@@ -16,7 +16,7 @@
         </v-tab>
       </v-tabs>
       <v-btn icon>
-        <v-icon @click="$emit('close')">
+        <v-icon @click="closeMap">
           $close
         </v-icon>
       </v-btn>
@@ -26,6 +26,7 @@
 
 <script>
 import maps from "@/router/links/mapsLinks.js";
+import { mapActions } from "vuex";
 
 export default {
   name: "app-bar-mapper",
@@ -42,6 +43,18 @@ export default {
     tabItems() {
       return maps.routes();
     }
+  },
+  methods: {
+    closeMap() {
+      let r = maps.closestRoute(this.$route.params.id);
+      this.removeMapById(this.$route.params.id);
+      this.$router.push(r);
+    },
+    createMap() {
+      this.newMap();
+      this.$router.push(maps.lastRoute());
+    },
+    ...mapActions("maps", ["newMap", "removeMapById"])
   }
 };
 </script>

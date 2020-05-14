@@ -74,7 +74,6 @@ const MapsLinks = {
     return store.getters["maps/mapNames"].map(m => {
       return { id: m.id, name: m.name, route: this.data.path + "/" + m.id };
     });
-;
   },
 
   setRouteParams(path, name, nameId) {
