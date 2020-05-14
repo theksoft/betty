@@ -28,6 +28,28 @@ const Links = {
     return Maps;
   },
 
+  appBar(route) {
+    return modules.reduce((r, e) => {
+      if (r) {
+        return r;
+      }
+      if (e.match && e.match(route)) {
+        r = e.appBar;
+      }
+      return r;
+    }, null);
+  },
+
+  beforeEach(to, from, next) {
+    let v = modules.reduce((r, e) => {
+      if (!e.beforeEach) {
+        return r;
+      }
+      return e.beforeEach(to, from, r);
+    }, null);
+    v === null ? next() : next(v);
+  },
+
   homeNav: () => {
     return modules
       .reduce((r, v) => {
@@ -46,16 +68,6 @@ const Links = {
       return r;
     }, []);
     // Could have chained map to restrict to specific fields ... for another loop price
-  },
-
-  beforeEach(to, from, next) {
-    let v = modules.reduce((r, e) => {
-      if (!e.beforeEach) {
-        return r;
-      }
-      return e.beforeEach(to, from, r);
-    }, null);
-    v === null ? next() : next(v);
   }
 };
 

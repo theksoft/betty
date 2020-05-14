@@ -8,9 +8,13 @@ const MapsLinks = {
     nameId: null, // Will be set by router
     path: null, // Will be set by router
     icon: "$maps",
-    image: "ancient-map.png"
+    image: "ancient-map.png",
+    appBar: "AppBarMapper"
   },
   lastPath: null,
+  get appBar() {
+    return this.data.appBar;
+  },
   get name() {
     return this.data.name;
   },
@@ -68,6 +72,13 @@ const MapsLinks = {
       path += "/" + store.getters["maps/mapAt"](count - 1).id;
     }
     return path;
+  },
+
+  match(route) {
+    if (!route) {
+      return false;
+    }
+    return route.name === this.data.name || route.name === this.data.nameId;
   },
 
   routes() {

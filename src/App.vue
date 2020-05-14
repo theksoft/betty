@@ -65,13 +65,7 @@ export default {
   }),
   computed: {
     showAppBar() {
-      if ("Designer" === this.$route.name || "Game" === this.$route.name) {
-        return "AppBarDesigner";
-      }
-      if ("Mapper" === this.$route.name || "Map" === this.$route.name) {
-        return "AppBarMapper";
-      }
-      return "AppBarDefault";
+      return links.appBar(this.$route) || "AppBarDefault";
     }
   }
 };

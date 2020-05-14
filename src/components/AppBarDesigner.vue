@@ -7,7 +7,7 @@
     <v-spacer />
     <v-divider vertical />
     <v-toolbar-title class="mx-2">
-      Designer
+      {{ title }}
     </v-toolbar-title>
     <template v-if="tabItems.length" v-slot:extension>
       <v-tabs align-with-title show-arrows>
@@ -23,6 +23,8 @@
 </template>
 
 <script>
+import games from "@/router/links/gamesLinks.js";
+
 export default {
   name: "app-bar-designer",
   props: {
@@ -38,6 +40,9 @@ export default {
         { id: 42, name: "Game 42", route: "/designer/42" },
         { id: 69, name: "Game 69", route: "/designer/69" }
       ];
+    },
+    title() {
+      return games.name;
     }
   }
 };

@@ -7,7 +7,7 @@
     <v-spacer />
     <v-divider vertical />
     <v-toolbar-title class="mx-2">
-      Mapper
+      {{ title }}
     </v-toolbar-title>
     <template v-if="tabItems.length" v-slot:extension>
       <v-tabs v-model="route" align-with-title show-arrows>
@@ -42,6 +42,9 @@ export default {
   computed: {
     tabItems() {
       return maps.routes();
+    },
+    title() {
+      return maps.name;
     }
   },
   methods: {

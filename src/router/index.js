@@ -8,8 +8,8 @@ Vue.use(VueRouter);
 
 Links.home.setRouteParams("/", "Home");
 Links.about.setRouteParams("/about", "About");
-Links.maps.setRouteParams("/mapper", "Mapper", "Map");
-Links.games.setRouteParams("/designer", "Designer", "Game");
+Links.maps.setRouteParams("/maps", "Maps", "Map");
+Links.games.setRouteParams("/games", "Games", "Game");
 
 const routes = [
   {

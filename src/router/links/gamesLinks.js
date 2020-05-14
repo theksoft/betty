@@ -7,7 +7,11 @@ const GamesLinks = {
     nameId: null, // Will be set by router
     path: null, // Will be set by router
     icon: "$games",
-    image: "game-package.png"
+    image: "game-package.png",
+    appBar: "AppBarDesigner"
+  },
+  get appBar() {
+    return this.data.appBar;
   },
   get name() {
     return this.data.name;
@@ -17,6 +21,13 @@ const GamesLinks = {
   },
   get path() {
     return this.data.path;
+  },
+
+  match(route) {
+    if (!route) {
+      return false;
+    }
+    return route.name === this.data.name || route.name === this.data.nameId;
   },
 
   setRouteParams(path, name, nameId) {
