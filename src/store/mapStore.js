@@ -24,10 +24,8 @@ export const maps = {
     mapAt: state => index => {
       return state.content[index];
     },
-    mapRoutes: state => path => {
-      return state.content.map(m => {
-        return { id: m.id, name: m.name, route: path + m.id };
-      });
+    mapNames: state => {
+      return state.content.map(m => ({ name: m.name, id: m.id }));
     }
   },
 

@@ -70,6 +70,13 @@ const MapsLinks = {
     return path;
   },
 
+  routes() {
+    return store.getters["maps/mapNames"].map(m => {
+      return { id: m.id, name: m.name, route: this.data.path + "/" + m.id };
+    });
+;
+  },
+
   setRouteParams(path, name, nameId) {
     this.data.path = path;
     this.data.name = name;

@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import maps from "@/router/links/mapsLinks.js";
 
 export default {
   name: "app-bar-mapper",
@@ -40,9 +40,8 @@ export default {
   }),
   computed: {
     tabItems() {
-      return this.mapRoutes("/mapper/");
-    },
-    ...mapGetters("maps", ["mapRoutes"])
+      return maps.routes();
+    }
   }
 };
 </script>
