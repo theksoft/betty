@@ -4,16 +4,25 @@ export const maps = {
   namespaced: true,
 
   state: {
-    content: [],
-    data: null
+    content: []
   },
 
   getters: {
+    closestMap: state => id => {
+      let r = state.content.findIndex(e => e.id === id) + 1;
+      if (r >= state.content.length) {
+        r = r - 2;
+      }
+      return r < 0 ? null : state.content[r].id;
+    },
     count: state => {
       return state.content.length;
     },
-    data: state => {
-      return state.data;
+    map: state => id => {
+      return state.content.find(e => e.id === id);
+    },
+    mapAt: state => index => {
+      return state.content[index];
     },
     mapRoutes: state => path => {
       return state.content.map(m => {
@@ -23,7 +32,7 @@ export const maps = {
   },
 
   mutations: {
-    addMap: (state, map) => {
+    ADD_MAP: (state, map) => {
       // Check it is a map
       if (map.type !== "image-map" || !map.id) {
         return;
@@ -33,29 +42,23 @@ export const maps = {
         state.content.push(map);
       }
     },
-    removeMapById: (state, id) => {
+    REMOVE_MAP_BY_ID: (state, id) => {
       let i = state.content.findIndex(e => e.id === id);
       if (i !== -1) {
         state.content.splice(i, 1);
       }
-    },
-    setData: (state, value) => {
-      state.data = value;
     }
   },
 
   actions: {
     addMap({ commit }, map) {
-      commit("addMap", map);
+      commit("ADD_MAP", map);
     },
     newMap({ commit }) {
-      commit("addMap", new ImageMap());
+      commit("ADD_MAP", new ImageMap());
     },
     removeMapById({ commit }, id) {
-      commit("removeMapById", id);
-    },
-    storeData({ commit }, value) {
-      commit("setData", value);
+      commit("REMOVE_MAP_BY_ID", id);
     }
   }
 };

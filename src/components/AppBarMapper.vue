@@ -16,7 +16,7 @@
         </v-tab>
       </v-tabs>
       <v-btn icon>
-        <v-icon @click="$emit('close', route)">
+        <v-icon @click="$emit('close')">
           $close
         </v-icon>
       </v-btn>
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
   name: "app-bar-mapper",
@@ -42,29 +42,7 @@ export default {
     tabItems() {
       return this.mapRoutes("/mapper/");
     },
-    ...mapGetters("maps", ["mapRoutes", "data"])
-  },
-  watch: {
-    route(value) {
-      if (this.$route.name !== "Map" && this.data) {
-        this.$router.push(this.data);
-        return;
-      }
-      if (value && value !== this.$route.path) {
-        this.$router.push(value);
-      }
-      this.storeData(value);
-    },
-    tabItems(value) {
-      if (0 === value.length) {
-        this.storeData(null);
-        this.route = null;
-        this.$router.push("/mapper/");
-      }
-    }
-  },
-  methods: {
-    ...mapActions("maps", ["storeData"])
+    ...mapGetters("maps", ["mapRoutes"])
   }
 };
 </script>

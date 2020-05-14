@@ -12,7 +12,23 @@ const modules = [
 ];
 
 const Links = {
-  home: () => {
+  get about() {
+    return About;
+  },
+
+  get games() {
+    return Games;
+  },
+
+  get home() {
+    return Home;
+  },
+
+  get maps() {
+    return Maps;
+  },
+
+  homeNav: () => {
     return modules
       .reduce((r, v) => {
         r.push(v.data);
@@ -30,9 +46,19 @@ const Links = {
       return r;
     }, []);
     // Could have chained map to restrict to specific fields ... for another loop price
+  },
+
+  beforeEach(to, from, next) {
+    let v = modules.reduce((r, e) => {
+      if (!e.beforeEach) {
+        return r;
+      }
+      return e.beforeEach(to, from, r);
+    }, null);
+    v === null ? next() : next(v);
   }
 };
 
 export default Links;
-export const homeLinks = Links.home;
+export const homeLinks = Links.homeNav;
 export const navLinks = Links.nav;

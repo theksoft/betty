@@ -29,7 +29,7 @@
     <component
       :is="showAppBar"
       :clipped="drawer.clipped"
-      @new="newMap"
+      @new="createMap"
       @close="closeMap"
     >
       <v-app-bar-nav-icon @click.stop="drawer.model = !drawer.model" />
@@ -81,8 +81,14 @@ export default {
     }
   },
   methods: {
-    closeMap(route) {
-      this.removeMapById(route.substring("/mapper/".length));
+    closeMap() {
+      let r = this.links.maps.closestRoute(this.$route.params.id);
+      this.removeMapById(this.$route.params.id);
+      this.$router.push(r);
+    },
+    createMap() {
+      this.newMap();
+      this.$router.push(this.links.maps.lastRoute());
     },
     ...mapActions("maps", ["newMap", "removeMapById"])
   }
