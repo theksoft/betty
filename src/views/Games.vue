@@ -1,5 +1,5 @@
 <template>
-  <div class="designer">
+  <div class="games">
     <h1>This is a designer page tab</h1>
     <p>I am {{ id }}!</p>
   </div>
@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: "designer",
+  name: "games",
   props: {
     id: {
       type: String,

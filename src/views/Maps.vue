@@ -1,5 +1,5 @@
 <template>
-  <div class="mapper">
+  <div class="maps">
     <h1>This is a map page tab</h1>
     <p>I am {{ id }}!</p>
   </div>
@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: "mapper",
+  name: "maps",
   props: {
     id: {
       type: String,

@@ -25,26 +25,26 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     // Use webpackChunkName: "designer"
-    component: () => import("../views/Designer.vue")
+    component: () => import("../views/Games.vue")
   },
   {
     path: Links.games.path + "/:id",
     name: Links.games.nameId,
     // Use webpackChunkName: "designer"
-    component: () => import("../views/Designer.vue"),
+    component: () => import("../views/Games.vue"),
     props: true
   },
   {
     path: Links.maps.path,
     name: Links.maps.name,
     // Use webpackChunkName: "mapper"
-    component: () => import("../views/Mapper.vue")
+    component: () => import("../views/Maps.vue")
   },
   {
     path: Links.maps.path + "/:id",
     name: Links.maps.nameId,
     // Use webpackChunkName: "mapper"
-    component: () => import("../views/Mapper.vue"),
+    component: () => import("../views/Maps.vue"),
     props: true
   },
   {

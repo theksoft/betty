@@ -9,7 +9,7 @@ const MapsLinks = {
     path: null, // Will be set by router
     icon: "$maps",
     image: "ancient-map.png",
-    appBar: "AppBarMapper"
+    appBar: "AppBarMaps"
   },
   lastPath: null,
   get appBar() {

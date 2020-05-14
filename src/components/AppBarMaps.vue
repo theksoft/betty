@@ -25,11 +25,11 @@
 </template>
 
 <script>
-import maps from "@/router/links/mapsLinks.js";
+import maps from "@/router/modules/mapsLinks.js";
 import { mapActions } from "vuex";
 
 export default {
-  name: "app-bar-mapper",
+  name: "app-bar-maps",
   props: {
     clipped: {
       type: Boolean,

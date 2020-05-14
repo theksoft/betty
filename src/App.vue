@@ -45,15 +45,15 @@
 <script>
 import links from "@/router/links.js";
 import AppBarDefault from "@/components/AppBarDefault.vue";
-import AppBarDesigner from "@/components/AppBarDesigner.vue";
-import AppBarMapper from "@/components/AppBarMapper.vue";
+import AppBarGames from "@/components/AppBarGames.vue";
+import AppBarMaps from "@/components/AppBarMaps.vue";
 
 export default {
   name: "Betty",
   components: {
     AppBarDefault,
-    AppBarDesigner,
-    AppBarMapper
+    AppBarGames,
+    AppBarMaps
   },
   data: () => ({
     drawer: {

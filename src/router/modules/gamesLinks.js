@@ -8,7 +8,7 @@ const GamesLinks = {
     path: null, // Will be set by router
     icon: "$games",
     image: "game-package.png",
-    appBar: "AppBarDesigner"
+    appBar: "AppBarGames"
   },
   get appBar() {
     return this.data.appBar;

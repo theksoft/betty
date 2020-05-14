@@ -1,7 +1,7 @@
-import Home from "./links/homeLinks.js";
-import About from "./links/aboutLinks.js";
-import Games from "./links/gamesLinks.js";
-import Maps from "./links/mapsLinks.js";
+import Home from "./modules/homeLinks.js";
+import About from "./modules/aboutLinks.js";
+import Games from "./modules/gamesLinks.js";
+import Maps from "./modules/mapsLinks.js";
 
 const modules = [
   // Declared in order of menu

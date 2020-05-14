@@ -23,10 +23,10 @@
 </template>
 
 <script>
-import games from "@/router/links/gamesLinks.js";
+import games from "@/router/modules/gamesLinks.js";
 
 export default {
-  name: "app-bar-designer",
+  name: "app-bar-games",
   props: {
     clipped: {
       type: Boolean,
@@ -35,11 +35,7 @@ export default {
   },
   computed: {
     tabItems() {
-      return [
-        { id: 12, name: "Game 12", route: "/designer/12" },
-        { id: 42, name: "Game 42", route: "/designer/42" },
-        { id: 69, name: "Game 69", route: "/designer/69" }
-      ];
+      return [];
     },
     title() {
       return games.name;

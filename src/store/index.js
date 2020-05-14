@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { maps } from "./mapStore.js";
+import { maps } from "./modules/mapStore.js";
 
 Vue.use(Vuex);
 
