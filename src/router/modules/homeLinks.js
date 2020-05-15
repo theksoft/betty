@@ -1,20 +1,25 @@
 const HomeLinks = {
-  data: {
-    name: null, // Will be set by router
-    path: null, // Will be set by router
+  _data: {
+    rootPath: null, // Will be set by router
+    rootName: null, // Will be set by router
     icon: "$home"
   },
-  get name() {
-    return this.data.name;
-  },
-  get path() {
-    return this.data.path;
+
+  get data() {
+    return this._data;
   },
 
-  setRouteParams(path, name) {
-    this.data.path = path;
-    this.data.name = name;
-    Object.freeze(this.data);
+  get rootName() {
+    return this._data.rootName;
+  },
+  get rootPath() {
+    return this._data.rootPath;
+  },
+
+  set params(params) {
+    this._data.rootPath = params.rootPath;
+    this._data.rootName = params.rootName;
+    Object.freeze(this._data);
   }
 };
 

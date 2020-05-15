@@ -58,16 +58,25 @@ const Links = {
       }, [])
       .filter(e => {
         return e.image;
-      });
-    // Could have chained map to restrict to specific fields ... for another loop price
+      })
+      .map(e => ({
+        path: e.rootPath,
+        name: e.rootName,
+        image: e.image
+      }));
   },
 
   nav: () => {
-    return modules.reduce((r, v) => {
-      r.push(v.data);
-      return r;
-    }, []);
-    // Could have chained map to restrict to specific fields ... for another loop price
+    return modules
+      .reduce((r, v) => {
+        r.push(v.data);
+        return r;
+      }, [])
+      .map(e => ({
+        path: e.rootPath,
+        name: e.rootName,
+        icon: e.icon
+      }));
   }
 };
 

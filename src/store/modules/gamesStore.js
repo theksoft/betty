@@ -6,7 +6,7 @@ export const games = {
   },
 
   getters: {
-    closestGame: state => id => {
+    closestElement: state => id => {
       let r = state.content.findIndex(e => e.id === id) + 1;
       if (r >= state.content.length) {
         r = r - 2;
@@ -16,13 +16,13 @@ export const games = {
     count: state => {
       return state.content.length;
     },
-    game: state => id => {
+    elementById: state => id => {
       return state.content.find(e => e.id === id);
     },
-    gameAt: state => index => {
+    elementAt: state => index => {
       return state.content[index];
     },
-    gameNames: state => {
+    elementNames: state => {
       return state.content.map(m => ({ name: m.name, id: m.id }));
     }
   },
