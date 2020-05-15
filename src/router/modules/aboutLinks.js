@@ -1,26 +1,8 @@
-const AboutLinks = {
-  _data: {
-    rootPath: null, // Will be set by router
-    rootName: null, // Will be set by router
-    icon: "$about"
-  },
+import defLinks from "./genDefLinks.js";
 
-  get data() {
-    return this._data;
-  },
+("use strict");
 
-  get rootName() {
-    return this._data.rootName;
-  },
-  get rootPath() {
-    return this._data.rootPath;
-  },
-
-  set params(params) {
-    this._data.rootPath = params.rootPath;
-    this._data.rootName = params.rootName;
-    Object.freeze(this._data);
-  }
-};
-
-export default AboutLinks;
+export default new defLinks({
+  icon: "$about",
+  appBar: "AppBarDefault"
+});
