@@ -14,13 +14,14 @@ export default new Vuetify({
   icons: {
     iconfont: "mdiSvg", // default
     values: {
-      about: "mdi-information",
-      close: "mdi-close-thick",
-      games: "mdi-package",
-      gameAdd: "mdi-package-variant",
+      about: "mdi-information-variant",
+      close: "mdi-window-close",
+      games: "mdi-package-variant-closed",
+      gameAdd: "mdi-plus",
       home: "mdi-home",
-      maps: "mdi-map-outline",
-      mapAdd: "mdi-map-plus"
+      help: "mdi-help",
+      maps: "mdi-image-filter-hdr",
+      mapAdd: "mdi-plus"
     }
   }
 });

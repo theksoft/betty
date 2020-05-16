@@ -43,6 +43,12 @@ const routes = [
     props: true
   },
   {
+    path: resources.help.rootPath,
+    name: resources.help.rootName,
+    // Use webpackChunkName: "help"
+    component: () => import("../views/Help/Help.vue")
+  },
+  {
     path: resources.about.rootPath,
     name: resources.about.rootName,
     // Use webpackChunkName: "about"

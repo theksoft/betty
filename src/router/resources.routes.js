@@ -1,5 +1,6 @@
 import Home from "@/views/Home/resources/home.routes.js";
 import About from "@/views/About/resources/about.routes.js";
+import Help from "@/views/Help/resources/help.routes.js";
 import Games from "@/views/Games/resources/games.routes.js";
 import Maps from "@/views/Maps/resources/maps.routes.js";
 
@@ -8,6 +9,7 @@ const modules = [
   Home,
   Games,
   Maps,
+  Help,
   About
 ];
 
@@ -18,6 +20,10 @@ const Resources = {
 
   get games() {
     return Games;
+  },
+
+  get help() {
+    return Help;
   },
 
   get home() {
