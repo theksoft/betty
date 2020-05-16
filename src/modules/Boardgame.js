@@ -1,6 +1,6 @@
 import { v4 as uuid } from "uuid";
 
-export class Game {
+export class Boardgame {
   constructor() {
     this._type = "boardgame";
     this._id = uuid();

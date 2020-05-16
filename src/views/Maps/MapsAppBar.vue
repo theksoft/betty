@@ -1,8 +1,8 @@
 <template>
   <v-app-bar dense :clipped-left="clipped" app>
     <slot></slot>
-    <v-btn @click="newGame" icon>
-      <v-icon>$gameAdd</v-icon>
+    <v-btn @click="newMap" icon>
+      <v-icon>$mapAdd</v-icon>
     </v-btn>
     <v-spacer />
     <v-divider vertical />
@@ -15,20 +15,22 @@
           {{ e.name }}
         </v-tab>
       </v-tabs>
-      <v-btn @click="closeGame" icon>
-        <v-icon>$close</v-icon>
+      <v-btn @click="closeMap" icon>
+        <v-icon>
+          $close
+        </v-icon>
       </v-btn>
     </template>
   </v-app-bar>
 </template>
 
 <script>
-import { Game } from "@/data/Game.js";
-import games from "@/router/modules/gamesLinks.js";
 import { mapActions } from "vuex";
+import { ImageMap as Map } from "@/modules/ImageMap.js";
+import maps from "./resources/maps.routes.js";
 
 export default {
-  name: "app-bar-games",
+  name: "maps-app-bar",
   props: {
     clipped: {
       type: Boolean,
@@ -40,23 +42,23 @@ export default {
   }),
   computed: {
     tabItems() {
-      return games.routes();
+      return maps.routes();
     },
     title() {
-      return games.name;
+      return maps.name;
     }
   },
   methods: {
-    closeGame() {
-      let r = games.closestRoute(this.$route.params.id);
-      this.removeGameById(this.$route.params.id);
+    closeMap() {
+      let r = maps.closestRoute(this.$route.params.id);
+      this.removeMapById(this.$route.params.id);
       this.$router.push(r);
     },
-    newGame() {
-      this.addGame(new Game());
-      this.$router.push(games.lastRoute());
+    newMap() {
+      this.addMap(new Map());
+      this.$router.push(maps.lastRoute());
     },
-    ...mapActions("games", ["addGame", "removeGameById"])
+    ...mapActions("maps", ["addMap", "removeMapById"])
   }
 };
 </script>

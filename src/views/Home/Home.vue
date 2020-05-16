@@ -2,7 +2,7 @@
   <div class="home" ref="home">
     <v-row class="flex-wrap">
       <HomeLink
-        v-for="(link, index) in links.filter(e => e.image)"
+        v-for="(link, index) in routes.filter(e => e.image)"
         :route="link.path"
         :image="link.image"
         :width="cardSize"
@@ -16,7 +16,7 @@
 
 <script>
 // @ is an alias to /src
-import HomeLink from "@/components/HomeLink.vue";
+import HomeLink from "@/views/Home/components/HomeLink.vue";
 
 export default {
   name: "home",
@@ -24,7 +24,7 @@ export default {
     HomeLink
   },
   props: {
-    links: {
+    routes: {
       type: Array,
       required: true
     },

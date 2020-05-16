@@ -1,4 +1,4 @@
-import navLinks from "./genNavLinks.js";
+import Routes from "@/router/base/navigation.routes.js";
 
 ("use strict");
 
@@ -6,8 +6,12 @@ import navLinks from "./genNavLinks.js";
   <a href="https://www.vecteezy.com/free-vector/ancient-map">Ancient Map Vectors by Vecteezy</a>
 */
 
-export default new navLinks({
+export default new Routes({
+  rootPath: "/games",
+  rootName: "Games",
+  idName: "Game",
+  storeName: "games",
   icon: "$games",
   image: "game-package.png",
-  appBar: "AppBarGames"
+  appBar: "GamesAppBar"
 });

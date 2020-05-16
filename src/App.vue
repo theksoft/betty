@@ -12,7 +12,7 @@
     >
       <v-list nav dense>
         <v-list-item
-          v-for="(link, index) in links.nav()"
+          v-for="(link, index) in routes.nav()"
           :to="link.path"
           :key="index"
         >
@@ -43,17 +43,17 @@
 </template>
 
 <script>
-import links from "@/router/links.js";
-import AppBarDefault from "@/components/AppBarDefault.vue";
-import AppBarGames from "@/components/AppBarGames.vue";
-import AppBarMaps from "@/components/AppBarMaps.vue";
+import routes from "@/router/resources.routes.js";
+import DefaultAppBar from "@/components/DefaultAppBar.vue";
+import GamesAppBar from "@/views/Games/GamesAppBar.vue";
+import MapsAppBar from "@/views/Maps/MapsAppBar.vue";
 
 export default {
   name: "Betty",
   components: {
-    AppBarDefault,
-    AppBarGames,
-    AppBarMaps
+    DefaultAppBar,
+    GamesAppBar,
+    MapsAppBar
   },
   data: () => ({
     drawer: {
@@ -61,11 +61,11 @@ export default {
       clipped: true,
       mini: true
     },
-    links
+    routes
   }),
   computed: {
     showAppBar() {
-      return links.appBar(this.$route) || "AppBarDefault";
+      return routes.appBar(this.$route) || "DefaultAppBar";
     }
   }
 };

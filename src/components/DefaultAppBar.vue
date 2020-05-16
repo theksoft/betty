@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: "app-bar-default",
+  name: "default-app-bar",
   props: {
     clipped: {
       type: Boolean,

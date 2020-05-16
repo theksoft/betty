@@ -1,7 +1,7 @@
-import Home from "./modules/homeLinks.js";
-import About from "./modules/aboutLinks.js";
-import Games from "./modules/gamesLinks.js";
-import Maps from "./modules/mapsLinks.js";
+import Home from "@/views/Home/resources/home.routes.js";
+import About from "@/views/About/resources/about.routes.js";
+import Games from "@/views/Games/resources/games.routes.js";
+import Maps from "@/views/Maps/resources/maps.routes.js";
 
 const modules = [
   // Declared in order of menu
@@ -11,7 +11,7 @@ const modules = [
   About
 ];
 
-const Links = {
+const Resources = {
   get about() {
     return About;
   },
@@ -80,6 +80,4 @@ const Links = {
   }
 };
 
-export default Links;
-export const homeLinks = Links.homeNav;
-export const navLinks = Links.nav;
+export default Resources;

@@ -2,20 +2,19 @@ import store from "../../store";
 
 ("use strict");
 
-export default class genericNavLinks {
+export default class NavigationRoutes {
   constructor(data) {
     this._data = {
-      // BEGIN will be set after construction
-      rootPath: null,
-      rootName: null,
-      idName: null,
-      storeName: null,
-      // END will be set after construction
+      rootPath: data.rootPath,
+      rootName: data.rootName,
+      idName: data.idName,
+      storeName: data.storeName,
       icon: data.icon,
       image: data.image,
       appBar: data.appBar
     };
     this._lastPath = null;
+    Object.freeze(this._data);
   }
 
   // Getters
@@ -37,15 +36,6 @@ export default class genericNavLinks {
   }
   get rootPath() {
     return this._data.rootPath;
-  }
-
-  // Setters
-  set params(params) {
-    this._data.rootPath = params.rootPath;
-    this._data.rootName = params.rootName;
-    this._data.idName = params.idName;
-    this._data.storeName = params.storeName;
-    Object.freeze(this._data);
   }
 
   beforeEach(to, from, r) {
