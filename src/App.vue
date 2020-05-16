@@ -1,56 +1,72 @@
 <template>
-  <v-app>
-    <v-app-bar app color="primary" dark>
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
+  <v-app id="betty">
+    <v-navigation-drawer
+      v-model="drawer.model"
+      :clipped="drawer.clipped"
+      :mini-variant="drawer.mini"
+      :expand-on-hover="drawer.mini"
+      mini-variant-width="42"
+      width="160"
+      app
+      overflow
+    >
+      <v-list nav dense>
+        <v-list-item
+          v-for="(link, index) in routes.nav()"
+          :to="link.path"
+          :key="index"
+        >
+          <v-list-item-action>
+            <v-icon>{{ link.icon }}</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title>{{ link.name }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
 
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
-
-      <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
-    </v-app-bar>
+    <component :is="showAppBar" :clipped="drawer.clipped">
+      <v-app-bar-nav-icon @click.stop="drawer.model = !drawer.model" />
+    </component>
 
     <v-content>
-      <HelloWorld />
+      <v-container fluid>
+        <router-view />
+      </v-container>
     </v-content>
+
+    <v-footer app>
+      <span class="px-4">&copy; {{ new Date().getFullYear() }}</span>
+    </v-footer>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld";
+import routes from "@/router/resources.routes.js";
+import DefaultAppBar from "@/components/DefaultAppBar.vue";
+import GamesAppBar from "@/views/Games/GamesAppBar.vue";
+import MapsAppBar from "@/views/Maps/MapsAppBar.vue";
 
 export default {
-  name: "App",
-
+  name: "Betty",
   components: {
-    HelloWorld
+    DefaultAppBar,
+    GamesAppBar,
+    MapsAppBar
   },
-
   data: () => ({
-    //
-  })
+    drawer: {
+      model: false,
+      clipped: true,
+      mini: true
+    },
+    routes
+  }),
+  computed: {
+    showAppBar() {
+      return routes.appBar(this.$route) || "DefaultAppBar";
+    }
+  }
 };
 </script>
