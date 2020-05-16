@@ -4,7 +4,13 @@ import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
 
+import mapper from "./plugins/ImageMapper";
+import packager from "./plugins/BoargamePackager";
+
 Vue.config.productionTip = false;
+
+Vue.use(mapper);
+Vue.use(packager);
 
 new Vue({
   router,

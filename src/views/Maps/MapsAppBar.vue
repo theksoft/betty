@@ -26,7 +26,6 @@
 
 <script>
 import { mapActions } from "vuex";
-import { ImageMap as Map } from "@/modules/ImageMap.js";
 import maps from "./resources/maps.routes.js";
 
 export default {
@@ -55,7 +54,7 @@ export default {
       this.$router.push(r);
     },
     newMap() {
-      this.addMap(new Map());
+      this.addMap(this.$mapper.create());
       this.$router.push(maps.lastRoute());
     },
     ...mapActions("maps", ["addMap", "removeMapById"])

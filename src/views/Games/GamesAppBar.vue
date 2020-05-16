@@ -24,7 +24,6 @@
 
 <script>
 import { mapActions } from "vuex";
-import { Boardgame } from "@/modules/Boardgame.js";
 import games from "./resources/games.routes.js";
 
 export default {
@@ -53,7 +52,7 @@ export default {
       this.$router.push(r);
     },
     newGame() {
-      this.addGame(new Boardgame());
+      this.addGame(this.$packager.create());
       this.$router.push(games.lastRoute());
     },
     ...mapActions("games", ["addGame", "removeGameById"])

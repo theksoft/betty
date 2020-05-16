@@ -1,8 +1,8 @@
 import { v4 as uuid } from "uuid";
 
-export class Boardgame {
+export default class ImageMap {
   constructor() {
-    this._type = "boardgame";
+    this._type = "image-map";
     this._id = uuid();
     this._name = "untitled";
   }
