@@ -1,58 +1,52 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
-import { links } from "./links.js";
+
+import Home from "@/views/Home/Home.vue";
+import resources from "./resources.routes.js";
 
 Vue.use(VueRouter);
 
 const routes = [
   {
-    path: "/",
-    name: "Home",
+    path: resources.home.rootPath,
+    name: resources.home.rootName,
     component: Home,
-    props: { links }
+    props: { routes: resources.homeNav() }
   },
   {
-    path: "/designer",
-    name: "Designer",
+    path: resources.games.rootPath,
+    name: resources.games.rootName,
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    // Use webpackChunkName: "designer"
-    component: () => import("../views/Designer.vue")
+    // Use webpackChunkName: "games"
+    component: () => import("../views/Games/Games.vue")
   },
   {
-    path: "/designer/:id",
-    name: "Game",
-    // Use webpackChunkName: "designer"
-    component: () => import("../views/Designer.vue"),
+    path: resources.games.rootPath + "/:id",
+    name: resources.games.idName,
+    // Use webpackChunkName: "games"
+    component: () => import("../views/Games/Games.vue"),
     props: true
   },
   {
-    path: "/mapper",
-    name: "Mapper",
-    // Use webpackChunkName: "mapper"
-    component: () => import("../views/Mapper.vue")
+    path: resources.maps.rootPath,
+    name: resources.maps.rootName,
+    // Use webpackChunkName: "maps"
+    component: () => import("../views/Maps/Maps.vue")
   },
   {
-    path: "/mapper/:id",
-    name: "Map",
-    // Use webpackChunkName: "mapper"
-    component: () => import("../views/Mapper.vue"),
+    path: resources.maps.rootPath + "/:id",
+    name: resources.maps.idName,
+    // Use webpackChunkName: "maps"
+    component: () => import("../views/Maps/Maps.vue"),
     props: true
   },
   {
-    path: "/about",
-    name: "About",
+    path: resources.about.rootPath,
+    name: resources.about.rootName,
     // Use webpackChunkName: "about"
-    component: () => import("../views/About.vue")
-  },
-  {
-    path: "/hello",
-    name: "HelloWorld",
-    // See above
-    component: () =>
-      import(/* webpackChunkName: "mapper" */ "../views/Hello.vue")
+    component: () => import("../views/About/About.vue")
   }
 ];
 
@@ -60,6 +54,12 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes
+});
+
+router.beforeEach((to, from, next) => {
+  if (resources.beforeEach) {
+    resources.beforeEach(to, from, next);
+  }
 });
 
 export default router;

@@ -12,32 +12,22 @@
     >
       <v-list nav dense>
         <v-list-item
-          v-for="(link, index) in links"
+          v-for="(link, index) in routes.nav()"
           :to="link.path"
           :key="index"
         >
           <v-list-item-action>
-            <v-icon :color="theme.color">{{ link.icon }}</v-icon>
+            <v-icon>{{ link.icon }}</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title :class="theme.classText">
-              {{ link.name }}
-            </v-list-item-title>
+            <v-list-item-title>{{ link.name }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
-    <component
-      :is="showAppBar"
-      :clipped="drawer.clipped"
-      :color="theme.color"
-      :classText="theme.classText"
-    >
-      <v-app-bar-nav-icon
-        :color="theme.color"
-        @click.stop="drawer.model = !drawer.model"
-      />
+    <component :is="showAppBar" :clipped="drawer.clipped">
+      <v-app-bar-nav-icon @click.stop="drawer.model = !drawer.model" />
     </component>
 
     <v-content>
@@ -53,17 +43,17 @@
 </template>
 
 <script>
-import { links } from "@/router/links.js";
-import AppBarDefault from "@/components/AppBarDefault.vue";
-import AppBarDesigner from "@/components/AppBarDesigner.vue";
-import AppBarMapper from "@/components/AppBarMapper.vue";
+import routes from "@/router/resources.routes.js";
+import DefaultAppBar from "@/components/DefaultAppBar.vue";
+import GamesAppBar from "@/views/Games/GamesAppBar.vue";
+import MapsAppBar from "@/views/Maps/MapsAppBar.vue";
 
 export default {
   name: "Betty",
   components: {
-    AppBarDefault,
-    AppBarDesigner,
-    AppBarMapper
+    DefaultAppBar,
+    GamesAppBar,
+    MapsAppBar
   },
   data: () => ({
     drawer: {
@@ -71,21 +61,11 @@ export default {
       clipped: true,
       mini: true
     },
-    links,
-    theme: {
-      color: "brown lighten-2",
-      classText: "brown--text text--lighten-3"
-    }
+    routes
   }),
   computed: {
     showAppBar() {
-      if ("Designer" === this.$route.name || "Game" === this.$route.name) {
-        return "AppBarDesigner";
-      }
-      if ("Mapper" === this.$route.name || "Map" === this.$route.name) {
-        return "AppBarMapper";
-      }
-      return "AppBarDefault";
+      return routes.appBar(this.$route) || "DefaultAppBar";
     }
   }
 };
