@@ -9,5 +9,6 @@ export default new Routes({
   storeName: "maps",
   icon: "$maps",
   image: "ancient-map.png",
-  appBar: "MapsAppBar"
+  appBar: "MapsAppBar",
+  title: "Betty/Image Mapper"
 });

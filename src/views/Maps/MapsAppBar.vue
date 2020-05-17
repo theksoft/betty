@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import maps from "./resources/maps.routes.js";
 
 export default {
@@ -63,7 +63,12 @@ export default {
       return maps.routes();
     },
     title() {
-      return maps.name;
+      if (this.route && this.elementById(this.$route.params.id)) {
+        return (
+          "[" + maps.title + "] " + this.elementById(this.$route.params.id).name
+        );
+      }
+      return maps.title;
     },
     commands() {
       return this.allCommands.map(({ icon, tip, handler, target }) => {
@@ -75,7 +80,9 @@ export default {
           disabled: !noTabs || (noTabs && !target) ? false : true
         };
       });
-    }
+    },
+
+    ...mapGetters("maps", ["elementById"])
   },
   methods: {
     closeMap() {

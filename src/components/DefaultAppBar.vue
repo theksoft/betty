@@ -1,8 +1,6 @@
 <template>
   <v-app-bar dense :clipped-left="clipped" app>
     <slot></slot>
-    <v-spacer />
-    <v-divider vertical />
     <v-toolbar-title class="mx-2">
       Betty
     </v-toolbar-title>
