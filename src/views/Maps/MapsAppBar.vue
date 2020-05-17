@@ -110,11 +110,11 @@ export default {
       console.log("Preview map!");
     },
 
-    ...mapActions("maps", ["addMap", "removeMapById"]),
-
     runCommand(command) {
       this[command]();
-    }
+    },
+
+    ...mapActions("maps", ["addMap", "removeMapById"])
   }
 };
 </script>

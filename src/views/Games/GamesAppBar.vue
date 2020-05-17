@@ -5,12 +5,24 @@
       {{ title }}
     </v-toolbar-title>
     <v-spacer />
-    <v-btn @click="newGame" icon>
-      <v-icon>$gameAdd</v-icon>
-    </v-btn>
-    <v-btn @click="closeGame" icon>
-      <v-icon>$close</v-icon>
-    </v-btn>
+    <v-tooltip
+      v-for="(command, index) in commands"
+      :key="index"
+      bottom
+      open-delay="1000"
+    >
+      <template v-slot:activator="{ on }">
+        <v-btn
+          @click="runCommand(command.handler)"
+          :disabled="command.disabled"
+          icon
+          v-on="on"
+        >
+          <v-icon>{{ command.icon }}</v-icon>
+        </v-btn>
+      </template>
+      <span>{{ command.tip }}</span>
+    </v-tooltip>
     <template v-if="tabItems.length" v-slot:extension>
       <v-tabs v-model="route" align-with-title show-arrows>
         <v-tab v-for="e in tabItems" :to="e.route" :key="e.id" exact>
@@ -34,7 +46,14 @@ export default {
     }
   },
   data: () => ({
-    route: null
+    route: null,
+    allCommands: [
+      // eslint-disable-next-line
+      { icon: "$gameNew", tip: "New boardgame project", handler: "newGame", target: false }, // eslint-disable-next-line
+      { icon: "$gameLoad", tip: "Load boardgame project", handler: "loadGame", target: false }, // eslint-disable-next-line
+      { icon: "$gameSave", tip: "Save boardgame project", handler: "saveGame", target: true }, // eslint-disable-next-line
+      { icon: "$gameClose", tip: "Close boardgame project", handler: "closeGame", target: true } // eslint-disable-next-line
+    ]
   }),
   computed: {
     tabItems() {
@@ -49,8 +68,19 @@ export default {
       }
       return games.title;
     },
+    commands() {
+      return this.allCommands.map(({ icon, tip, handler, target }) => {
+        let noTabs = !this.route || !this.$route.params.id;
+        return {
+          icon,
+          tip,
+          handler,
+          disabled: !noTabs || (noTabs && !target) ? false : true
+        };
+      });
+    },
 
-    ...mapGetters("maps", ["elementById"])
+    ...mapGetters("games", ["elementById"])
   },
   methods: {
     closeGame() {
@@ -62,6 +92,17 @@ export default {
       this.addGame(this.$packager.create());
       this.$router.push(games.lastRoute());
     },
+    loadGame() {
+      console.log("Load game!");
+    },
+    saveGame() {
+      console.log("Save game!");
+    },
+
+    runCommand(command) {
+      this[command]();
+    },
+
     ...mapActions("games", ["addGame", "removeGameById"])
   }
 };
