@@ -1,18 +1,11 @@
 <template>
   <div class="maps">
-    <h1>This is a map page tab</h1>
-    <p>I am {{ id }}!</p>
+    <h1>This is a list of edited maps</h1>
   </div>
 </template>
 
 <script>
 export default {
-  name: "maps",
-  props: {
-    id: {
-      type: String,
-      default: "not named"
-    }
-  }
+  name: "maps"
 };
 </script>

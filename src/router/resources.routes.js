@@ -46,16 +46,6 @@ const Resources = {
     }, null);
   },
 
-  beforeEach(to, from, next) {
-    let v = modules.reduce((r, e) => {
-      if (!e.beforeEach) {
-        return r;
-      }
-      return e.beforeEach(to, from, r);
-    }, null);
-    v === null ? next() : next(v);
-  },
-
   homeNav: () => {
     return modules
       .reduce((r, v) => {

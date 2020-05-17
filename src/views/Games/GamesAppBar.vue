@@ -23,7 +23,7 @@
       </template>
       <span>{{ command.tip }}</span>
     </v-tooltip>
-    <template v-if="tabItems.length" v-slot:extension>
+    <template v-if="tabItems.length > 1" v-slot:extension>
       <v-tabs v-model="route" align-with-title show-arrows>
         <v-tab v-for="e in tabItems" :to="e.route" :key="e.id" exact>
           {{ e.name }}
@@ -82,20 +82,21 @@ export default {
     title() {
       if (this.route && this.elementById(this.$route.params.id)) {
         return (
-          // eslint-disable-next-line prettier/prettier
-          "[" + this.games.title + "] " + this.elementById(this.$route.params.id).name
+          "[" +
+          this.games.title +
+          "] " +
+          this.elementById(this.$route.params.id).name
         );
       }
       return this.games.title;
     },
     commands() {
       return this.allCommands.map(({ icon, tip, handler, target }) => {
-        let noTabs = !this.route || !this.$route.params.id;
         return {
           icon,
           tip,
           handler,
-          disabled: !noTabs || (noTabs && !target) ? false : true
+          disabled: (!this.route || !this.$route.params.id) && target
         };
       });
     },

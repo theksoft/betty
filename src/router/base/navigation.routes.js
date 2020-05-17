@@ -14,7 +14,6 @@ export default class NavigationRoutes {
       appBar: data.appBar,
       title: data.title
     };
-    this._lastPath = null;
     Object.freeze(this._data);
   }
 
@@ -40,36 +39,6 @@ export default class NavigationRoutes {
   }
   get title() {
     return this._data.title;
-  }
-
-  beforeEach(to, from, r) {
-    // If leaving an "id" route, store it if it exists
-    if (from.name === this.idName) {
-      this._lastPath = from.path;
-      this.checkLastPath();
-    }
-    // Going to parent route, go to lastPath if valid or first map if any
-    // Specific case if coming from "id" route, just prevent
-    if (to.name === this.rootName) {
-      if (this.checkLastPath()) {
-        return from.name === this.idName && from.path === this._lastPath
-          ? false
-          : this._lastPath;
-      }
-    }
-    return r;
-  }
-
-  checkLastPath() {
-    if (this._lastPath) {
-      if (!this.sGetArgs("elementById", this.getId(this._lastPath))) {
-        this._lastPath = null;
-      }
-    }
-    if (!this._lastPath && this.sGet("count")) {
-      this._lastPath = this.rootPath + "/" + this.sGetArgs("elementAt", 0).id;
-    }
-    return this._lastPath;
   }
 
   closestRoute(id) {
@@ -99,9 +68,11 @@ export default class NavigationRoutes {
   }
 
   routes() {
-    return this.sGet("elementNames").map(m => {
+    let rtn = this.sGet("elementNames").map(m => {
       return { id: m.id, name: m.name, route: this.rootPath + "/" + m.id };
     });
+    rtn.splice(0, 0, { name: "[...]", route: this.rootPath });
+    return rtn;
   }
 
   sGet(getter) {

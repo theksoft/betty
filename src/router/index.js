@@ -26,7 +26,7 @@ const routes = [
     path: resources.games.rootPath + "/:id",
     name: resources.games.idName,
     // Use webpackChunkName: "games"
-    component: () => import("../views/Games/Games.vue"),
+    component: () => import("../views/Games/GamesDetails.vue"),
     props: true
   },
   {
@@ -39,7 +39,7 @@ const routes = [
     path: resources.maps.rootPath + "/:id",
     name: resources.maps.idName,
     // Use webpackChunkName: "maps"
-    component: () => import("../views/Maps/Maps.vue"),
+    component: () => import("../views/Maps/MapsDetails.vue"),
     props: true
   },
   {
@@ -60,12 +60,6 @@ const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
   routes
-});
-
-router.beforeEach((to, from, next) => {
-  if (resources.beforeEach) {
-    resources.beforeEach(to, from, next);
-  }
 });
 
 export default router;

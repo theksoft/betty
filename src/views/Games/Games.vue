@@ -1,18 +1,11 @@
 <template>
   <div class="games">
-    <h1>This is a game page tab</h1>
-    <p>I am {{ id }}!</p>
+    <h1>This is a list of edited games</h1>
   </div>
 </template>
 
 <script>
 export default {
-  name: "games",
-  props: {
-    id: {
-      type: String,
-      default: "not named"
-    }
-  }
+  name: "games"
 };
 </script>
