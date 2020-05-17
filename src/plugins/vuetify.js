@@ -17,11 +17,20 @@ export default new Vuetify({
       about: "mdi-information-variant",
       close: "mdi-window-close",
       games: "mdi-package-variant-closed",
-      gameAdd: "mdi-plus",
+      gameNew: "mdi-plus",
+      gameLoad: "mdi-upload",
+      gameSave: "mdi-download",
+      gameClose: "mdi-window-close",
       home: "mdi-home",
       help: "mdi-help",
       maps: "mdi-image-filter-hdr",
-      mapAdd: "mdi-plus"
+      mapNew: "mdi-plus",
+      mapLoad: "mdi-upload",
+      mapImport: "mdi-import",
+      mapExport: "mdi-export",
+      mapSave: "mdi-download",
+      mapPreview: "mdi-eye-outline",
+      mapClose: "mdi-window-close"
     }
   }
 });

@@ -11,7 +11,8 @@ export default class NavigationRoutes {
       storeName: data.storeName,
       icon: data.icon,
       image: data.image,
-      appBar: data.appBar
+      appBar: data.appBar,
+      title: data.title
     };
     this._lastPath = null;
     Object.freeze(this._data);
@@ -36,6 +37,9 @@ export default class NavigationRoutes {
   }
   get rootPath() {
     return this._data.rootPath;
+  }
+  get title() {
+    return this._data.title;
   }
 
   beforeEach(to, from, r) {
