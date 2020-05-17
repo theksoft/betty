@@ -1,4 +1,4 @@
-import Routes from "@/router/base/navigation.routes.js";
+import Routes from "../base/navigation.routes.js";
 
 ("use strict");
 

@@ -35,7 +35,7 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import games from "./resources/games.routes.js";
+import routes from "@/router/resources.routes.js";
 
 export default {
   name: "games-app-bar",
@@ -48,25 +48,45 @@ export default {
   data: () => ({
     route: null,
     allCommands: [
-      // eslint-disable-next-line
-      { icon: "$gameNew", tip: "New boardgame project", handler: "newGame", target: false }, // eslint-disable-next-line
-      { icon: "$gameLoad", tip: "Load boardgame project", handler: "loadGame", target: false }, // eslint-disable-next-line
-      { icon: "$gameSave", tip: "Save boardgame project", handler: "saveGame", target: true }, // eslint-disable-next-line
-      { icon: "$gameClose", tip: "Close boardgame project", handler: "closeGame", target: true } // eslint-disable-next-line
-    ]
+      {
+        icon: "$gameNew",
+        tip: "New boardgame project",
+        handler: "newGame",
+        target: false
+      },
+      {
+        icon: "$gameLoad",
+        tip: "Load boardgame project",
+        handler: "loadGame",
+        target: false
+      },
+      {
+        icon: "$gameSave",
+        tip: "Save boardgame project",
+        handler: "saveGame",
+        target: true
+      },
+      {
+        icon: "$gameClose",
+        tip: "Close boardgame project",
+        handler: "closeGame",
+        target: true
+      }
+    ],
+    games: routes.games
   }),
   computed: {
     tabItems() {
-      return games.routes();
+      return this.games.routes();
     },
     title() {
       if (this.route && this.elementById(this.$route.params.id)) {
         return (
           // eslint-disable-next-line prettier/prettier
-          "[" + games.title + "] " + this.elementById(this.$route.params.id).name
+          "[" + this.games.title + "] " + this.elementById(this.$route.params.id).name
         );
       }
-      return games.title;
+      return this.games.title;
     },
     commands() {
       return this.allCommands.map(({ icon, tip, handler, target }) => {
@@ -84,13 +104,13 @@ export default {
   },
   methods: {
     closeGame() {
-      let r = games.closestRoute(this.$route.params.id);
+      let r = this.games.closestRoute(this.$route.params.id);
       this.removeGameById(this.$route.params.id);
       this.$router.push(r);
     },
     newGame() {
       this.addGame(this.$packager.create());
-      this.$router.push(games.lastRoute());
+      this.$router.push(this.games.lastRoute());
     },
     loadGame() {
       console.log("Load game!");

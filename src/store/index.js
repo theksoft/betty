@@ -1,8 +1,8 @@
 import Vue from "vue";
 import Vuex from "vuex";
 
-import { maps } from "@/views/Maps/resources/maps.store.js";
-import { games } from "@/views/Games/resources/games.store.js";
+import { maps } from "./modules/maps.store.js";
+import { games } from "./modules/games.store.js";
 
 Vue.use(Vuex);
 

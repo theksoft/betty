@@ -1,8 +1,8 @@
-import Home from "@/views/Home/resources/home.routes.js";
-import About from "@/views/About/resources/about.routes.js";
-import Help from "@/views/Help/resources/help.routes.js";
-import Games from "@/views/Games/resources/games.routes.js";
-import Maps from "@/views/Maps/resources/maps.routes.js";
+import Home from "./modules/home.routes.js";
+import About from "./modules/about.routes.js";
+import Help from "./modules/help.routes.js";
+import Games from "./modules/games.routes.js";
+import Maps from "./modules/maps.routes.js";
 
 const modules = [
   // Declared in order of menu

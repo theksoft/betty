@@ -35,7 +35,7 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
-import maps from "./resources/maps.routes.js";
+import routes from "@/router/resources.routes.js";
 
 export default {
   name: "maps-app-bar",
@@ -47,28 +47,66 @@ export default {
   },
   data: () => ({
     route: null,
+    maps: routes.maps,
     allCommands: [
-      // eslint-disable-next-line
-      { icon: "$mapNew", tip: "New image map project", handler: "newMap", target: false }, // eslint-disable-next-line
-      { icon: "$mapLoad", tip: "Load image map project", handler: "loadMap", target: false }, // eslint-disable-next-line
-      { icon: "$mapSave", tip: "Save image map project", handler: "saveMap", target: true }, // eslint-disable-next-line
-      { icon: "$mapPreview", tip: "Preview image map", handler: "previewMap", target: true }, // eslint-disable-next-line
-      { icon: "$mapImport", tip: "Import image map", handler: "importMap", target: true }, // eslint-disable-next-line
-      { icon: "$mapExport", tip: "Export image map", handler: "exportMap", target: true }, // eslint-disable-next-line
-      { icon: "$mapClose", tip: "Close image map project", handler: "closeMap", target: true }, // eslint-disable-next-line
+      {
+        icon: "$mapNew",
+        tip: "New image map project",
+        handler: "newMap",
+        target: false
+      },
+      {
+        icon: "$mapLoad",
+        tip: "Load image map project",
+        handler: "loadMap",
+        target: false
+      },
+      {
+        icon: "$mapSave",
+        tip: "Save image map project",
+        handler: "saveMap",
+        target: true
+      },
+      {
+        icon: "$mapPreview",
+        tip: "Preview image map",
+        handler: "previewMap",
+        target: true
+      },
+      {
+        icon: "$mapImport",
+        tip: "Import image map",
+        handler: "importMap",
+        target: true
+      },
+      {
+        icon: "$mapExport",
+        tip: "Export image map",
+        handler: "exportMap",
+        target: true
+      },
+      {
+        icon: "$mapClose",
+        tip: "Close image map project",
+        handler: "closeMap",
+        target: true
+      }
     ]
   }),
   computed: {
     tabItems() {
-      return maps.routes();
+      return this.maps.routes();
     },
     title() {
       if (this.route && this.elementById(this.$route.params.id)) {
         return (
-          "[" + maps.title + "] " + this.elementById(this.$route.params.id).name
+          "[" +
+          this.maps.title +
+          "] " +
+          this.elementById(this.$route.params.id).name
         );
       }
-      return maps.title;
+      return this.maps.title;
     },
     commands() {
       return this.allCommands.map(({ icon, tip, handler, target }) => {
@@ -86,13 +124,13 @@ export default {
   },
   methods: {
     closeMap() {
-      let r = maps.closestRoute(this.$route.params.id);
+      let r = this.maps.closestRoute(this.$route.params.id);
       this.removeMapById(this.$route.params.id);
       this.$router.push(r);
     },
     newMap() {
       this.addMap(this.$mapper.create());
-      this.$router.push(maps.lastRoute());
+      this.$router.push(this.maps.lastRoute());
     },
     loadMap() {
       console.log("Load map!");
