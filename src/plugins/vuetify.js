@@ -21,7 +21,13 @@ export default new Vuetify({
       home: "mdi-home",
       help: "mdi-help",
       maps: "mdi-image-filter-hdr",
-      mapAdd: "mdi-plus"
+      mapNew: "mdi-plus",
+      mapLoad: "mdi-upload",
+      mapImport: "mdi-import",
+      mapExport: "mdi-export",
+      mapSave: "mdi-download",
+      mapPreview: "mdi-eye-outline",
+      mapClose: "mdi-window-close"
     }
   }
 });
