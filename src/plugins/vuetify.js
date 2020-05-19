@@ -16,7 +16,7 @@ export default new Vuetify({
     values: {
       about: "mdi-information-variant",
       close: "mdi-window-close",
-      games: "mdi-package-variant-closed",
+      games: "mdi-package-variant",
       gameNew: "mdi-plus",
       gameLoad: "mdi-upload",
       gameSave: "mdi-download",
