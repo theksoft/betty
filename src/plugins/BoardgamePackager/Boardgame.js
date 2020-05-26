@@ -1,10 +1,10 @@
 import { v4 as uuid } from "uuid";
 
 export default class Boardgame {
-  constructor() {
+  constructor(e) {
     this._type = "boardgame";
     this._id = uuid();
-    this._name = "untitled";
+    this._name = e ? e.name : "untitled";
   }
 
   get type() {

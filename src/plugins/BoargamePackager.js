@@ -1,8 +1,8 @@
 import Game from "./BoardgamePackager/Boardgame.js";
 
 const BoardgamePackager = {
-  create: () => {
-    return new Game();
+  create: e => {
+    return new Game(e);
   }
 };
 

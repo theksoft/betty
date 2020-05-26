@@ -1,7 +1,7 @@
 <template>
   <div class="home" ref="home">
     <v-row class="flex-wrap">
-      <HomeLink
+      <home-link
         v-for="(link, index) in routes.filter(e => e.image)"
         :route="link.path"
         :image="link.image"
@@ -9,7 +9,7 @@
         :key="index"
       >
         {{ link.name }}
-      </HomeLink>
+      </home-link>
     </v-row>
   </div>
 </template>

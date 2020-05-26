@@ -30,7 +30,8 @@ export default new Vuetify({
       mapExport: "mdi-export",
       mapSave: "mdi-download",
       mapPreview: "mdi-eye-outline",
-      mapClose: "mdi-window-close"
+      mapClose: "mdi-window-close",
+      modified: "sticker-alert-outline"
     }
   }
 });

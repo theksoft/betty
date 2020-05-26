@@ -30,15 +30,24 @@
         </v-tab>
       </v-tabs>
     </template>
+    <games-params-dialog
+      :show="paramsDlg.dialog"
+      @valid="onGamesParams($event)"
+      @cancel="paramsDlg.dialog = false"
+    />
   </v-app-bar>
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
 import routes from "@/router/resources.routes.js";
+import GamesParamsDialog from "./GamesParamsDialog";
 
 export default {
   name: "games-app-bar",
+  components: {
+    GamesParamsDialog
+  },
   props: {
     clipped: {
       type: Boolean,
@@ -73,7 +82,12 @@ export default {
         target: true
       }
     ],
-    games: routes.games
+    games: routes.games,
+    paramsDlg: {
+      dialog: false,
+      action: "new",
+      params: {}
+    }
   }),
   computed: {
     tabItems() {
@@ -110,14 +124,35 @@ export default {
       this.$router.push(r);
     },
     newGame() {
-      this.addGame(this.$packager.create());
-      this.$router.push(this.games.lastRoute());
+      this.paramsDlg.action = "new";
+      this.paramsDlg.params = {};
+      this.paramsDlg.dialog = true;
     },
     loadGame() {
       console.log("Load game!");
     },
     saveGame() {
       console.log("Save game!");
+    },
+    onGamesParams(e) {
+      this.paramsDlg.dialog = false;
+      switch (this.paramsDlg.action) {
+        case "new":
+          {
+            let game = this.$packager.create(e);
+            game.saved = false;
+            this.addGame(game);
+          }
+          this.$router.push(this.games.lastRoute());
+          break;
+        default:
+          console.log(
+            "Unexpected 'games-params-dialog' call:\n action --> " +
+              this.paramsDlg.action +
+              "\n event data --> " +
+              e
+          );
+      }
     },
 
     runCommand(command) {
