@@ -24,11 +24,32 @@ export const games = {
     },
     elementNames: state => {
       return state.content.map(m => ({ name: m.name, id: m.id }));
+    },
+    gameCompareParams: state => ({ id, params }) => {
+      let element = state.content.find(e => e.id === id);
+      return element.name === params.name;
+    },
+    gameSaved: state => id => {
+      let element = state.content.find(e => e.id === id);
+      if (element) {
+        return element.saved || false;
+      }
+      return false;
+    },
+    gameParams: state => id => {
+      let element = state.content.find(e => e.id === id);
+      let rtn = {};
+      if (element) {
+        Object.assign(rtn, {
+          name: element.name
+        });
+      }
+      return rtn;
     }
   },
 
   mutations: {
-    ADD_GAME: (state, game) => {
+    GAME_ADD: (state, game) => {
       // Check it is a game
       if (game.type !== "boardgame" || !game.id) {
         return;
@@ -38,20 +59,30 @@ export const games = {
         state.content.push(game);
       }
     },
-    REMOVE_GAME_BY_ID: (state, id) => {
+    GAME_REMOVE_BY_ID: (state, id) => {
       let i = state.content.findIndex(e => e.id === id);
       if (i !== -1) {
         state.content.splice(i, 1);
+      }
+    },
+    GAME_UPDATE: (state, { id, params }) => {
+      let game = state.content.find(e => e.id === id);
+      if (game) {
+        game.name = params.name;
+        game.saved = false;
       }
     }
   },
 
   actions: {
-    addGame({ commit }, map) {
-      commit("ADD_GAME", map);
+    gameAdd({ commit }, map) {
+      commit("GAME_ADD", map);
     },
-    removeGameById({ commit }, id) {
-      commit("REMOVE_GAME_BY_ID", id);
+    gameRemoveById({ commit }, id) {
+      commit("GAME_REMOVE_BY_ID", id);
+    },
+    gameUpdateParams({ commit }, arg) {
+      commit("GAME_UPDATE", arg);
     }
   }
 };

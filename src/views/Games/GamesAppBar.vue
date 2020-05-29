@@ -78,6 +78,12 @@ export default {
         target: true
       },
       {
+        icon: "$gameEdit",
+        tip: "Edit boardgame project parameters",
+        handler: "editGame",
+        target: true
+      },
+      {
         icon: "$gameClose",
         tip: "Close boardgame project",
         handler: "closeGame",
@@ -117,21 +123,26 @@ export default {
       });
     },
 
-    ...mapGetters("games", ["elementById"])
+    ...mapGetters("games", ["elementById", "gameCompareParams", "gameParams"])
   },
   methods: {
     closeGame() {
       let r = this.games.closestRoute(this.$route.params.id);
-      this.removeGameById(this.$route.params.id);
+      this.gameRemoveById(this.$route.params.id);
       this.$router.push(r);
     },
-    newGame() {
-      this.paramsDlg.action = "new";
-      this.paramsDlg.params = { name: "untitled" };
+    editGame() {
+      this.paramsDlg.action = "update";
+      this.paramsDlg.params = this.gameParams(this.$route.params.id);
       this.paramsDlg.dialog = true;
     },
     loadGame() {
       console.log("Load game!");
+    },
+    newGame() {
+      this.paramsDlg.action = "new";
+      this.paramsDlg.params = this.$packager.defaultParams();
+      this.paramsDlg.dialog = true;
     },
     saveGame() {
       console.log("Save game!");
@@ -143,9 +154,20 @@ export default {
           {
             let game = this.$packager.create(e);
             game.saved = false;
-            this.addGame(game);
+            this.gameAdd(game);
           }
           this.$router.push(this.games.lastRoute());
+          break;
+        case "update":
+          {
+            let arg = {
+              id: this.$route.params.id,
+              params: e
+            };
+            if (!this.gameCompareParams(arg)) {
+              this.gameUpdateParams(arg);
+            }
+          }
           break;
         default:
           console.log(
@@ -161,7 +183,7 @@ export default {
       this[command]();
     },
 
-    ...mapActions("games", ["addGame", "removeGameById"])
+    ...mapActions("games", ["gameAdd", "gameUpdateParams", "gameRemoveById"])
   }
 };
 </script>

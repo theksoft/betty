@@ -35,9 +35,9 @@ export default {
   },
   methods: {
     closeGame(id) {
-      this.removeGameById(id);
+      this.gameRemoveById(id);
     },
-    ...mapActions("games", ["removeGameById"])
+    ...mapActions("games", ["gameRemoveById"])
   }
 };
 </script>
