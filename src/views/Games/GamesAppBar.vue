@@ -150,21 +150,20 @@ export default {
     ])
   },
   methods: {
-    closeGame() {
+    async closeGame() {
       let id = this.$route.params.id;
-      if (this.gameModified(id)) {
-        this.$confirm(
+      if (
+        this.gameModified(id) &&
+        (await this.$confirm(
           "Boardgame '" +
             this.elementById(id).name +
             "' has never been saved!<br>Do you really want to close it?",
           { title: "Warning" }
-        ).then(confirmed => {
-          if (confirmed) {
-            let r = this.games.closestRoute(id);
-            this.gameRemoveById(id);
-            this.$router.push(r);
-          }
-        });
+        ))
+      ) {
+        let r = this.games.closestRoute(id);
+        this.gameRemoveById(id);
+        this.$router.push(r);
       }
     },
     editGame() {

@@ -35,18 +35,17 @@ export default {
     ...mapGetters("games", ["elementNames", "elementById", "gameModified"])
   },
   methods: {
-    closeGame(id) {
-      if (this.gameModified(id)) {
-        this.$confirm(
+    async closeGame(id) {
+      if (
+        this.gameModified(id) &&
+        (await this.$confirm(
           "Boardgame '" +
             this.elementById(id).name +
             "' has never been saved!<br>Do you really want to close it?",
           { title: "Warning" }
-        ).then(confirmed => {
-          if (confirmed) {
-            this.gameRemoveById(id);
-          }
-        });
+        ))
+      ) {
+        this.gameRemoveById(id);
       }
     },
     ...mapActions("games", ["gameRemoveById"])
