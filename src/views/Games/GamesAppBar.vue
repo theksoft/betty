@@ -32,6 +32,8 @@
     </template>
     <games-params-dialog
       :show="paramsDlg.dialog"
+      :action="paramsDlg.action"
+      :params="paramsDlg.params"
       @valid="onGamesParams($event)"
       @cancel="paramsDlg.dialog = false"
     />
@@ -125,7 +127,7 @@ export default {
     },
     newGame() {
       this.paramsDlg.action = "new";
-      this.paramsDlg.params = {};
+      this.paramsDlg.params = { name: "untitled" };
       this.paramsDlg.dialog = true;
     },
     loadGame() {
