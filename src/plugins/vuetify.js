@@ -33,7 +33,7 @@ export default new Vuetify({
       mapNew: "mdi-plus",
       mapPreview: "mdi-eye-outline",
       mapSave: "mdi-download",
-      modified: "sticker-alert-outline"
+      modified: "mdi-sticker-alert-outline"
     }
   }
 });

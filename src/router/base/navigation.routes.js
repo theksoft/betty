@@ -71,7 +71,7 @@ export default class NavigationRoutes {
     let rtn = this.sGet("elementNames").map(m => {
       return { id: m.id, name: m.name, route: this.rootPath + "/" + m.id };
     });
-    rtn.splice(0, 0, { name: "[...]", route: this.rootPath });
+    rtn.splice(0, 0, { name: "...", route: this.rootPath });
     return rtn;
   }
 

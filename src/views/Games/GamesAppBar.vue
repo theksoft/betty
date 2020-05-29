@@ -4,6 +4,7 @@
     <v-toolbar-title class="mx-2">
       {{ title }}
     </v-toolbar-title>
+    <v-icon v-if="modified" tile>$modified</v-icon>
     <v-spacer />
     <v-tooltip
       v-for="(command, index) in commands"
@@ -57,7 +58,6 @@ export default {
     }
   },
   data: () => ({
-    route: null,
     allCommands: [
       {
         icon: "$gameNew",
@@ -95,23 +95,10 @@ export default {
       dialog: false,
       action: "new",
       params: {}
-    }
+    },
+    route: null
   }),
   computed: {
-    tabItems() {
-      return this.games.routes();
-    },
-    title() {
-      if (this.route && this.elementById(this.$route.params.id)) {
-        return (
-          "[" +
-          this.games.title +
-          "] " +
-          this.elementById(this.$route.params.id).name
-        );
-      }
-      return this.games.title;
-    },
     commands() {
       return this.allCommands.map(({ icon, tip, handler, target }) => {
         return {
@@ -122,8 +109,32 @@ export default {
         };
       });
     },
+    modified() {
+      if (this.route) {
+        return this.gameModified(this.$route.params.id);
+      }
+      return false;
+    },
+    tabItems() {
+      return this.games.routes();
+    },
+    title() {
+      if (this.route && this.elementById(this.$route.params.id)) {
+        return (
+          this.games.title +
+          " - " +
+          this.elementById(this.$route.params.id).name
+        );
+      }
+      return this.games.title;
+    },
 
-    ...mapGetters("games", ["elementById", "gameCompareParams", "gameParams"])
+    ...mapGetters("games", [
+      "elementById",
+      "gameCompareParams",
+      "gameModified",
+      "gameParams"
+    ])
   },
   methods: {
     closeGame() {
@@ -153,7 +164,7 @@ export default {
         case "new":
           {
             let game = this.$packager.create(e);
-            game.saved = false;
+            game.modified = true;
             this.gameAdd(game);
           }
           this.$router.push(this.games.lastRoute());

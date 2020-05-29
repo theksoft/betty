@@ -23,16 +23,20 @@ export const games = {
       return state.content[index];
     },
     elementNames: state => {
-      return state.content.map(m => ({ name: m.name, id: m.id }));
+      return state.content.map(m => ({
+        name: m.name,
+        id: m.id,
+        modified: !!m.modified
+      }));
     },
     gameCompareParams: state => ({ id, params }) => {
       let element = state.content.find(e => e.id === id);
       return element.name === params.name;
     },
-    gameSaved: state => id => {
+    gameModified: state => id => {
       let element = state.content.find(e => e.id === id);
       if (element) {
-        return element.saved || false;
+        return !!element.modified;
       }
       return false;
     },
@@ -69,7 +73,7 @@ export const games = {
       let game = state.content.find(e => e.id === id);
       if (game) {
         game.name = params.name;
-        game.saved = false;
+        game.modified = true;
       }
     }
   },

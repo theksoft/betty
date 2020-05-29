@@ -14,5 +14,5 @@ export default new Routes({
   icon: "$games",
   image: "game-package.png",
   appBar: "GamesAppBar",
-  title: "Betty/Boardgame designer"
+  title: "BETTY Boardgame designer"
 });
