@@ -6,7 +6,7 @@ const BoardgamePackager = {
   },
   defaultParams: () => {
     return {
-      name: "untitled"
+      name: ""
     };
   }
 };

@@ -1,9 +1,10 @@
 import Vue from "vue";
 import Vuetify from "vuetify/lib";
+import VuetifyConfirm from "vuetify-confirm";
 
 Vue.use(Vuetify);
 
-export default new Vuetify({
+const vuetify = new Vuetify({
   theme: {
     dark: true
     /*,
@@ -15,6 +16,7 @@ export default new Vuetify({
     iconfont: "mdiSvg", // default
     values: {
       about: "mdi-information-variant",
+      actionMore: "mdi-dots-horizontal",
       close: "mdi-window-close",
       games: "mdi-package-variant",
       gameClose: "mdi-window-close",
@@ -37,3 +39,7 @@ export default new Vuetify({
     }
   }
 });
+
+Vue.use(VuetifyConfirm, { vuetify });
+
+export default vuetify;

@@ -4,7 +4,7 @@ export default class Boardgame {
   constructor(e) {
     this._type = "boardgame";
     this._id = uuid();
-    this._name = e ? e.name : "untitled";
+    this._name = e ? e.name : "<untitled>";
   }
 
   get type() {

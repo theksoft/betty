@@ -5,25 +5,36 @@
       {{ title }}
     </v-toolbar-title>
     <v-icon v-if="modified" tile>$modified</v-icon>
+
     <v-spacer />
-    <v-tooltip
-      v-for="(command, index) in commands"
-      :key="index"
-      bottom
-      open-delay="1000"
-    >
-      <template v-slot:activator="{ on }">
-        <v-btn
-          @click="runCommand(command.handler)"
-          :disabled="command.disabled"
-          icon
-          v-on="on"
-        >
-          <v-icon>{{ command.icon }}</v-icon>
+
+    <v-speed-dial v-model="showActions" right direction="left" open-on-hover>
+      <template v-slot:activator>
+        <v-btn v-model="showActions" fab icon>
+          <v-icon>$actionMore</v-icon>
         </v-btn>
       </template>
-      <span>{{ command.tip }}</span>
-    </v-tooltip>
+      <v-tooltip
+        v-for="(command, index) in commands"
+        :key="index"
+        bottom
+        open-delay="1000"
+      >
+        <template v-slot:activator="{ on }">
+          <v-btn
+            fab
+            @click="runCommand(command.handler)"
+            v-if="!command.disabled"
+            x-small
+            v-on="on"
+          >
+            <v-icon>{{ command.icon }}</v-icon>
+          </v-btn>
+        </template>
+        <span>{{ command.tip }}</span>
+      </v-tooltip>
+    </v-speed-dial>
+
     <template v-if="tabItems.length > 1" v-slot:extension>
       <v-tabs v-model="route" align-with-title show-arrows>
         <v-tab v-for="e in tabItems" :to="e.route" :key="e.id" exact>
@@ -31,6 +42,7 @@
         </v-tab>
       </v-tabs>
     </template>
+
     <games-params-dialog
       :show="paramsDlg.dialog"
       :action="paramsDlg.action"
@@ -96,7 +108,8 @@ export default {
       action: "new",
       params: {}
     },
-    route: null
+    route: null,
+    showActions: false
   }),
   computed: {
     commands() {
@@ -138,9 +151,21 @@ export default {
   },
   methods: {
     closeGame() {
-      let r = this.games.closestRoute(this.$route.params.id);
-      this.gameRemoveById(this.$route.params.id);
-      this.$router.push(r);
+      let id = this.$route.params.id;
+      if (this.gameModified(id)) {
+        this.$confirm(
+          "Boardgame '" +
+            this.elementById(id).name +
+            "' has never been saved!<br>Do you really want to close it?",
+          { title: "Warning" }
+        ).then(confirmed => {
+          if (confirmed) {
+            let r = this.games.closestRoute(id);
+            this.gameRemoveById(id);
+            this.$router.push(r);
+          }
+        });
+      }
     },
     editGame() {
       this.paramsDlg.action = "update";

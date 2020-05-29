@@ -32,11 +32,22 @@ export default {
     items() {
       return this.elementNames;
     },
-    ...mapGetters("games", ["elementNames"])
+    ...mapGetters("games", ["elementNames", "elementById", "gameModified"])
   },
   methods: {
     closeGame(id) {
-      this.gameRemoveById(id);
+      if (this.gameModified(id)) {
+        this.$confirm(
+          "Boardgame '" +
+            this.elementById(id).name +
+            "' has never been saved!<br>Do you really want to close it?",
+          { title: "Warning" }
+        ).then(confirmed => {
+          if (confirmed) {
+            this.gameRemoveById(id);
+          }
+        });
+      }
     },
     ...mapActions("games", ["gameRemoveById"])
   }

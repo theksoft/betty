@@ -12,6 +12,7 @@
         :rules="rules.name"
         label="Name"
         required
+        @keypress.enter.prevent.stop
       ></v-text-field>
       <v-row class="justify-space-between">
         <v-btn @click.stop="$emit('cancel')" class="mx-4">
