@@ -4,7 +4,6 @@
     <v-toolbar-title class="mx-2">
       {{ title }}
     </v-toolbar-title>
-    <v-icon v-if="modified" tile>$modified</v-icon>
 
     <v-spacer />
 
@@ -39,6 +38,7 @@
       <v-tabs v-model="route" align-with-title show-arrows>
         <v-tab v-for="e in tabItems" :to="e.route" :key="e.id" exact>
           {{ e.name }}
+          <v-icon v-if="modified(e.id)" class="ml-1">$modified</v-icon>
         </v-tab>
       </v-tabs>
     </template>
@@ -122,23 +122,10 @@ export default {
         };
       });
     },
-    modified() {
-      if (this.route) {
-        return this.gameModified(this.$route.params.id);
-      }
-      return false;
-    },
     tabItems() {
       return this.games.routes();
     },
     title() {
-      if (this.route && this.elementById(this.$route.params.id)) {
-        return (
-          this.games.title +
-          " - " +
-          this.elementById(this.$route.params.id).name
-        );
-      }
       return this.games.title;
     },
 
@@ -152,14 +139,19 @@ export default {
   methods: {
     async closeGame() {
       let id = this.$route.params.id;
+      if (!this.gameModified(id)) {
+        let r = this.games.closestRoute(id);
+        this.gameRemoveById(id);
+        this.$router.push(r);
+        return;
+      }
       if (
-        this.gameModified(id) &&
-        (await this.$confirm(
+        await this.$confirm(
           "Boardgame '" +
             this.elementById(id).name +
             "' has never been saved!<br>Do you really want to close it?",
           { title: "Warning" }
-        ))
+        )
       ) {
         let r = this.games.closestRoute(id);
         this.gameRemoveById(id);
@@ -174,6 +166,9 @@ export default {
     loadGame() {
       console.log("Load game!");
     },
+    modified(id) {
+      return this.gameModified(id);
+    },
     newGame() {
       this.paramsDlg.action = "new";
       this.paramsDlg.params = this.$packager.defaultParams();
@@ -181,6 +176,7 @@ export default {
     },
     saveGame() {
       console.log("Save game!");
+      this.gameSaved(this.$route.params.id);
     },
     onGamesParams(e) {
       this.paramsDlg.dialog = false;
@@ -218,7 +214,12 @@ export default {
       this[command]();
     },
 
-    ...mapActions("games", ["gameAdd", "gameUpdateParams", "gameRemoveById"])
+    ...mapActions("games", [
+      "gameAdd",
+      "gameUpdateParams",
+      "gameRemoveById",
+      "gameSaved"
+    ])
   }
 };
 </script>

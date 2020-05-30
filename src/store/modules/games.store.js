@@ -69,6 +69,12 @@ export const games = {
         state.content.splice(i, 1);
       }
     },
+    GAME_SAVED: (state, id) => {
+      let game = state.content.find(e => e.id === id);
+      if (game) {
+        game.modified = false;
+      }
+    },
     GAME_UPDATE: (state, { id, params }) => {
       let game = state.content.find(e => e.id === id);
       if (game) {
@@ -84,6 +90,9 @@ export const games = {
     },
     gameRemoveById({ commit }, id) {
       commit("GAME_REMOVE_BY_ID", id);
+    },
+    gameSaved({ commit }, id) {
+      commit("GAME_SAVED", id);
     },
     gameUpdateParams({ commit }, arg) {
       commit("GAME_UPDATE", arg);

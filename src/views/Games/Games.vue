@@ -36,14 +36,17 @@ export default {
   },
   methods: {
     async closeGame(id) {
+      if (!this.gameModified(id)) {
+        this.gameRemoveById(id);
+        return;
+      }
       if (
-        this.gameModified(id) &&
-        (await this.$confirm(
+        await this.$confirm(
           "Boardgame '" +
             this.elementById(id).name +
             "' has never been saved!<br>Do you really want to close it?",
           { title: "Warning" }
-        ))
+        )
       ) {
         this.gameRemoveById(id);
       }
