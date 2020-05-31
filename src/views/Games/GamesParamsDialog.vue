@@ -6,7 +6,11 @@
     persistent
     max-width="600"
   >
-    <v-form class="pa-4" v-model="valid" lazy-validation>
+    <v-form class="pa-4" v-model="valid">
+      <h2 class="mb-1">
+        Boardgame Parameters
+      </h2>
+      <v-divider />
       <v-text-field
         v-model="values.name"
         :rules="rules.name"
