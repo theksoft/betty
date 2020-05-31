@@ -175,8 +175,15 @@ export default {
       this.paramsDlg.dialog = true;
     },
     saveGame() {
-      console.log("Save game!");
-      this.gameSaved(this.$route.params.id);
+      const game = this.elementById(this.$route.params.id);
+      if (game) {
+        const { blob, filename } = this.$packager.blob(game);
+        this.$files.saveBlobAs(blob, filename);
+        // File download dialog is slow a bit to appear
+        setTimeout(() => {
+          this.gameSaved(this.$route.params.id);
+        }, 1000);
+      }
     },
     onGamesParams(e) {
       this.paramsDlg.dialog = false;
