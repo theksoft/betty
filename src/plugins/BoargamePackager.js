@@ -1,5 +1,27 @@
 import Game from "./BoardgamePackager/Boardgame.js";
 
+const _extension = ".bgp";
+
+const _buildBlob = game => {
+  // Define content
+  const data = JSON.stringify(game);
+  // return blob
+  return new Blob([data], { type: "application/json" });
+};
+
+const _loadBlob = blob => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = e => reject(e);
+    reader.onload = () => resolve(reader.result);
+    reader.readAsText(blob);
+  });
+};
+
+const _createFrom = obj => {
+  return Game.reload(obj);
+};
+
 const BoardgamePackager = {
   create: e => {
     return new Game(e);
@@ -11,19 +33,23 @@ const BoardgamePackager = {
     };
   },
 
+  extension() {
+    return _extension;
+  },
+
   blob: game => {
     // Elaborate opbject copy
-    let copy = Object.assign({}, game); // WARNING: Copy only properties that can be enumerated
+    // WARNING: Object.assign copies only properties that can be enumerated
+    let copy = Object.assign({}, game);
     delete copy.modified;
-    // Define content
-    const data = JSON.stringify(copy);
-    // return blob
     return {
-      blob: new Blob([data], {
-        type: "application/json"
-      }),
-      filename: game.id + ".json"
+      blob: _buildBlob(copy),
+      filename: game.id + _extension
     };
+  },
+
+  loadBlob: async blob => {
+    return _createFrom(JSON.parse(await _loadBlob(blob)));
   }
 };
 

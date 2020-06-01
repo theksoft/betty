@@ -1,8 +1,10 @@
 import { v4 as uuid } from "uuid";
 
+const _TYPE = "boardgame";
+
 export default class Boardgame {
   constructor(e) {
-    this._type = "boardgame";
+    this._type = _TYPE;
     this._id = uuid();
     this._name = e ? e.name : "<untitled>";
   }
@@ -20,5 +22,17 @@ export default class Boardgame {
   }
   set name(name) {
     this._name = name;
+  }
+
+  static reload(src) {
+    if (!src || !src._type || src._type !== _TYPE) {
+      throw new Error("ERROR: Provided data is not a boardgame object!");
+    }
+    let game = new Boardgame();
+    if (src._id) {
+      game._id = src._id;
+    }
+    game._name = src._name;
+    return game;
   }
 }

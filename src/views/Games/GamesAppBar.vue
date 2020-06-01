@@ -74,31 +74,31 @@ export default {
       {
         icon: "$gameNew",
         tip: "New boardgame project",
-        handler: "newGame",
+        handler: "gameNew",
         target: false
       },
       {
         icon: "$gameLoad",
         tip: "Load boardgame project",
-        handler: "loadGame",
+        handler: "gameLoad",
         target: false
       },
       {
         icon: "$gameSave",
         tip: "Save boardgame project",
-        handler: "saveGame",
+        handler: "gameSave",
         target: true
       },
       {
         icon: "$gameEdit",
         tip: "Edit boardgame project parameters",
-        handler: "editGame",
+        handler: "gameEdit",
         target: true
       },
       {
         icon: "$gameClose",
         tip: "Close boardgame project",
-        handler: "closeGame",
+        handler: "gameClose",
         target: true
       }
     ],
@@ -137,7 +137,7 @@ export default {
     ])
   },
   methods: {
-    async closeGame() {
+    async gameClose() {
       let id = this.$route.params.id;
       if (!this.gameModified(id)) {
         let r = this.games.closestRoute(id);
@@ -158,23 +158,32 @@ export default {
         this.$router.push(r);
       }
     },
-    editGame() {
+    gameEdit() {
       this.paramsDlg.action = "update";
       this.paramsDlg.params = this.gameParams(this.$route.params.id);
       this.paramsDlg.dialog = true;
     },
-    loadGame() {
-      console.log("Load game!");
+    async gameLoad() {
+      try {
+        const file = await this.$files.selectFiles(this.$packager.extension());
+        const game = await this.$packager.loadBlob(file);
+        this.gameAdd(game);
+        if (game.id !== this.$route.params.id) {
+          this.$router.push(this.games.lastRoute());
+        }
+      } catch (e) {
+        alert(e.message);
+      }
     },
     modified(id) {
       return this.gameModified(id);
     },
-    newGame() {
+    gameNew() {
       this.paramsDlg.action = "new";
       this.paramsDlg.params = this.$packager.defaultParams();
       this.paramsDlg.dialog = true;
     },
-    saveGame() {
+    gameSave() {
       const game = this.elementById(this.$route.params.id);
       if (game) {
         const { blob, filename } = this.$packager.blob(game);

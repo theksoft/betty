@@ -25,8 +25,7 @@ export const games = {
     elementNames: state => {
       return state.content.map(m => ({
         name: m.name,
-        id: m.id,
-        modified: !!m.modified
+        id: m.id
       }));
     },
     gameCompareParams: state => ({ id, params }) => {
