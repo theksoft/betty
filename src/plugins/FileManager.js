@@ -1,3 +1,8 @@
+/*
+  FileManager
+  Private data
+*/
+
 const _saveAs = (getURL, releaseURL, filename) => {
   let url = getURL();
   let a = document.createElement("a");
@@ -21,6 +26,11 @@ const _saveBlobAs = (blob, filename) => {
     filename
   );
 };
+
+/*
+  FileManager
+  Public data
+*/
 
 const FileManager = {
   selectFiles(filter, multiple) {

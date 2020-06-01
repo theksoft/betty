@@ -8,7 +8,6 @@
         <v-list-item-content>
           <v-list-item-title class="headline">
             {{ item.name }}
-            <!--v-icon v-if="item.modified" tile>$modified</v-icon-->
             <v-icon v-if="gameModified(item.id)" tile>$modified</v-icon>
           </v-list-item-title>
           <v-list-item-subtitle>
@@ -16,7 +15,7 @@
           </v-list-item-subtitle>
         </v-list-item-content>
         <v-list-item-action>
-          <v-btn @click.prevent="closeGame(item.id)" icon>
+          <v-btn @click.prevent="gameClose(item.id)" icon>
             <v-icon>$close</v-icon>
           </v-btn>
         </v-list-item-action>
@@ -27,6 +26,7 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+
 export default {
   name: "games",
   computed: {
@@ -36,7 +36,7 @@ export default {
     ...mapGetters("games", ["elementNames", "elementById", "gameModified"])
   },
   methods: {
-    async closeGame(id) {
+    async gameClose(id) {
       if (!this.gameModified(id)) {
         this.gameRemoveById(id);
         return;

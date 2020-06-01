@@ -23,10 +23,7 @@ export const games = {
       return state.content[index];
     },
     elementNames: state => {
-      return state.content.map(m => ({
-        name: m.name,
-        id: m.id
-      }));
+      return state.content.map(m => ({ name: m.name, id: m.id }));
     },
     gameCompareParams: state => ({ id, params }) => {
       let element = state.content.find(e => e.id === id);

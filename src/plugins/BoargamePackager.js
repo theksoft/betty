@@ -1,5 +1,10 @@
 import Game from "./BoardgamePackager/Boardgame.js";
 
+/*
+  BoardgamePackager
+  Private data
+*/
+
 const _extension = ".bgp";
 
 const _buildBlob = game => {
@@ -21,6 +26,11 @@ const _loadBlob = blob => {
 const _createFrom = obj => {
   return Game.reload(obj);
 };
+
+/*
+  BoardgamePackager
+  Public data
+*/
 
 const BoardgamePackager = {
   create: e => {

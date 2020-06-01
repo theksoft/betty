@@ -10,5 +10,5 @@ export default new Routes({
   icon: "$maps",
   image: "ancient-map.png",
   appBar: "MapsAppBar",
-  title: "Betty/Image Mapper"
+  title: "BETTY Image Mapper"
 });

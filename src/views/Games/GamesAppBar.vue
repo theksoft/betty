@@ -7,7 +7,7 @@
 
     <v-spacer />
 
-    <v-speed-dial v-model="showActions" right direction="left" open-on-hover>
+    <v-speed-dial v-model="showActions" right direction="left">
       <template v-slot:activator>
         <v-btn v-model="showActions" fab icon>
           <v-icon>$actionMore</v-icon>
@@ -136,6 +136,7 @@ export default {
       "gameParams"
     ])
   },
+
   methods: {
     async gameClose() {
       let id = this.$route.params.id;
@@ -158,11 +159,13 @@ export default {
         this.$router.push(r);
       }
     },
+
     gameEdit() {
       this.paramsDlg.action = "update";
       this.paramsDlg.params = this.gameParams(this.$route.params.id);
       this.paramsDlg.dialog = true;
     },
+
     async gameLoad() {
       try {
         const file = await this.$files.selectFiles(this.$packager.extension());
@@ -175,14 +178,17 @@ export default {
         alert(e.message);
       }
     },
+
     modified(id) {
       return this.gameModified(id);
     },
+
     gameNew() {
       this.paramsDlg.action = "new";
       this.paramsDlg.params = this.$packager.defaultParams();
       this.paramsDlg.dialog = true;
     },
+
     gameSave() {
       const game = this.elementById(this.$route.params.id);
       if (game) {
@@ -194,6 +200,7 @@ export default {
         }, 1000);
       }
     },
+
     onGamesParams(e) {
       this.paramsDlg.dialog = false;
       switch (this.paramsDlg.action) {
