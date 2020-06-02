@@ -4,6 +4,7 @@
     <v-toolbar-title class="mx-2">
       {{ title }}
     </v-toolbar-title>
+    <v-icon v-if="unsaved" class="ml-2" color="error">$modified</v-icon>
 
     <v-spacer />
 
@@ -38,7 +39,6 @@
       <v-tabs v-model="route" align-with-title show-arrows>
         <v-tab v-for="e in tabItems" :to="e.route" :key="e.id" exact>
           {{ e.name }}
-          <v-icon v-if="modified(e.id)" class="ml-1">$modified</v-icon>
         </v-tab>
       </v-tabs>
     </template>
@@ -128,6 +128,12 @@ export default {
     title() {
       return this.games.title;
     },
+    unsaved() {
+      if (!this.$route.params.id) {
+        return false;
+      }
+      return this.gameModified(this.$route.params.id);
+    },
 
     ...mapGetters("games", [
       "elementById",
@@ -179,25 +185,24 @@ export default {
       }
     },
 
-    modified(id) {
-      return this.gameModified(id);
-    },
-
     gameNew() {
       this.paramsDlg.action = "new";
       this.paramsDlg.params = this.$packager.defaultParams();
       this.paramsDlg.dialog = true;
     },
 
-    gameSave() {
+    async gameSave() {
       const game = this.elementById(this.$route.params.id);
-      if (game) {
-        const { blob, filename } = this.$packager.blob(game);
+      try {
+        const blob = await this.$packager.blob(game);
+        const filename = this.$packager.filename(game);
         this.$files.saveBlobAs(blob, filename);
         // File download dialog is slow a bit to appear
         setTimeout(() => {
           this.gameSaved(this.$route.params.id);
         }, 1000);
+      } catch (e) {
+        alert(e.message);
       }
     },
 

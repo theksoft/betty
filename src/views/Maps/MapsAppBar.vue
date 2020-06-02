@@ -4,6 +4,7 @@
     <v-toolbar-title class="mx-2">
       {{ title }}
     </v-toolbar-title>
+    <v-icon v-if="unsaved" class="ml-2" color="error">$modified</v-icon>
 
     <v-spacer />
 
@@ -38,7 +39,6 @@
       <v-tabs v-model="route" align-with-title show-arrows>
         <v-tab v-for="e in tabItems" :to="e.route" :key="e.id" exact>
           {{ e.name }}
-          <v-icon v-if="modified(e.id)" class="ml-1">$modified</v-icon>
         </v-tab>
       </v-tabs>
     </template>
@@ -146,6 +146,12 @@ export default {
     title() {
       return this.maps.title;
     },
+    unsaved() {
+      if (!this.$route.params.id) {
+        return false;
+      }
+      return this.mapModified(this.$route.params.id);
+    },
 
     ...mapGetters("maps", [
       "elementById",
@@ -195,10 +201,6 @@ export default {
       } catch (e) {
         alert(e.message);
       }
-    },
-
-    modified(id) {
-      return this.mapModified(id);
     },
 
     mapNew() {

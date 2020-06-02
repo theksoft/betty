@@ -8,7 +8,9 @@
         <v-list-item-content>
           <v-list-item-title class="headline">
             {{ item.name }}
-            <v-icon v-if="gameModified(item.id)" tile>$modified</v-icon>
+            <v-icon v-if="gameModified(item.id)" tile color="error">
+              $modified
+            </v-icon>
           </v-list-item-title>
           <v-list-item-subtitle>
             {{ item.id }}

@@ -1,6 +1,11 @@
 import { v4 as uuid } from "uuid";
 
 const _TYPE = "boardgame";
+const _ERRORS = {
+  COMPATIBILITY:
+    "ERROR: Provided data is not compatible with boardgame object!",
+  INSTANCE: "ERROR: Provided object is not a boardgame object instance!"
+};
 
 export default class Boardgame {
   constructor(e) {
@@ -24,15 +29,40 @@ export default class Boardgame {
     this._name = name;
   }
 
+  static type() {
+    return _TYPE;
+  }
+
+  static match(src) {
+    return src && src._type && src._type === _TYPE;
+  }
+
+  static checkCompatibility(src) {
+    if (!Boardgame.match(src)) {
+      throw new Error(_ERRORS.COMPATIBILITY);
+    }
+  }
+
+  static checkInstance(src) {
+    // Check also presence of one getter for a true object
+    if (!Boardgame.match(src) || !src.type) {
+      throw new Error(_ERRORS.INSTANCE);
+    }
+  }
+
+  static clone(src) {
+    Boardgame.checkInstance(src);
+    let clone = new Boardgame();
+    // WARNING Object.assign copies only enumerable properties!
+    Object.assign(clone, src);
+    return clone;
+  }
+
   static reload(src) {
-    if (!src || !src._type || src._type !== _TYPE) {
-      throw new Error("ERROR: Provided data is not a boardgame object!");
-    }
+    Boardgame.checkCompatibility(src);
     let game = new Boardgame();
-    if (src._id) {
-      game._id = src._id;
-    }
-    game._name = src._name;
+    // WARNING Object.assign copies only enumerable properties!
+    Object.assign(game, src);
     return game;
   }
 }
