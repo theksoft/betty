@@ -50,6 +50,10 @@
       @valid="onGamesParams($event)"
       @cancel="paramsDlg.dialog = false"
     />
+
+    <processing-dialog :show="processingDlg.dialog">
+      {{ processingDlg.message }}
+    </processing-dialog>
   </v-app-bar>
 </template>
 
@@ -57,11 +61,13 @@
 import { mapGetters, mapActions } from "vuex";
 import routes from "@/router/resources.routes.js";
 import GamesParamsDialog from "./GamesParamsDialog";
+import ProcessingDialog from "@/components/ProcessingDialog";
 
 export default {
   name: "games-app-bar",
   components: {
-    GamesParamsDialog
+    GamesParamsDialog,
+    ProcessingDialog
   },
   props: {
     clipped: {
@@ -103,6 +109,10 @@ export default {
       }
     ],
     games: routes.games,
+    processingDlg: {
+      dialog: false,
+      message: ""
+    },
     paramsDlg: {
       dialog: false,
       action: "new",
@@ -175,13 +185,19 @@ export default {
     async gameLoad() {
       try {
         const file = await this.$files.selectFiles(this.$packager.extension());
-        const game = await this.$packager.loadBlob(file);
-        this.gameAdd(game);
-        if (game.id !== this.$route.params.id) {
-          this.$router.push(this.games.lastRoute());
+        if (file) {
+          this.processingDlg.message = "Loading...";
+          this.processingDlg.dialog = true;
+          const game = await this.$packager.loadBlob(file);
+          this.gameAdd(game);
+          if (game.id !== this.$route.params.id) {
+            this.$router.push(this.games.lastRoute());
+          }
         }
       } catch (e) {
         alert(e.message);
+      } finally {
+        this.processingDlg.dialog = false;
       }
     },
 
@@ -194,6 +210,8 @@ export default {
     async gameSave() {
       const game = this.elementById(this.$route.params.id);
       try {
+        this.processingDlg.message = "Generating save...";
+        this.processingDlg.dialog = true;
         const blob = await this.$packager.blob(game);
         const filename = this.$packager.filename(game);
         this.$files.saveBlobAs(blob, filename);
@@ -203,6 +221,8 @@ export default {
         }, 1000);
       } catch (e) {
         alert(e.message);
+      } finally {
+        this.processingDlg.dialog = false;
       }
     },
 
