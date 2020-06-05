@@ -17,17 +17,24 @@
           :key="index"
         >
           <v-list-item-action>
-            <v-icon>{{ link.icon }}</v-icon>
+            <v-icon color="primary lighten-3">
+              {{ link.icon }}
+            </v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>{{ link.name }}</v-list-item-title>
+            <v-list-item-title class="primary--text text--lighten-1">
+              {{ link.name }}
+            </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
     <component :is="showAppBar" :clipped="drawer.clipped">
-      <v-app-bar-nav-icon @click.stop="drawer.model = !drawer.model" />
+      <v-app-bar-nav-icon
+        @click.stop="drawer.model = !drawer.model"
+        class="primary--text"
+      ></v-app-bar-nav-icon>
     </component>
 
     <v-content>

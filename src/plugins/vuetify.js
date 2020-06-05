@@ -6,11 +6,21 @@ Vue.use(Vuetify);
 
 const vuetify = new Vuetify({
   theme: {
-    dark: true
-    /*,
+    dark: true,
+    themes: {
+      dark: {
+        primary: "#607d8b",
+        secondary: "#795548",
+        accent: "#3F51B5",
+        error: "#f44336",
+        warning: "#ff9800",
+        info: "#2196f3",
+        success: "#4caf50"
+      }
+    },
     options: {
       customProperties: true
-    }*/
+    }
   },
   icons: {
     iconfont: "mdiSvg", // default
