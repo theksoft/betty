@@ -1,15 +1,10 @@
 <template>
-  <v-app-bar
-    dense
-    :clipped-left="clipped"
-    app
-    class="primary--text text--lighten-1"
-  >
+  <v-app-bar dense :clipped-left="clipped" app>
     <slot></slot>
-    <v-toolbar-title class="mx-2">
+    <v-toolbar-title class="title">
       {{ title }}
     </v-toolbar-title>
-    <v-icon v-if="unsaved" class="ml-2 error--text text--lighten-1">
+    <v-icon v-if="unsaved" class="modified-indicator">
       $modified
     </v-icon>
 
@@ -17,7 +12,7 @@
 
     <v-speed-dial v-model="showActions" right direction="left">
       <template v-slot:activator>
-        <v-btn v-model="showActions" fab icon color="primary lighten-1">
+        <v-btn v-model="showActions" fab icon class="icon-activator">
           <v-icon>$actionMore</v-icon>
         </v-btn>
       </template>
@@ -26,7 +21,6 @@
         :key="index"
         bottom
         open-delay="1000"
-        color="info info--text text--lighten-5"
       >
         <template v-slot:activator="{ on }">
           <v-btn
@@ -35,8 +29,7 @@
             v-if="!command.disabled"
             x-small
             v-on="on"
-            color="secondary"
-            class="black--text"
+            class="icon-menu"
           >
             <v-icon>{{ command.icon }}</v-icon>
           </v-btn>
@@ -46,12 +39,7 @@
     </v-speed-dial>
 
     <template v-if="tabItems.length > 1" v-slot:extension>
-      <v-tabs
-        v-model="route"
-        align-with-title
-        show-arrows
-        color="secondary lighten-2"
-      >
+      <v-tabs v-model="route" align-with-title show-arrows>
         <v-tab v-for="e in tabItems" :to="e.route" :key="e.id" exact>
           {{ e.name }}
         </v-tab>
@@ -286,3 +274,7 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+@import "@/scss/app-bar.scss";
+</style>

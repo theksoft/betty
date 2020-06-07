@@ -1,0 +1,25 @@
+@import "./global.scss";
+
+$title-margin-x: $spacer * 2;
+$title-color: $primary-text-light;
+$activator-color: $title-color;
+
+.title {
+  margin-left: $title-margin-x;
+  margin-right: $title-margin-x;
+  color: $title-color;
+}
+
+.modified-indicator {
+  margin-left: $spacer * 2;
+  color: $modified-icon-color;
+}
+
+.icon-activator {
+  color: $activator-color !important;
+}
+
+.icon-menu {
+  background-color: map-get($secondary, base) !important;
+  color: black;
+}

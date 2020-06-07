@@ -1,0 +1,19 @@
+@import "./global.scss";
+
+$select: map-get($secondary, lighten-1);
+
+.nav {
+  color: $select !important;
+}
+
+.nav-activator {
+  color: $primary-text !important;
+}
+
+.nav-text {
+  color: $primary-text;
+}
+
+.nav-icon {
+  color: $primary-text-light !important;
+}

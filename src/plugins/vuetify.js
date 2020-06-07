@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuetify from "vuetify/lib";
+import colors from "vuetify/lib/util/colors";
 import VuetifyConfirm from "vuetify-confirm";
 
 Vue.use(Vuetify);
@@ -9,13 +10,13 @@ const vuetify = new Vuetify({
     dark: true,
     themes: {
       dark: {
-        primary: "#607d8b",
-        secondary: "#795548",
-        accent: "#3F51B5",
-        error: "#f44336",
-        warning: "#ff9800",
-        info: "#2196f3",
-        success: "#4caf50"
+        primary: colors.blueGrey.base,
+        secondary: colors.brown.base,
+        accent: colors.indigo.base,
+        error: colors.red.base,
+        warning: colors.orange.base,
+        info: colors.blue.base,
+        success: colors.green.base
       }
     },
     options: {

@@ -6,8 +6,8 @@
     persistent
     max-width="600"
   >
-    <v-form class="pa-4 indigo darken-4" light v-model="valid">
-      <h2 class="mb-1 primary--text text--lighten-3">
+    <v-form class="form" v-model="valid">
+      <h2 class="title">
         Boardgame Parameters
       </h2>
       <v-divider />
@@ -18,14 +18,13 @@
         required
         @keypress.enter.prevent.stop
       ></v-text-field>
-      <v-row class="justify-space-between mt-2">
-        <v-btn @click.stop="$emit('cancel')" class="mx-4" color="primary">
+      <v-row class="row-buttons">
+        <v-btn @click.stop="$emit('cancel')" class="button">
           Cancel
         </v-btn>
         <v-btn
           @click.stop="valid && $emit('valid', values)"
-          class="mx-4"
-          color="primary"
+          class="button"
           :disabled="!valid"
         >
           OK
@@ -69,3 +68,7 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+@import "@/scss/dialog-form.scss";
+</style>

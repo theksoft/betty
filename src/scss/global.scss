@@ -1,0 +1,26 @@
+@import "~vuetify/src/styles/styles.sass";
+
+$primary: $blue-grey;
+$secondary: $brown;
+$accent: $indigo;
+$error: $red;
+$warning: $orange;
+$info: $blue;
+$success: $green;
+
+$primary-text: map-get($primary, lighten-1);
+$secondary-text: map-get($secondary, lighten-1);
+$accent-text: map-get($accent, lighten-1);
+
+$primary-text-light: map-get($primary, lighten-3);
+$secondary-text-light: map-get($secondary, lighten-3);
+$accent-text-light: map-get($accent, lighten-3);
+
+$modified-icon-color: map-get($error, lighten-1);
+
+$tip-background: map-get($info, base);
+$tip-color: map-get($info, lighten-4);
+
+$card-vlist-margin-y: $spacer * 2;
+$form-padding: $spacer * 4;
+$text-btn-margin-x: $spacer * 4;

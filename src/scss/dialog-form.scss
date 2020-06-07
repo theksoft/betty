@@ -1,0 +1,26 @@
+@import "./global.scss";
+
+$base: $primary;
+$base-text: $primary-text-light;
+
+.form {
+  padding: $form-padding;
+  background-color: map-get($accent, darken-4);
+}
+
+.title {
+  margin-bottom: $spacer;
+  color: $base-text;
+}
+
+.row-buttons {
+  margin-top: $spacer * 2;
+  justify-content: space-between;
+}
+
+.button {
+  margin-left: $text-btn-margin-x;
+  margin-right: $text-btn-margin-x;
+  color: $base-text;
+  background-color: map-get($base, base) !important;
+}

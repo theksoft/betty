@@ -1,0 +1,31 @@
+@import "./global.scss";
+
+$base: $secondary;
+
+.card {
+  background-color: map-get($base, darken-4);
+  margin-top: $card-vlist-margin-y;
+  margin-bottom: $card-vlist-margin-y;
+}
+
+.icon {
+  color: black;
+}
+
+.item-title {
+  color: $primary-text;
+  font-weight: bold;
+}
+
+.item-text {
+  color: map-get($base, lighten-2) !important;
+}
+
+.icon-button {
+  background-color: black;
+  color: map-get($base, base) !important;
+}
+
+.modified-indicator {
+  color: $modified-icon-color;
+}

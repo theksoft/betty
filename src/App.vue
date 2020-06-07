@@ -15,14 +15,15 @@
           v-for="(link, index) in routes.nav()"
           :to="link.path"
           :key="index"
+          class="nav"
         >
           <v-list-item-action>
-            <v-icon color="primary lighten-3">
+            <v-icon class="nav-icon">
               {{ link.icon }}
             </v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title class="primary--text text--lighten-1">
+            <v-list-item-title class="nav-text">
               {{ link.name }}
             </v-list-item-title>
           </v-list-item-content>
@@ -33,7 +34,7 @@
     <component :is="showAppBar" :clipped="drawer.clipped">
       <v-app-bar-nav-icon
         @click.stop="drawer.model = !drawer.model"
-        class="primary--text"
+        class="nav-activator"
       ></v-app-bar-nav-icon>
     </component>
 
@@ -77,3 +78,7 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+@import "@/scss/nav-drawer.scss";
+</style>
