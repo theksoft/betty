@@ -1,11 +1,11 @@
 import { v4 as uuid } from "uuid";
 
 const _TYPE = "image-map";
-const _ERRORS = {
+const _ERRORS = Object.freeze({
   COMPATIBILITY:
     "ERROR: Provided data is not compatible with image map object!",
   INSTANCE: "ERROR: Provided object is not an image map object instance!"
-};
+});
 
 export default class ImageMap {
   constructor(e) {

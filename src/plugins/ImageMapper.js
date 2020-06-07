@@ -8,10 +8,10 @@ import Map from "./ImageMapper/ImageMap.js";
 
 const _extension = ".bgm";
 const _descriptor = "package.json";
-const _ERRORS = {
+const _ERRORS = Object.freeze({
   BAD_FILE: "ERROR The provided file is not an image map definition file!",
   UNSUPPORTED_FILE: "ERROR The provided file format is no more supported!"
-};
+});
 
 const _buildDescriptor = map => ({
   header: {

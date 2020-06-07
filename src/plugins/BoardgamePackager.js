@@ -8,10 +8,10 @@ import Boardgame from "./BoardgamePackager/Boardgame.js";
 
 const _extension = ".bgp";
 const _descriptor = "package.json";
-const _ERRORS = {
+const _ERRORS = Object.freeze({
   BAD_FILE: "ERROR The provided file is not a boardgame definition file!",
   UNSUPPORTED_FILE: "ERROR The provided file format is no more supported!"
-};
+});
 
 const _buildDescriptor = game => ({
   header: {

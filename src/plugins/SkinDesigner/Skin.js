@@ -1,10 +1,10 @@
 import { v4 as uuid } from "uuid";
 
 const _TYPE = "skin";
-const _ERRORS = {
+const _ERRORS = Object.freeze({
   COMPATIBILITY: "ERROR: Provided data is not compatible with skin object!",
   INSTANCE: "ERROR: Provided object is not a skin object instance!"
-};
+});
 
 export default class Skin {
   constructor(e) {

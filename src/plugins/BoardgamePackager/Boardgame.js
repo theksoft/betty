@@ -1,11 +1,11 @@
 import { v4 as uuid } from "uuid";
 
 const _TYPE = "boardgame";
-const _ERRORS = {
+const _ERRORS = Object.freeze({
   COMPATIBILITY:
     "ERROR: Provided data is not compatible with boardgame object!",
   INSTANCE: "ERROR: Provided object is not a boardgame object instance!"
-};
+});
 
 export default class Boardgame {
   constructor(e) {
