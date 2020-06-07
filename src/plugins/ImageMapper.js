@@ -9,7 +9,8 @@ import Map from "./ImageMapper/ImageMap.js";
 const _extension = ".bgm";
 const _descriptor = "package.json";
 const _ERRORS = {
-  BAD_FILE: "ERROR The provided file is not an image map definition file!"
+  BAD_FILE: "ERROR The provided file is not an image map definition file!",
+  UNSUPPORTED_FILE: "ERROR The provided file format is no more supported!"
 };
 
 const _buildDescriptor = map => ({
@@ -22,6 +23,11 @@ const _buildDescriptor = map => ({
     location: Map.type()
   }
 });
+
+const _manageVersion = (/*descriptor*/) => {
+  // TODO: Develop version compatibility
+  return true;
+};
 
 const _buildBlob = map => {
   // This may throw an exception
@@ -48,7 +54,10 @@ const _loadBlob = async blob => {
   if (!descriptor.header || descriptor.header.type !== Map.type()) {
     throw new Error(_ERRORS.BAD_FILE);
   }
-  // TODO: check version
+  // Manage file version compatibility
+  if (!_manageVersion(descriptor)) {
+    throw new Error(_ERRORS.UNSUPPORTED_FILE);
+  }
 
   // Interpret content - Currently basic
   return zip

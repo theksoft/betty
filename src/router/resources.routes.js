@@ -3,11 +3,13 @@ import About from "./modules/about.routes.js";
 import Help from "./modules/help.routes.js";
 import Games from "./modules/games.routes.js";
 import Maps from "./modules/maps.routes.js";
+import Skins from "./modules/skins.routes.js";
 
 const modules = [
   // Declared in order of menu
   Home,
   Games,
+  Skins,
   Maps,
   Help,
   About
@@ -32,6 +34,10 @@ const Resources = {
 
   get maps() {
     return Maps;
+  },
+
+  get skins() {
+    return Skins;
   },
 
   appBar(route) {

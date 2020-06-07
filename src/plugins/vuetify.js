@@ -46,7 +46,13 @@ const vuetify = new Vuetify({
       mapNew: "mdi-plus",
       mapPreview: "mdi-eye-outline",
       mapSave: "mdi-download",
-      modified: "mdi-sticker-alert-outline"
+      modified: "mdi-sticker-alert-outline",
+      skins: "mdi-drama-masks",
+      skinClose: "mdi-window-close",
+      skinEdit: "mdi-pencil-outline",
+      skinLoad: "mdi-upload",
+      skinNew: "mdi-plus",
+      skinSave: "mdi-download"
     }
   }
 });

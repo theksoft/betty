@@ -30,6 +30,19 @@ const routes = [
     props: true
   },
   {
+    path: resources.skins.rootPath,
+    name: resources.skins.rootName,
+    // Use webpackChunkName: "skins"
+    component: () => import("../views/Skins/Skins.vue")
+  },
+  {
+    path: resources.skins.rootPath + "/:id",
+    name: resources.skins.idName,
+    // Use webpackChunkName: "skins"
+    component: () => import("../views/Skins/SkinsDetails.vue"),
+    props: true
+  },
+  {
     path: resources.maps.rootPath,
     name: resources.maps.rootName,
     // Use webpackChunkName: "maps"

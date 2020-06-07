@@ -55,13 +55,15 @@ import routes from "@/router/resources.routes.js";
 import DefaultAppBar from "@/components/DefaultAppBar.vue";
 import GamesAppBar from "@/views/Games/GamesAppBar.vue";
 import MapsAppBar from "@/views/Maps/MapsAppBar.vue";
+import SkinsAppBar from "@/views/Skins/SkinsAppBar.vue";
 
 export default {
   name: "Betty",
   components: {
     DefaultAppBar,
     GamesAppBar,
-    MapsAppBar
+    MapsAppBar,
+    SkinsAppBar
   },
   data: () => ({
     drawer: {

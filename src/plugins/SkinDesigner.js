@@ -1,26 +1,26 @@
 import JSZip from "jszip";
-import Boardgame from "./BoardgamePackager/Boardgame.js";
+import Skin from "./SkinDesigner/Skin.js";
 
 /*
-  BoardgamePackager
+  SkinDesigner
   Private data
 */
 
-const _extension = ".bgp";
+const _extension = ".bgs";
 const _descriptor = "package.json";
 const _ERRORS = {
-  BAD_FILE: "ERROR The provided file is not a boardgame definition file!",
+  BAD_FILE: "ERROR The provided file is not a skin definition file!",
   UNSUPPORTED_FILE: "ERROR The provided file format is no more supported!"
 };
 
-const _buildDescriptor = game => ({
+const _buildDescriptor = skin => ({
   header: {
     version: "0.1",
-    type: Boardgame.type()
+    type: Skin.type()
   },
   content: {
-    name: game.id + _extension,
-    location: Boardgame.type()
+    name: skin.id + _extension,
+    location: Skin.type()
   }
 });
 
@@ -29,13 +29,13 @@ const _manageVersion = (/*descriptor*/) => {
   return true;
 };
 
-const _buildBlob = game => {
+const _buildBlob = skin => {
   // This may throw an exception
-  Boardgame.checkInstance(game);
+  Skin.checkInstance(skin);
 
   let zip = new JSZip();
-  zip.file(_descriptor, JSON.stringify(_buildDescriptor(game)));
-  zip.folder(game.type).file(game.id + _extension, JSON.stringify(game));
+  zip.file(_descriptor, JSON.stringify(_buildDescriptor(skin)));
+  zip.folder(skin.type).file(skin.id + _extension, JSON.stringify(skin));
   return zip.generateAsync({ type: "blob" });
 };
 
@@ -51,7 +51,7 @@ const _loadBlob = async blob => {
 
   // Process descriptor
   let descriptor = JSON.parse(await zip.file(_descriptor).async("string"));
-  if (!descriptor.header || descriptor.header.type !== Boardgame.type()) {
+  if (!descriptor.header || descriptor.header.type !== Skin.type()) {
     throw new Error(_ERRORS.BAD_FILE);
   }
   // Manage file version compatibility
@@ -67,17 +67,17 @@ const _loadBlob = async blob => {
 };
 
 const _createFrom = obj => {
-  return Boardgame.reload(obj);
+  return Skin.reload(obj);
 };
 
 /*
-  BoardgamePackager
+  SkinDesigner
   Public data
 */
 
-const BoardgamePackager = {
+const SkinDesigner = {
   create: e => {
-    return new Boardgame(e);
+    return new Skin(e);
   },
 
   defaultParams: () => {
@@ -90,13 +90,13 @@ const BoardgamePackager = {
     return _extension;
   },
 
-  filename: game => {
-    return game.id + _extension;
+  filename: skin => {
+    return skin.id + _extension;
   },
 
-  blob: game => {
+  blob: skin => {
     // Elaborate opbject clone for cleanup purpose
-    let clone = Boardgame.clone(game);
+    let clone = Skin.clone(skin);
     delete clone.modified;
     return _buildBlob(clone);
   },
@@ -108,8 +108,8 @@ const BoardgamePackager = {
 
 export default {
   install: function(Vue) {
-    Object.defineProperty(Vue.prototype, "$packager", {
-      value: BoardgamePackager
+    Object.defineProperty(Vue.prototype, "$skinner", {
+      value: SkinDesigner
     });
   }
 };
