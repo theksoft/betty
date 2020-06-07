@@ -111,3 +111,5 @@ export default {
     Object.defineProperty(Vue.prototype, "$mapper", { value: ImageMapper });
   }
 };
+
+export { Map };

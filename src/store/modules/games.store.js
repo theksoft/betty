@@ -1,3 +1,5 @@
+import { Boardgame } from "@/plugins/BoardgamePackager.js";
+
 export const games = {
   namespaced: true,
 
@@ -51,7 +53,7 @@ export const games = {
   mutations: {
     GAME_ADD: (state, game) => {
       // Check it is a game
-      if (game.type !== "boardgame" || !game.id) {
+      if (game.type !== Boardgame.type() || !game.id) {
         return;
       }
       // id must not be present in content

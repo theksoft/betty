@@ -113,3 +113,5 @@ export default {
     });
   }
 };
+
+export { Skin };

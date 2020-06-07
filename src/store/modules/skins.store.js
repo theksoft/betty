@@ -1,3 +1,5 @@
+import Skin from "../../plugins/SkinDesigner/Skin";
+
 export const skins = {
   namespaced: true,
 
@@ -51,7 +53,7 @@ export const skins = {
   mutations: {
     SKIN_ADD: (state, skin) => {
       // Check it is a skin
-      if (skin.type !== "skin" || !skin.id) {
+      if (skin.type !== Skin.type() || !skin.id) {
         return;
       }
       // id must not be present in content

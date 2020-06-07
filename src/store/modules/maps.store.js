@@ -1,3 +1,5 @@
+import { Map } from "@/plugins/ImageMapper.js";
+
 export const maps = {
   namespaced: true,
 
@@ -51,7 +53,7 @@ export const maps = {
   mutations: {
     MAP_ADD: (state, map) => {
       // Check it is a map
-      if (map.type !== "image-map" || !map.id) {
+      if (map.type !== Map.type() || !map.id) {
         return;
       }
       // id must not be present in content
