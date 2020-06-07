@@ -6,8 +6,8 @@
     persistent
     max-width="600"
   >
-    <v-form class="pa-4" v-model="valid">
-      <h2 class="mb-1">
+    <v-form class="form" v-model="valid">
+      <h2 class="title">
         Image Map Parameters
       </h2>
       <v-divider />
@@ -18,11 +18,15 @@
         required
         @keypress.enter.prevent.stop
       ></v-text-field>
-      <v-row class="justify-space-between">
-        <v-btn @click.stop="$emit('cancel')" class="mx-4">
+      <v-row class="row-buttons">
+        <v-btn @click.stop="$emit('cancel')" class="button">
           Cancel
         </v-btn>
-        <v-btn @click.stop="valid && $emit('valid', values)" class="mx-4">
+        <v-btn
+          @click.stop="valid && $emit('valid', values)"
+          class="button"
+          :disabled="!valid"
+        >
           OK
         </v-btn>
       </v-row>
@@ -64,3 +68,7 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+@import "@/scss/dialog-form.scss";
+</style>

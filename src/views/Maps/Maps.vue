@@ -1,23 +1,23 @@
 <template>
   <div class="maps">
-    <v-card tile hover class="my-2" v-for="item in items" :key="item.id" exact>
+    <v-card tile hover class="card" v-for="item in items" :key="item.id" exact>
       <v-list-item :to="item.id" append exact>
         <v-list-item-icon>
-          <v-icon tile>$maps</v-icon>
+          <v-icon class="icon" x-large>$maps</v-icon>
         </v-list-item-icon>
         <v-list-item-content>
-          <v-list-item-title class="headline">
+          <v-list-item-title class="headline item-title">
             {{ item.name }}
-            <v-icon v-if="mapModified(item.id)" tile color="error">
+            <v-icon v-if="mapModified(item.id)" class="modified-indicator">
               $modified
             </v-icon>
           </v-list-item-title>
-          <v-list-item-subtitle>
+          <v-list-item-subtitle class="item-text">
             {{ item.id }}
           </v-list-item-subtitle>
         </v-list-item-content>
         <v-list-item-action>
-          <v-btn @click.prevent="mapClose(item.id)" icon>
+          <v-btn @click.prevent="mapClose(item.id)" class="icon-button" icon>
             <v-icon>$close</v-icon>
           </v-btn>
         </v-list-item-action>
@@ -58,3 +58,7 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+@import "@/scss/vue-items.scss";
+</style>

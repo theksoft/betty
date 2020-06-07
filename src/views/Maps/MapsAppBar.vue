@@ -1,16 +1,16 @@
 <template>
   <v-app-bar dense :clipped-left="clipped" app>
     <slot></slot>
-    <v-toolbar-title class="mx-2">
+    <v-toolbar-title class="title">
       {{ title }}
     </v-toolbar-title>
-    <v-icon v-if="unsaved" class="ml-2" color="error">$modified</v-icon>
+    <v-icon v-if="unsaved" class="modified-indicator">$modified</v-icon>
 
     <v-spacer />
 
     <v-speed-dial v-model="showActions" right direction="left">
       <template v-slot:activator>
-        <v-btn v-model="showActions" fab icon>
+        <v-btn v-model="showActions" fab icon class="icon-activator">
           <v-icon>$actionMore</v-icon>
         </v-btn>
       </template>
@@ -27,6 +27,7 @@
             v-if="!command.disabled"
             x-small
             v-on="on"
+            class="icon-menu"
           >
             <v-icon>{{ command.icon }}</v-icon>
           </v-btn>
@@ -50,6 +51,10 @@
       @valid="onMapsParams($event)"
       @cancel="paramsDlg.dialog = false"
     />
+
+    <processing-dialog :show="processingDlg.dialog">
+      {{ processingDlg.message }}
+    </processing-dialog>
   </v-app-bar>
 </template>
 
@@ -57,11 +62,13 @@
 import { mapGetters, mapActions } from "vuex";
 import routes from "@/router/resources.routes.js";
 import MapsParamsDialog from "./MapsParamsDialog";
+import ProcessingDialog from "@/components/ProcessingDialog";
 
 export default {
   name: "maps-app-bar",
   components: {
-    MapsParamsDialog
+    MapsParamsDialog,
+    ProcessingDialog
   },
   props: {
     clipped: {
@@ -121,6 +128,10 @@ export default {
       }
     ],
     maps: routes.maps,
+    processingDlg: {
+      dialog: false,
+      message: ""
+    },
     paramsDlg: {
       dialog: false,
       action: "new",
@@ -193,13 +204,19 @@ export default {
     async mapLoad() {
       try {
         const file = await this.$files.selectFiles(this.$mapper.extension());
-        const map = await this.$mapper.loadBlob(file);
-        this.mapAdd(map);
-        if (map.id !== this.$route.params.id) {
-          this.$router.push(this.maps.lastRoute());
+        if (file) {
+          this.processingDlg.message = "Loading...";
+          this.processingDlg.dialog = true;
+          const map = await this.$mapper.loadBlob(file);
+          this.mapAdd(map);
+          if (map.id !== this.$route.params.id) {
+            this.$router.push(this.maps.lastRoute());
+          }
         }
       } catch (e) {
         alert(e.message);
+      } finally {
+        this.processingDlg.dialog = false;
       }
     },
 
@@ -209,15 +226,22 @@ export default {
       this.paramsDlg.dialog = true;
     },
 
-    mapSave() {
+    async mapSave() {
       const map = this.elementById(this.$route.params.id);
-      if (map) {
-        const { blob, filename } = this.$mapper.blob(map);
+      try {
+        this.processingDlg.message = "Generating save...";
+        this.processingDlg.dialog = true;
+        const blob = await this.$mapper.blob(map);
+        const filename = this.$mapper.filename(map);
         this.$files.saveBlobAs(blob, filename);
         // File download dialog is slow a bit to appear
         setTimeout(() => {
           this.mapSaved(this.$route.params.id);
         }, 1000);
+      } catch (e) {
+        alert(e.message);
+      } finally {
+        this.processingDlg.dialog = false;
       }
     },
 
@@ -278,3 +302,7 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+@import "@/scss/app-bar.scss";
+</style>

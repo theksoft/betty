@@ -1,4 +1,3 @@
-import Game from "./BoardgamePackager/Boardgame.js";
 import JSZip from "jszip";
 import Boardgame from "./BoardgamePackager/Boardgame.js";
 
@@ -59,7 +58,7 @@ const _loadBlob = async blob => {
 };
 
 const _createFrom = obj => {
-  return Game.reload(obj);
+  return Boardgame.reload(obj);
 };
 
 /*
@@ -69,7 +68,7 @@ const _createFrom = obj => {
 
 const BoardgamePackager = {
   create: e => {
-    return new Game(e);
+    return new Boardgame(e);
   },
 
   defaultParams: () => {
@@ -88,7 +87,7 @@ const BoardgamePackager = {
 
   blob: game => {
     // Elaborate opbject clone for cleanup purpose
-    let clone = Game.clone(game);
+    let clone = Boardgame.clone(game);
     delete clone.modified;
     return _buildBlob(clone);
   },

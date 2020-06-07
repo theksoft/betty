@@ -1,3 +1,4 @@
+import JSZip from "jszip";
 import Map from "./ImageMapper/ImageMap.js";
 
 /*
@@ -6,21 +7,54 @@ import Map from "./ImageMapper/ImageMap.js";
 */
 
 const _extension = ".bgm";
-
-const _buildBlob = map => {
-  // Define content
-  const data = JSON.stringify(map);
-  // return blob
-  return new Blob([data], { type: "application/json" });
+const _descriptor = "package.json";
+const _ERRORS = {
+  BAD_FILE: "ERROR The provided file is not an image map definition file!"
 };
 
-const _loadBlob = blob => {
-  return new Promise((resolve, reject) => {
+const _buildDescriptor = map => ({
+  header: {
+    version: "0.1",
+    type: Map.type()
+  },
+  content: {
+    name: map.id + _extension,
+    location: Map.type()
+  }
+});
+
+const _buildBlob = map => {
+  // This may throw an exception
+  Map.checkInstance(map);
+
+  let zip = new JSZip();
+  zip.file(_descriptor, JSON.stringify(_buildDescriptor(map)));
+  zip.folder(map.type).file(map.id + _extension, JSON.stringify(map));
+  return zip.generateAsync({ type: "blob" });
+};
+
+const _loadBlob = async blob => {
+  // Read blob content as array buffer for JSZip
+  let reader = new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onerror = e => reject(e);
     reader.onload = () => resolve(reader.result);
-    reader.readAsText(blob);
+    reader.readAsArrayBuffer(blob);
   });
+  let zip = await JSZip.loadAsync(await reader);
+
+  // Process descriptor
+  let descriptor = JSON.parse(await zip.file(_descriptor).async("string"));
+  if (!descriptor.header || descriptor.header.type !== Map.type()) {
+    throw new Error(_ERRORS.BAD_FILE);
+  }
+  // TODO: check version
+
+  // Interpret content - Currently basic
+  return zip
+    .folder(descriptor.content.location)
+    .file(descriptor.content.name)
+    .async("string");
 };
 
 const _createFrom = obj => {
@@ -47,15 +81,15 @@ const ImageMapper = {
     return _extension;
   },
 
+  filename: map => {
+    return map.id + _extension;
+  },
+
   blob: map => {
-    // Elaborate opbject copy
-    // WARNING: Object.assign copies only properties that can be enumerated
-    let copy = Object.assign({}, map);
-    delete copy.modified;
-    return {
-      blob: _buildBlob(copy),
-      filename: map.id + _extension
-    };
+    // Elaborate opbject clone for cleanup purpose
+    let clone = Map.clone(map);
+    delete clone.modified;
+    return _buildBlob(clone);
   },
 
   loadBlob: async blob => {

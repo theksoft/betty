@@ -4,9 +4,7 @@
     <v-toolbar-title class="title">
       {{ title }}
     </v-toolbar-title>
-    <v-icon v-if="unsaved" class="modified-indicator">
-      $modified
-    </v-icon>
+    <v-icon v-if="unsaved" class="modified-indicator">$modified</v-icon>
 
     <v-spacer />
 

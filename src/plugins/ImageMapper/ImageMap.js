@@ -1,6 +1,11 @@
 import { v4 as uuid } from "uuid";
 
 const _TYPE = "image-map";
+const _ERRORS = {
+  COMPATIBILITY:
+    "ERROR: Provided data is not compatible with image map object!",
+  INSTANCE: "ERROR: Provided object is not an image map object instance!"
+};
 
 export default class ImageMap {
   constructor(e) {
@@ -24,15 +29,40 @@ export default class ImageMap {
     this._name = name;
   }
 
+  static type() {
+    return _TYPE;
+  }
+
+  static match(src) {
+    return src && src._type && src._type === _TYPE;
+  }
+
+  static checkCompatibility(src) {
+    if (!ImageMap.match(src)) {
+      throw new Error(_ERRORS.COMPATIBILITY);
+    }
+  }
+
+  static checkInstance(src) {
+    // Check also presence of one getter for a true object
+    if (!ImageMap.match(src) || !src.type) {
+      throw new Error(_ERRORS.INSTANCE);
+    }
+  }
+
+  static clone(src) {
+    ImageMap.checkInstance(src);
+    let clone = new ImageMap();
+    // WARNING Object.assign copies only enumerable properties!
+    Object.assign(clone, src);
+    return clone;
+  }
+
   static reload(src) {
-    if (!src || !src._type || src._type !== _TYPE) {
-      throw new Error("ERROR: Provided data is not an image map object!");
-    }
+    ImageMap.checkCompatibility(src);
     let map = new ImageMap();
-    if (src._id) {
-      map._id = src._id;
-    }
-    map._name = src._name;
+    // WARNING Object.assign copies only enumerable properties!
+    Object.assign(map, src);
     return map;
   }
 }
