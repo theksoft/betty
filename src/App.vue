@@ -80,5 +80,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/scss/nav-drawer.scss";
+@import "@/scss/global.scss";
+.nav {
+  color: map-get($secondary, lighten-4) !important;
+}
+.nav-activator {
+  color: $primary-text !important;
+}
+.nav-text {
+  color: $primary-text;
+}
+.nav-icon {
+  color: $primary-text-light !important;
+}
 </style>
