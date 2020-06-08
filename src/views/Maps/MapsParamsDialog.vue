@@ -5,8 +5,10 @@
     params="params"
     persistent
     max-width="600"
+    @keydown.esc="onAbort"
+    @keydown.enter.prevent="onValidate"
   >
-    <v-form class="form" v-model="valid">
+    <v-form ref="form" class="form" v-model="valid">
       <h2 class="title">
         Image Map Parameters
       </h2>
@@ -16,17 +18,12 @@
         :rules="rules.name"
         label="Name"
         required
-        @keypress.enter.prevent.stop
       ></v-text-field>
       <v-row class="row-buttons">
-        <v-btn @click.stop="$emit('cancel')" class="button">
+        <v-btn @click.stop="onAbort" class="button">
           Cancel
         </v-btn>
-        <v-btn
-          @click.stop="valid && $emit('valid', values)"
-          class="button"
-          :disabled="!valid"
-        >
+        <v-btn @click.stop="onValidate" class="button" :disabled="!valid">
           OK
         </v-btn>
       </v-row>
@@ -63,6 +60,17 @@ export default {
     show(value) {
       if (value) {
         this.values.name = this.params ? this.params.name || "" : "";
+      }
+    }
+  },
+  methods: {
+    onAbort() {
+      this.$emit("cancel");
+    },
+    onValidate() {
+      this.$refs.form.validate();
+      if (this.valid) {
+        this.$emit("valid", this.values);
       }
     }
   }

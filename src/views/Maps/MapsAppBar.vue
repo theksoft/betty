@@ -246,7 +246,6 @@ export default {
     },
 
     onMapsParams(e) {
-      this.paramsDlg.dialog = false;
       switch (this.paramsDlg.action) {
         case "new":
           {
@@ -275,6 +274,7 @@ export default {
               e
           );
       }
+      this.paramsDlg.dialog = false;
     },
 
     mapImport() {
