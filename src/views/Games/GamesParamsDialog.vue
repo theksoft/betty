@@ -8,26 +8,21 @@
     @keydown.esc="onAbort"
     @keydown.enter.prevent="onValidate"
   >
-    <v-form ref="form" class="form" v-model="valid">
-      <h2 class="title">
-        Boardgame Parameters
-      </h2>
-      <v-divider />
-      <v-text-field
-        v-model="values.name"
-        :rules="rules.name"
-        label="Name"
-        required
-      ></v-text-field>
-      <v-row class="row-buttons">
-        <v-btn @click.stop="onAbort" class="button">
-          Cancel
-        </v-btn>
-        <v-btn @click.stop="onValidate" class="button" :disabled="!valid">
-          OK
-        </v-btn>
-      </v-row>
-    </v-form>
+    <v-card>
+      <v-card-title class="title">Boardgame Parameters</v-card-title>
+      <v-form ref="form" class="form" lazy-validation>
+        <v-text-field
+          v-model="values.name"
+          :rules="rules.name"
+          label="Name"
+          required
+        ></v-text-field>
+      </v-form>
+      <v-card-actions class="row-buttons">
+        <v-btn @click.stop="onAbort" class="button">Cancel</v-btn>
+        <v-btn @click.stop="onValidate" class="button">OK</v-btn>
+      </v-card-actions>
+    </v-card>
   </v-dialog>
 </template>
 
@@ -48,7 +43,6 @@ export default {
     }
   },
   data: () => ({
-    valid: true,
     values: {
       name: ""
     },
@@ -68,8 +62,7 @@ export default {
       this.$emit("cancel");
     },
     onValidate() {
-      this.$refs.form.validate();
-      if (this.valid) {
+      if (this.$refs.form.validate()) {
         this.$emit("valid", this.values);
       }
     }
