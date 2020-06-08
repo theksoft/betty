@@ -33,7 +33,7 @@ const _saveBlobAs = (blob, filename) => {
 */
 
 const FileManager = {
-  selectFiles(filter, multiple) {
+  selectFiles: (filter, multiple) => {
     return new Promise(resolve => {
       let input = document.createElement("input");
       input.defaultValue = input.value = "";
@@ -72,7 +72,16 @@ const FileManager = {
     });
   },
 
-  readAsDataUrl(file) {
+  readAsArrayBuffer: file => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onerror = e => reject(e);
+      reader.onload = () => resolve(reader.result);
+      reader.readAsArrayBuffer(file);
+    });
+  },
+
+  readAsDataUrl: file => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onerror = e => reject(e);
@@ -81,7 +90,7 @@ const FileManager = {
     });
   },
 
-  readAsText(file) {
+  readAsText: file => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onerror = e => reject(e);
@@ -90,7 +99,7 @@ const FileManager = {
     });
   },
 
-  saveBlobAs(blob, filename) {
+  saveBlobAs: (blob, filename) => {
     _saveBlobAs(blob, filename);
   },
 
@@ -135,3 +144,5 @@ export default {
     });
   }
 };
+
+export { FileManager };

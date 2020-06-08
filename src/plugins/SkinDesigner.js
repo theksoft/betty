@@ -1,5 +1,6 @@
 import JSZip from "jszip";
 import Skin from "./SkinDesigner/Skin.js";
+import { FileManager as Files } from "./FileManager.js";
 
 /*
   SkinDesigner
@@ -41,13 +42,8 @@ const _buildBlob = skin => {
 
 const _loadBlob = async blob => {
   // Read blob content as array buffer for JSZip
-  let reader = new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onerror = e => reject(e);
-    reader.onload = () => resolve(reader.result);
-    reader.readAsArrayBuffer(blob);
-  });
-  let zip = await JSZip.loadAsync(await reader);
+  let data = await Files.readAsArrayBuffer(blob);
+  let zip = await JSZip.loadAsync(data);
 
   // Process descriptor
   let descriptor = JSON.parse(await zip.file(_descriptor).async("string"));
@@ -66,9 +62,7 @@ const _loadBlob = async blob => {
     .async("string");
 };
 
-const _createFrom = obj => {
-  return Skin.reload(obj);
-};
+const _createFrom = obj => Skin.reload(obj);
 
 /*
   SkinDesigner
@@ -76,23 +70,14 @@ const _createFrom = obj => {
 */
 
 const SkinDesigner = {
-  create: e => {
-    return new Skin(e);
-  },
+  create: e => new Skin(e),
 
-  defaultParams: () => {
-    return {
-      name: ""
-    };
-  },
+  defaultParams: () => ({
+    name: ""
+  }),
 
-  extension: () => {
-    return _extension;
-  },
-
-  filename: skin => {
-    return skin.id + _extension;
-  },
+  extension: () => _extension,
+  filename: skin => skin.id + _extension,
 
   blob: skin => {
     // Elaborate opbject clone for cleanup purpose

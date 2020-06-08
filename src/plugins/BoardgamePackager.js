@@ -1,5 +1,6 @@
 import JSZip from "jszip";
 import Boardgame from "./BoardgamePackager/Boardgame.js";
+import { FileManager as Files } from "./FileManager.js";
 
 /*
   BoardgamePackager
@@ -41,13 +42,8 @@ const _buildBlob = game => {
 
 const _loadBlob = async blob => {
   // Read blob content as array buffer for JSZip
-  let reader = new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onerror = e => reject(e);
-    reader.onload = () => resolve(reader.result);
-    reader.readAsArrayBuffer(blob);
-  });
-  let zip = await JSZip.loadAsync(await reader);
+  let data = await Files.readAsArrayBuffer(blob);
+  let zip = await JSZip.loadAsync(data);
 
   // Process descriptor
   let descriptor = JSON.parse(await zip.file(_descriptor).async("string"));
@@ -66,9 +62,7 @@ const _loadBlob = async blob => {
     .async("string");
 };
 
-const _createFrom = obj => {
-  return Boardgame.reload(obj);
-};
+const _createFrom = obj => Boardgame.reload(obj);
 
 /*
   BoardgamePackager
@@ -76,23 +70,15 @@ const _createFrom = obj => {
 */
 
 const BoardgamePackager = {
-  create: e => {
-    return new Boardgame(e);
-  },
+  create: e => new Boardgame(e),
 
-  defaultParams: () => {
-    return {
-      name: ""
-    };
-  },
+  defaultParams: () => ({
+    name: ""
+  }),
 
-  extension: () => {
-    return _extension;
-  },
+  extension: () => _extension,
 
-  filename: game => {
-    return game.id + _extension;
-  },
+  filename: game => game.id + _extension,
 
   blob: game => {
     // Elaborate opbject clone for cleanup purpose

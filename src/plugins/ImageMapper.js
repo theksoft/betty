@@ -1,5 +1,6 @@
 import JSZip from "jszip";
 import Map from "./ImageMapper/ImageMap.js";
+import { FileManager as Files } from "./FileManager.js";
 
 /*
   ImageMapper
@@ -41,13 +42,8 @@ const _buildBlob = map => {
 
 const _loadBlob = async blob => {
   // Read blob content as array buffer for JSZip
-  let reader = new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onerror = e => reject(e);
-    reader.onload = () => resolve(reader.result);
-    reader.readAsArrayBuffer(blob);
-  });
-  let zip = await JSZip.loadAsync(await reader);
+  let data = await Files.readAsArrayBuffer(blob);
+  let zip = await JSZip.loadAsync(data);
 
   // Process descriptor
   let descriptor = JSON.parse(await zip.file(_descriptor).async("string"));
@@ -66,9 +62,7 @@ const _loadBlob = async blob => {
     .async("string");
 };
 
-const _createFrom = obj => {
-  return Map.reload(obj);
-};
+const _createFrom = obj => Map.reload(obj);
 
 /*
   ImageMapper
@@ -76,23 +70,14 @@ const _createFrom = obj => {
 */
 
 const ImageMapper = {
-  create: e => {
-    return new Map(e);
-  },
+  create: e => new Map(e),
 
-  defaultParams: () => {
-    return {
-      name: ""
-    };
-  },
+  defaultParams: () => ({
+    name: ""
+  }),
 
-  extension() {
-    return _extension;
-  },
-
-  filename: map => {
-    return map.id + _extension;
-  },
+  extension: () => _extension,
+  filename: map => map.id + _extension,
 
   blob: map => {
     // Elaborate opbject clone for cleanup purpose
