@@ -91,12 +91,6 @@ export default {
         target: true
       },
       {
-        icon: "$itemEdit",
-        tip: "Edit skin project parameters",
-        handler: "skinEdit",
-        target: true
-      },
-      {
         icon: "$itemClose",
         tip: "Close skin project",
         handler: "skinClose",
@@ -135,7 +129,7 @@ export default {
       return this.skinModified(this.$route.params.id);
     },
 
-    ...mapGetters("skins", ["elementById", "skinModified", "skinParams"])
+    ...mapGetters("skins", ["elementById", "skinModified"])
   },
 
   methods: {
@@ -158,23 +152,6 @@ export default {
         let r = this.skins.closestRoute(id);
         this.skinRemoveById(id);
         this.$router.push(r);
-      }
-    },
-
-    async skinEdit() {
-      let params = await this.$refs.paramsDialog.open(
-        "update",
-        this.skinParams(this.$route.params.id),
-        { width: 600 }
-      );
-      if (params) {
-        const skin = this.elementById(this.$route.params.id);
-        if (skin && !skin.compare(params)) {
-          this.skinUpdateParams({
-            id: this.$route.params.id,
-            params
-          });
-        }
       }
     },
 
@@ -234,12 +211,7 @@ export default {
       this[command]();
     },
 
-    ...mapActions("skins", [
-      "skinAdd",
-      "skinUpdateParams",
-      "skinRemoveById",
-      "skinSaved"
-    ])
+    ...mapActions("skins", ["skinAdd", "skinRemoveById", "skinSaved"])
   }
 };
 </script>

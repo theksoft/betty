@@ -91,12 +91,6 @@ export default {
         target: true
       },
       {
-        icon: "$itemEdit",
-        tip: "Edit boardgame project parameters",
-        handler: "gameEdit",
-        target: true
-      },
-      {
         icon: "$itemClose",
         tip: "Close boardgame project",
         handler: "gameClose",
@@ -132,7 +126,7 @@ export default {
       return this.gameModified(this.$route.params.id);
     },
 
-    ...mapGetters("games", ["elementById", "gameModified", "gameParams"])
+    ...mapGetters("games", ["elementById", "gameModified"])
   },
 
   methods: {
@@ -155,23 +149,6 @@ export default {
         let r = this.games.closestRoute(id);
         this.gameRemoveById(id);
         this.$router.push(r);
-      }
-    },
-
-    async gameEdit() {
-      let params = await this.$refs.paramsDialog.open(
-        "update",
-        this.gameParams(this.$route.params.id),
-        { width: 600 }
-      );
-      if (params) {
-        const game = this.elementById(this.$route.params.id);
-        if (game && !game.compare(params)) {
-          this.gameUpdateParams({
-            id: this.$route.params.id,
-            params
-          });
-        }
       }
     },
 
@@ -231,12 +208,7 @@ export default {
       this[command]();
     },
 
-    ...mapActions("games", [
-      "gameAdd",
-      "gameUpdateParams",
-      "gameRemoveById",
-      "gameSaved"
-    ])
+    ...mapActions("games", ["gameAdd", "gameRemoveById", "gameSaved"])
   }
 };
 </script>

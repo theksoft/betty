@@ -109,12 +109,6 @@ export default {
         target: true
       },
       {
-        icon: "$itemEdit",
-        tip: "Edit image map project parameters",
-        handler: "mapEdit",
-        target: true
-      },
-      {
         icon: "$itemClose",
         tip: "Close image map project",
         handler: "mapClose",
@@ -153,7 +147,7 @@ export default {
       return this.mapModified(this.$route.params.id);
     },
 
-    ...mapGetters("maps", ["elementById", "mapModified", "mapParams"])
+    ...mapGetters("maps", ["elementById", "mapModified"])
   },
 
   methods: {
@@ -176,23 +170,6 @@ export default {
         let r = this.maps.closestRoute(id);
         this.mapRemoveById(id);
         this.$router.push(r);
-      }
-    },
-
-    async mapEdit() {
-      let params = await this.$refs.paramsDialog.open(
-        "update",
-        this.mapParams(this.$route.params.id),
-        { width: 600 }
-      );
-      if (params) {
-        const map = this.elementById(this.$route.params.id);
-        if (map && !map.compare(params)) {
-          this.mapUpdateParams({
-            id: this.$route.params.id,
-            params
-          });
-        }
       }
     },
 
@@ -264,12 +241,7 @@ export default {
       this[command]();
     },
 
-    ...mapActions("maps", [
-      "mapAdd",
-      "mapUpdateParams",
-      "mapRemoveById",
-      "mapSaved"
-    ])
+    ...mapActions("maps", ["mapAdd", "mapRemoveById", "mapSaved"])
   }
 };
 </script>
