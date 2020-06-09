@@ -12,7 +12,7 @@
                   @click.stop="gameEdit(id)"
                   v-on="on"
                 >
-                  <v-icon class="header-action-icon">$gameEdit</v-icon>
+                  <v-icon class="header-action-icon">$itemEdit</v-icon>
                 </v-btn>
               </template>
               <span>Edit boardgame project parameters</span>
@@ -45,7 +45,7 @@
                   @click.stop="gameAddSkin(id)"
                   v-on="on"
                 >
-                  <v-icon class="header-action-icon">$skinAdd</v-icon>
+                  <v-icon class="header-action-icon">$itemAdd</v-icon>
                 </v-btn>
               </template>
               <span>Add a skin to boardgame project</span>

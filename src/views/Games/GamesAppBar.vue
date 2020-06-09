@@ -73,31 +73,31 @@ export default {
   data: () => ({
     allCommands: [
       {
-        icon: "$gameNew",
+        icon: "$itemNew",
         tip: "New boardgame project",
         handler: "gameNew",
         target: false
       },
       {
-        icon: "$gameLoad",
+        icon: "$itemLoad",
         tip: "Load boardgame project",
         handler: "gameLoad",
         target: false
       },
       {
-        icon: "$gameSave",
+        icon: "$itemSave",
         tip: "Save boardgame project",
         handler: "gameSave",
         target: true
       },
       {
-        icon: "$gameEdit",
+        icon: "$itemEdit",
         tip: "Edit boardgame project parameters",
         handler: "gameEdit",
         target: true
       },
       {
-        icon: "$gameClose",
+        icon: "$itemClose",
         tip: "Close boardgame project",
         handler: "gameClose",
         target: true

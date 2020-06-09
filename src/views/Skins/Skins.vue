@@ -17,7 +17,7 @@
           </v-list-item-subtitle>
         </v-list-item-content>
         <v-list-item-action>
-          <v-btn @click.prevent="skinClose(item.id)" class="icon-button" icon>
+          <v-btn @click.prevent="itemClose(item.id)" class="icon-button" icon>
             <v-icon>$close</v-icon>
           </v-btn>
         </v-list-item-action>

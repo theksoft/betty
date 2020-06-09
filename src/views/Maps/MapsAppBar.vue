@@ -73,49 +73,49 @@ export default {
   data: () => ({
     allCommands: [
       {
-        icon: "$mapNew",
+        icon: "$itemNew",
         tip: "New image map project",
         handler: "mapNew",
         target: false
       },
       {
-        icon: "$mapLoad",
+        icon: "$itemLoad",
         tip: "Load image map project",
         handler: "mapLoad",
         target: false
       },
       {
-        icon: "$mapSave",
+        icon: "$itemSave",
         tip: "Save image map project",
         handler: "mapSave",
         target: true
       },
       {
-        icon: "$mapPreview",
+        icon: "$itemPreview",
         tip: "Preview image map",
         handler: "mapPreview",
         target: true
       },
       {
-        icon: "$mapImport",
+        icon: "$itemImport",
         tip: "Import image map",
         handler: "mapImport",
         target: true
       },
       {
-        icon: "$mapExport",
+        icon: "$itemExport",
         tip: "Export image map",
         handler: "mapExport",
         target: true
       },
       {
-        icon: "$mapEdit",
+        icon: "$itemEdit",
         tip: "Edit image map project parameters",
         handler: "mapEdit",
         target: true
       },
       {
-        icon: "$mapClose",
+        icon: "$itemClose",
         tip: "Close image map project",
         handler: "mapClose",
         target: true

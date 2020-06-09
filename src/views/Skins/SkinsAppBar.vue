@@ -73,31 +73,31 @@ export default {
   data: () => ({
     allCommands: [
       {
-        icon: "$skinNew",
+        icon: "$itemNew",
         tip: "New skin project",
         handler: "skinNew",
         target: false
       },
       {
-        icon: "$skinLoad",
+        icon: "$itemLoad",
         tip: "Load skin project",
         handler: "skinLoad",
         target: false
       },
       {
-        icon: "$skinSave",
+        icon: "$itemSave",
         tip: "Save skin project",
         handler: "skinSave",
         target: true
       },
       {
-        icon: "$skinEdit",
+        icon: "$itemEdit",
         tip: "Edit skin project parameters",
         handler: "skinEdit",
         target: true
       },
       {
-        icon: "$skinClose",
+        icon: "$itemClose",
         tip: "Close skin project",
         handler: "skinClose",
         target: true

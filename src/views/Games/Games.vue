@@ -18,7 +18,7 @@
         </v-list-item-content>
         <v-list-item-action>
           <v-btn @click.prevent="gameClose(item.id)" class="icon-button" icon>
-            <v-icon>$close</v-icon>
+            <v-icon>$itemClose</v-icon>
           </v-btn>
         </v-list-item-action>
       </v-list-item>
