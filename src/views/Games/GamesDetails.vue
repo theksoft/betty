@@ -4,9 +4,19 @@
       <v-expansion-panel>
         <v-expansion-panel-header disable-icon-rotate class="header">
           <template v-slot:actions>
-            <v-btn class="header-action" icon @click.stop>
-              <v-icon class="header-action-icon">$gameEdit</v-icon>
-            </v-btn>
+            <v-tooltip left open-delay="1000">
+              <template v-slot:activator="{ on }">
+                <v-btn
+                  class="header-action"
+                  icon
+                  @click.stop="gameEdit(id)"
+                  v-on="on"
+                >
+                  <v-icon class="header-action-icon">$gameEdit</v-icon>
+                </v-btn>
+              </template>
+              <span>Edit boardgame project parameters</span>
+            </v-tooltip>
           </template>
           <div>
             <v-icon class="header-icon">$games</v-icon>
@@ -23,12 +33,23 @@
           </v-card>
         </v-expansion-panel-content>
       </v-expansion-panel>
+
       <v-expansion-panel>
         <v-expansion-panel-header disable-icon-rotate class="header">
           <template v-slot:actions>
-            <v-btn class="header-action" icon @click.stop>
-              <v-icon class="header-action-icon">$skinAdd</v-icon>
-            </v-btn>
+            <v-tooltip left open-delay="1000">
+              <template v-slot:activator="{ on }">
+                <v-btn
+                  class="header-action"
+                  icon
+                  @click.stop="gameAddSkin(id)"
+                  v-on="on"
+                >
+                  <v-icon class="header-action-icon">$skinAdd</v-icon>
+                </v-btn>
+              </template>
+              <span>Add a skin to boardgame project</span>
+            </v-tooltip>
           </template>
           <div>
             <v-icon class="header-icon">$skins</v-icon>
@@ -40,14 +61,20 @@
         </v-expansion-panel-content>
       </v-expansion-panel>
     </v-expansion-panels>
+
+    <games-params-dialog ref="paramsDialog"></games-params-dialog>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
+import GamesParamsDialog from "./GamesParamsDialog";
 
 export default {
   name: "games-details",
+  components: {
+    GamesParamsDialog
+  },
   props: {
     id: {
       type: String,
@@ -61,7 +88,28 @@ export default {
     version() {
       return this.elementById(this.id).version;
     },
-    ...mapGetters("games", ["elementById"])
+    ...mapGetters("games", ["elementById", "gameParams"])
+  },
+  methods: {
+    async gameEdit(id) {
+      let params = await this.$refs.paramsDialog.open(
+        "update",
+        this.gameParams(id),
+        { width: 600 }
+      );
+      if (params) {
+        const game = this.elementById(id);
+        if (game && !game.compare(params)) {
+          this.gameUpdateParams({ id, params });
+        }
+      }
+    },
+
+    gameAddSkin(id) {
+      console.log(id);
+    },
+
+    ...mapActions("games", ["gameUpdateParams"])
   }
 };
 </script>

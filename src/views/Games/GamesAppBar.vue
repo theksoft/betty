@@ -129,9 +129,6 @@ export default {
       return this.games.title;
     },
     unsaved() {
-      if (!this.$route.params.id) {
-        return false;
-      }
       return this.gameModified(this.$route.params.id);
     },
 
