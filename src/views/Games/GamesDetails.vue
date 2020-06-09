@@ -1,6 +1,45 @@
 <template>
   <div class="games-details">
-    <h1>This is the game {{ id }} named {{ name }} - version {{ version }}!</h1>
+    <v-expansion-panels multiple focusable hover tile>
+      <v-expansion-panel>
+        <v-expansion-panel-header disable-icon-rotate class="header">
+          <template v-slot:actions>
+            <v-btn class="header-action" icon @click.stop>
+              <v-icon class="header-action-icon">$gameEdit</v-icon>
+            </v-btn>
+          </template>
+          <div>
+            <v-icon class="header-icon">$games</v-icon>
+            <span>Parameters</span>
+          </div>
+        </v-expansion-panel-header>
+        <v-expansion-panel-content>
+          <v-card>
+            <v-card-title class="params-title">
+              {{ name }} # {{ version }}
+            </v-card-title>
+            <v-card-subtitle class="params-subtitle">{{ id }}</v-card-subtitle>
+            <v-card-text class="params-text">TODO</v-card-text>
+          </v-card>
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+      <v-expansion-panel>
+        <v-expansion-panel-header disable-icon-rotate class="header">
+          <template v-slot:actions>
+            <v-btn class="header-action" icon @click.stop>
+              <v-icon class="header-action-icon">$skinAdd</v-icon>
+            </v-btn>
+          </template>
+          <div>
+            <v-icon class="header-icon">$skins</v-icon>
+            <span>Skins</span>
+          </div>
+        </v-expansion-panel-header>
+        <v-expansion-panel-content>
+          {{ name }} # {{ version }} - {{ id }}
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+    </v-expansion-panels>
   </div>
 </template>
 
@@ -26,3 +65,7 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+@import "@/scss/details.scss";
+</style>

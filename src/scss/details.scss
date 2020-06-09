@@ -1,0 +1,42 @@
+@import "./global.scss";
+
+$base: map-get($secondary, base);
+$background: map-get($secondary, darken-4);
+$foreground: map-get($secondary, lighten-4);
+$subtitle: map-get($secondary, lighten-2);
+$text: map-get($accent, lighten-2);
+
+.header {
+  background-color: $background;
+  color: $foreground;
+  font-weight: bold;
+  font-size: larger;
+}
+
+.header-icon {
+  margin-right: $spacer * 4;
+  color: $foreground;
+}
+
+.header-action-icon {
+  color: $base !important;
+}
+
+.header-action {
+  background-color: black;
+}
+
+.params-title {
+  color: $primary-text;
+  font-weight: bold;
+}
+
+.params-subtitle {
+  color: $subtitle !important;
+}
+
+.params-text {
+  color: $text !important;
+  font-style: italic;
+  font-size: smaller;
+}

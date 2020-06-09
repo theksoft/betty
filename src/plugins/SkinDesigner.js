@@ -71,11 +71,7 @@ const _createFrom = obj => Skin.reload(obj);
 
 const SkinDesigner = {
   create: e => new Skin(e),
-
-  defaultParams: () => ({
-    name: ""
-  }),
-
+  defaultParams: () => Skin.defaultParams(),
   extension: () => _extension,
   filename: skin => skin.id + _extension,
 

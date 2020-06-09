@@ -44,13 +44,7 @@
       </v-tabs>
     </template>
 
-    <maps-params-dialog
-      :show="paramsDlg.dialog"
-      :action="paramsDlg.action"
-      :params="paramsDlg.params"
-      @valid="onMapsParams($event)"
-      @cancel="paramsDlg.dialog = false"
-    />
+    <maps-params-dialog ref="paramsDialog"></maps-params-dialog>
 
     <processing-dialog :show="processingDlg.dialog">
       {{ processingDlg.message }}
@@ -132,11 +126,6 @@ export default {
       dialog: false,
       message: ""
     },
-    paramsDlg: {
-      dialog: false,
-      action: "new",
-      params: {}
-    },
     route: null,
     showActions: false
   }),
@@ -190,10 +179,21 @@ export default {
       }
     },
 
-    mapEdit() {
-      this.paramsDlg.action = "update";
-      this.paramsDlg.params = this.mapParams(this.$route.params.id);
-      this.paramsDlg.dialog = true;
+    async mapEdit() {
+      let params = await this.$refs.paramsDialog.open(
+        "update",
+        this.mapParams(this.$route.params.id),
+        { width: 600 }
+      );
+      if (params) {
+        const map = this.elementById(this.$route.params.id);
+        if (map && !map.compare(params)) {
+          this.mapUpdateParams({
+            id: this.$route.params.id,
+            params
+          });
+        }
+      }
     },
 
     async mapLoad() {
@@ -215,10 +215,18 @@ export default {
       }
     },
 
-    mapNew() {
-      this.paramsDlg.action = "new";
-      this.paramsDlg.params = this.$mapper.defaultParams();
-      this.paramsDlg.dialog = true;
+    async mapNew() {
+      let params = await this.$refs.paramsDialog.open(
+        "new",
+        this.$mapper.defaultParams(),
+        { width: 600 }
+      );
+      if (params) {
+        let map = this.$mapper.create(params);
+        map.modified = true;
+        this.mapAdd(map);
+        this.$router.push(this.maps.lastRoute());
+      }
     },
 
     async mapSave() {
@@ -238,38 +246,6 @@ export default {
       } finally {
         this.processingDlg.dialog = false;
       }
-    },
-
-    onMapsParams(e) {
-      switch (this.paramsDlg.action) {
-        case "new":
-          {
-            let map = this.$mapper.create(e);
-            map.modified = true;
-            this.mapAdd(map);
-          }
-          this.$router.push(this.maps.lastRoute());
-          break;
-        case "update":
-          {
-            const map = this.elementById(this.$route.params.id);
-            if (map && !map.compare(e)) {
-              this.mapUpdateParams({
-                id: this.$route.params.id,
-                params: e
-              });
-            }
-          }
-          break;
-        default:
-          console.log(
-            "Unexpected 'maps-params-dialog' call:\n action --> " +
-              this.paramsDlg.action +
-              "\n event data --> " +
-              e
-          );
-      }
-      this.paramsDlg.dialog = false;
     },
 
     mapImport() {

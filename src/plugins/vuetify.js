@@ -48,6 +48,7 @@ const vuetify = new Vuetify({
       mapSave: "mdi-download",
       modified: "mdi-sticker-alert-outline",
       skins: "mdi-drama-masks",
+      skinAdd: "mdi-plus",
       skinClose: "mdi-window-close",
       skinEdit: "mdi-pencil-outline",
       skinLoad: "mdi-upload",

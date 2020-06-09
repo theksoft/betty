@@ -44,13 +44,7 @@
       </v-tabs>
     </template>
 
-    <games-params-dialog
-      :show="paramsDlg.dialog"
-      :action="paramsDlg.action"
-      :params="paramsDlg.params"
-      @valid="onGamesParams($event)"
-      @cancel="paramsDlg.dialog = false"
-    />
+    <games-params-dialog ref="paramsDialog"></games-params-dialog>
 
     <processing-dialog :show="processingDlg.dialog">
       {{ processingDlg.message }}
@@ -114,11 +108,6 @@ export default {
       dialog: false,
       message: ""
     },
-    paramsDlg: {
-      dialog: false,
-      action: "new",
-      params: {}
-    },
     route: null,
     showActions: false
   }),
@@ -172,10 +161,21 @@ export default {
       }
     },
 
-    gameEdit() {
-      this.paramsDlg.action = "update";
-      this.paramsDlg.params = this.gameParams(this.$route.params.id);
-      this.paramsDlg.dialog = true;
+    async gameEdit() {
+      let params = await this.$refs.paramsDialog.open(
+        "update",
+        this.gameParams(this.$route.params.id),
+        { width: 600 }
+      );
+      if (params) {
+        const game = this.elementById(this.$route.params.id);
+        if (game && !game.compare(params)) {
+          this.gameUpdateParams({
+            id: this.$route.params.id,
+            params
+          });
+        }
+      }
     },
 
     async gameLoad() {
@@ -197,10 +197,18 @@ export default {
       }
     },
 
-    gameNew() {
-      this.paramsDlg.action = "new";
-      this.paramsDlg.params = this.$packager.defaultParams();
-      this.paramsDlg.dialog = true;
+    async gameNew() {
+      let params = await this.$refs.paramsDialog.open(
+        "new",
+        this.$packager.defaultParams(),
+        { width: 600 }
+      );
+      if (params) {
+        let game = this.$packager.create(params);
+        game.modified = true;
+        this.gameAdd(game);
+        this.$router.push(this.games.lastRoute());
+      }
     },
 
     async gameSave() {
@@ -220,38 +228,6 @@ export default {
       } finally {
         this.processingDlg.dialog = false;
       }
-    },
-
-    onGamesParams(e) {
-      switch (this.paramsDlg.action) {
-        case "new":
-          {
-            let game = this.$packager.create(e);
-            game.modified = true;
-            this.gameAdd(game);
-          }
-          this.$router.push(this.games.lastRoute());
-          break;
-        case "update":
-          {
-            const game = this.elementById(this.$route.params.id);
-            if (game && !game.compare(e)) {
-              this.gameUpdateParams({
-                id: this.$route.params.id,
-                params: e
-              });
-            }
-          }
-          break;
-        default:
-          console.log(
-            "Unexpected 'games-params-dialog' call:\n action --> " +
-              this.paramsDlg.action +
-              "\n event data --> " +
-              e
-          );
-      }
-      this.paramsDlg.dialog = false;
     },
 
     runCommand(command) {

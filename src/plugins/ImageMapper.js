@@ -71,11 +71,7 @@ const _createFrom = obj => Map.reload(obj);
 
 const ImageMapper = {
   create: e => new Map(e),
-
-  defaultParams: () => ({
-    name: ""
-  }),
-
+  defaultParams: () => Map.defaultParams(),
   extension: () => _extension,
   filename: map => map.id + _extension,
 

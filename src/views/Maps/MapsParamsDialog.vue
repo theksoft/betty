@@ -1,10 +1,8 @@
 <template>
   <v-dialog
     v-model="show"
-    action="action"
-    params="params"
     persistent
-    max-width="600"
+    :max-width="width"
     @keydown.esc="onAbort"
     @keydown.enter.prevent="onValidate"
   >
@@ -14,7 +12,7 @@
         <v-row>
           <v-col cols="9">
             <v-text-field
-              v-model="values.name"
+              v-model="params.name"
               :rules="rules.name"
               label="Name"
               clearable
@@ -24,7 +22,7 @@
           <v-spacer />
           <v-col cols="2">
             <v-text-field
-              v-model.number="values.version"
+              v-model.number="params.version"
               type="Number"
               :min="1"
               :rules="rules.version"
@@ -43,45 +41,38 @@
 
 <script>
 export default {
-  props: {
-    show: {
-      type: Boolean,
-      default: false
-    },
-    action: {
-      type: String,
-      default: "new"
-    },
-    params: {
-      type: Object,
-      default: null
-    }
-  },
   data: () => ({
-    values: {
+    show: false,
+    resolve: null,
+    action: "new",
+    params: {
       name: "",
-      version: 1
+      version: 0
     },
     rules: {
       name: [v => !!v || "Name is required"],
       version: [v => v >= 1 || "Must be greater than or equal to 1"]
-    }
+    },
+    width: 0
   }),
-  watch: {
-    show(value) {
-      if (value) {
-        this.values.name = this.params ? this.params.name || "" : "";
-        this.values.version = this.params ? this.params.version || 1 : 1;
-      }
-    }
-  },
   methods: {
+    open(action, params, options) {
+      this.show = true;
+      this.width = options.width;
+      this.action = action;
+      this.params = Object.assign(this.params, params);
+      return new Promise(resolve => {
+        this.resolve = resolve;
+      });
+    },
     onAbort() {
-      this.$emit("cancel");
+      this.resolve(null);
+      this.show = false;
     },
     onValidate() {
       if (this.$refs.form.validate()) {
-        this.$emit("valid", this.values);
+        this.resolve(this.params);
+        this.show = false;
       }
     }
   }

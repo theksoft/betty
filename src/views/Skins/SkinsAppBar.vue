@@ -44,13 +44,7 @@
       </v-tabs>
     </template>
 
-    <skins-params-dialog
-      :show="paramsDlg.dialog"
-      :action="paramsDlg.action"
-      :params="paramsDlg.params"
-      @valid="onSkinsParams($event)"
-      @cancel="paramsDlg.dialog = false"
-    />
+    <skins-params-dialog ref="paramsDialog"></skins-params-dialog>
 
     <processing-dialog :show="processingDlg.dialog">
       {{ processingDlg.message }}
@@ -114,11 +108,6 @@ export default {
       dialog: false,
       message: ""
     },
-    paramsDlg: {
-      dialog: false,
-      action: "new",
-      params: {}
-    },
     route: null,
     showActions: false
   }),
@@ -172,10 +161,21 @@ export default {
       }
     },
 
-    skinEdit() {
-      this.paramsDlg.action = "update";
-      this.paramsDlg.params = this.skinParams(this.$route.params.id);
-      this.paramsDlg.dialog = true;
+    async skinEdit() {
+      let params = await this.$refs.paramsDialog.open(
+        "update",
+        this.skinParams(this.$route.params.id),
+        { width: 600 }
+      );
+      if (params) {
+        const skin = this.elementById(this.$route.params.id);
+        if (skin && !skin.compare(params)) {
+          this.skinUpdateParams({
+            id: this.$route.params.id,
+            params
+          });
+        }
+      }
     },
 
     async skinLoad() {
@@ -197,10 +197,18 @@ export default {
       }
     },
 
-    skinNew() {
-      this.paramsDlg.action = "new";
-      this.paramsDlg.params = this.$skinner.defaultParams();
-      this.paramsDlg.dialog = true;
+    async skinNew() {
+      let params = await this.$refs.paramsDialog.open(
+        "new",
+        this.$skinner.defaultParams(),
+        { width: 600 }
+      );
+      if (params) {
+        let skin = this.$skinner.create(params);
+        skin.modified = true;
+        this.skinAdd(skin);
+        this.$router.push(this.skins.lastRoute());
+      }
     },
 
     async skinSave() {
@@ -220,38 +228,6 @@ export default {
       } finally {
         this.processingDlg.dialog = false;
       }
-    },
-
-    onSkinsParams(e) {
-      switch (this.paramsDlg.action) {
-        case "new":
-          {
-            let skin = this.$skinner.create(e);
-            skin.modified = true;
-            this.skinAdd(skin);
-          }
-          this.$router.push(this.skins.lastRoute());
-          break;
-        case "update":
-          {
-            const skin = this.elementById(this.$route.params.id);
-            if (skin && !skin.compare(e)) {
-              this.skinUpdateParams({
-                id: this.$route.params.id,
-                params: e
-              });
-            }
-          }
-          break;
-        default:
-          console.log(
-            "Unexpected 'skins-params-dialog' call:\n action --> " +
-              this.paramsDlg.action +
-              "\n event data --> " +
-              e
-          );
-      }
-      this.paramsDlg.dialog = false;
     },
 
     runCommand(command) {
