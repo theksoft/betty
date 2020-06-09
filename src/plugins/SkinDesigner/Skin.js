@@ -8,9 +8,10 @@ const _ERRORS = Object.freeze({
 
 export default class Skin {
   constructor(e) {
+    let params = Object.assign({}, Skin.defaultParams(), e);
+    this.params = params;
     this._type = _TYPE;
     this._id = uuid();
-    this._name = e ? e.name : "<untitled>";
   }
 
   get type() {
@@ -26,6 +27,37 @@ export default class Skin {
   }
   set name(name) {
     this._name = name;
+  }
+
+  get version() {
+    return this._version;
+  }
+  set version(version) {
+    this._version = version;
+  }
+
+  get params() {
+    return {
+      name: this._name,
+      id: this._id,
+      version: this._version
+    };
+  }
+
+  set params(params) {
+    this._name = params.name;
+    this._version = params.version;
+  }
+
+  compare(params) {
+    return this._name === params.name && this._version === params.version;
+  }
+
+  static defaultParams() {
+    return {
+      name: "<untitled>",
+      version: 1
+    };
   }
 
   static type() {
@@ -44,7 +76,7 @@ export default class Skin {
 
   static checkInstance(src) {
     // Check also presence of one getter for a true object
-    if (!Skin.match(src) || !src.type) {
+    if (!Skin.match(src) || !src.type || !src.id) {
       throw new Error(_ERRORS.INSTANCE);
     }
   }
@@ -52,8 +84,7 @@ export default class Skin {
   static clone(src) {
     Skin.checkInstance(src);
     let clone = new Skin();
-    // WARNING Object.assign copies only enumerable properties!
-    Object.assign(clone, src);
+    clone.params = src.params;
     return clone;
   }
 

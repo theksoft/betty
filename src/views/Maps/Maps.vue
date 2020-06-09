@@ -7,7 +7,7 @@
         </v-list-item-icon>
         <v-list-item-content>
           <v-list-item-title class="headline item-title">
-            {{ item.name }}
+            {{ item.name }} # v{{ item.version }}
             <v-icon v-if="mapModified(item.id)" class="modified-indicator">
               $modified
             </v-icon>
@@ -33,9 +33,9 @@ export default {
   name: "maps",
   computed: {
     items() {
-      return this.elementNames;
+      return this.allParams;
     },
-    ...mapGetters("maps", ["elementNames", "elementById", "mapModified"])
+    ...mapGetters("maps", ["allParams", "elementById", "mapModified"])
   },
   methods: {
     async mapClose(id) {

@@ -71,13 +71,8 @@ const _createFrom = obj => Boardgame.reload(obj);
 
 const BoardgamePackager = {
   create: e => new Boardgame(e),
-
-  defaultParams: () => ({
-    name: ""
-  }),
-
+  defaultParams: () => Boardgame.defaultParams(),
   extension: () => _extension,
-
   filename: game => game.id + _extension,
 
   blob: game => {

@@ -146,12 +146,7 @@ export default {
       return this.gameModified(this.$route.params.id);
     },
 
-    ...mapGetters("games", [
-      "elementById",
-      "gameCompareParams",
-      "gameModified",
-      "gameParams"
-    ])
+    ...mapGetters("games", ["elementById", "gameModified", "gameParams"])
   },
 
   methods: {
@@ -239,12 +234,12 @@ export default {
           break;
         case "update":
           {
-            let arg = {
-              id: this.$route.params.id,
-              params: e
-            };
-            if (!this.gameCompareParams(arg)) {
-              this.gameUpdateParams(arg);
+            const game = this.elementById(this.$route.params.id);
+            if (game && !game.compare(e)) {
+              this.gameUpdateParams({
+                id: this.$route.params.id,
+                params: e
+              });
             }
           }
           break;

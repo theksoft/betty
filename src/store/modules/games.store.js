@@ -24,12 +24,8 @@ export const games = {
     elementAt: state => index => {
       return state.content[index];
     },
-    elementNames: state => {
-      return state.content.map(m => ({ name: m.name, id: m.id }));
-    },
-    gameCompareParams: state => ({ id, params }) => {
-      let element = state.content.find(e => e.id === id);
-      return element.name === params.name;
+    allParams: state => {
+      return state.content.map(m => m.params);
     },
     gameModified: state => id => {
       let element = state.content.find(e => e.id === id);
@@ -40,25 +36,21 @@ export const games = {
     },
     gameParams: state => id => {
       let element = state.content.find(e => e.id === id);
-      let rtn = {};
-      if (element) {
-        Object.assign(rtn, {
-          name: element.name
-        });
-      }
-      return rtn;
+      return element ? element.params : {};
     }
   },
 
   mutations: {
     GAME_ADD: (state, game) => {
-      // Check it is a game
-      if (game.type !== Boardgame.type() || !game.id) {
-        return;
-      }
-      // id must not be present in content
-      if (!state.content.find(e => e.id === game.id)) {
-        state.content.push(game);
+      try {
+        // Check it is a game
+        Boardgame.checkInstance(game);
+        // id must not be present in content
+        if (!state.content.find(e => e.id === game.id)) {
+          state.content.push(game);
+        }
+      } catch (e) {
+        console.log("Add game: " + e.message);
       }
     },
     GAME_REMOVE_BY_ID: (state, id) => {
@@ -76,7 +68,7 @@ export const games = {
     GAME_UPDATE: (state, { id, params }) => {
       let game = state.content.find(e => e.id === id);
       if (game) {
-        game.name = params.name;
+        game.params = params;
         game.modified = true;
       }
     }

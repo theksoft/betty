@@ -11,14 +11,29 @@
     <v-card>
       <v-card-title class="title">Image Map Parameters</v-card-title>
       <v-form ref="form" class="form" lazy-validation>
-        <v-text-field
-          v-model="values.name"
-          :rules="rules.name"
-          label="Name"
-          required
-        ></v-text-field>
+        <v-row>
+          <v-col cols="9">
+            <v-text-field
+              v-model="values.name"
+              :rules="rules.name"
+              label="Name"
+              clearable
+              required
+            ></v-text-field>
+          </v-col>
+          <v-spacer />
+          <v-col cols="2">
+            <v-text-field
+              v-model.number="values.version"
+              type="Number"
+              :min="1"
+              :rules="rules.version"
+              prefix="v"
+            ></v-text-field>
+          </v-col>
+        </v-row>
       </v-form>
-      <v-card-actions class="row-buttons">
+      <v-card-actions class="buttons">
         <v-btn @click.stop="onAbort" class="button">Cancel</v-btn>
         <v-btn @click.stop="onValidate" class="button">OK</v-btn>
       </v-card-actions>
@@ -44,16 +59,19 @@ export default {
   },
   data: () => ({
     values: {
-      name: ""
+      name: "",
+      version: 1
     },
     rules: {
-      name: [v => !!v || "Name is required"]
+      name: [v => !!v || "Name is required"],
+      version: [v => v >= 1 || "Must be greater than or equal to 1"]
     }
   }),
   watch: {
     show(value) {
       if (value) {
         this.values.name = this.params ? this.params.name || "" : "";
+        this.values.version = this.params ? this.params.version || 1 : 1;
       }
     }
   },

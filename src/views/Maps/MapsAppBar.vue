@@ -164,12 +164,7 @@ export default {
       return this.mapModified(this.$route.params.id);
     },
 
-    ...mapGetters("maps", [
-      "elementById",
-      "mapCompareParams",
-      "mapModified",
-      "mapParams"
-    ])
+    ...mapGetters("maps", ["elementById", "mapModified", "mapParams"])
   },
 
   methods: {
@@ -257,12 +252,12 @@ export default {
           break;
         case "update":
           {
-            let arg = {
-              id: this.$route.params.id,
-              params: e
-            };
-            if (!this.mapCompareParams(arg)) {
-              this.mapUpdateParams(arg);
+            const map = this.elementById(this.$route.params.id);
+            if (map && !map.compare(e)) {
+              this.mapUpdateParams({
+                id: this.$route.params.id,
+                params: e
+              });
             }
           }
           break;

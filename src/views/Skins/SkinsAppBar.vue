@@ -146,12 +146,7 @@ export default {
       return this.skinModified(this.$route.params.id);
     },
 
-    ...mapGetters("skins", [
-      "elementById",
-      "skinCompareParams",
-      "skinModified",
-      "skinParams"
-    ])
+    ...mapGetters("skins", ["elementById", "skinModified", "skinParams"])
   },
 
   methods: {
@@ -239,12 +234,12 @@ export default {
           break;
         case "update":
           {
-            let arg = {
-              id: this.$route.params.id,
-              params: e
-            };
-            if (!this.skinCompareParams(arg)) {
-              this.skinUpdateParams(arg);
+            const skin = this.elementById(this.$route.params.id);
+            if (skin && !skin.compare(e)) {
+              this.skinUpdateParams({
+                id: this.$route.params.id,
+                params: e
+              });
             }
           }
           break;

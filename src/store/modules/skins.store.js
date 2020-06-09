@@ -24,12 +24,8 @@ export const skins = {
     elementAt: state => index => {
       return state.content[index];
     },
-    elementNames: state => {
-      return state.content.map(m => ({ name: m.name, id: m.id }));
-    },
-    skinCompareParams: state => ({ id, params }) => {
-      let element = state.content.find(e => e.id === id);
-      return element.name === params.name;
+    allParams: state => {
+      return state.content.map(m => m.params);
     },
     skinModified: state => id => {
       let element = state.content.find(e => e.id === id);
@@ -40,25 +36,21 @@ export const skins = {
     },
     skinParams: state => id => {
       let element = state.content.find(e => e.id === id);
-      let rtn = {};
-      if (element) {
-        Object.assign(rtn, {
-          name: element.name
-        });
-      }
-      return rtn;
+      return element ? element.params : {};
     }
   },
 
   mutations: {
     SKIN_ADD: (state, skin) => {
-      // Check it is a skin
-      if (skin.type !== Skin.type() || !skin.id) {
-        return;
-      }
-      // id must not be present in content
-      if (!state.content.find(e => e.id === skin.id)) {
-        state.content.push(skin);
+      try {
+        // Check it is a skin
+        Skin.checkInstance(skin);
+        // id must not be present in content
+        if (!state.content.find(e => e.id === skin.id)) {
+          state.content.push(skin);
+        }
+      } catch (e) {
+        console.log("Add skin: " + e.message);
       }
     },
     SKIN_REMOVE_BY_ID: (state, id) => {
@@ -76,7 +68,7 @@ export const skins = {
     SKIN_UPDATE: (state, { id, params }) => {
       let skin = state.content.find(e => e.id === id);
       if (skin) {
-        skin.name = params.name;
+        skin.params = params;
         skin.modified = true;
       }
     }

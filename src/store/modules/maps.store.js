@@ -24,12 +24,8 @@ export const maps = {
     elementAt: state => index => {
       return state.content[index];
     },
-    elementNames: state => {
-      return state.content.map(m => ({ name: m.name, id: m.id }));
-    },
-    mapCompareParams: state => ({ id, params }) => {
-      let element = state.content.find(e => e.id === id);
-      return element.name === params.name;
+    allParams: state => {
+      return state.content.map(m => m.params);
     },
     mapModified: state => id => {
       let element = state.content.find(e => e.id === id);
@@ -40,25 +36,21 @@ export const maps = {
     },
     mapParams: state => id => {
       let element = state.content.find(e => e.id === id);
-      let rtn = {};
-      if (element) {
-        Object.assign(rtn, {
-          name: element.name
-        });
-      }
-      return rtn;
+      return element ? element.params : {};
     }
   },
 
   mutations: {
     MAP_ADD: (state, map) => {
-      // Check it is a map
-      if (map.type !== Map.type() || !map.id) {
-        return;
-      }
-      // id must not be present in content
-      if (!state.content.find(e => e.id === map.id)) {
-        state.content.push(map);
+      try {
+        // Check it is a map
+        Map.checkInstance(map);
+        // id must not be present in content
+        if (!state.content.find(e => e.id === map.id)) {
+          state.content.push(map);
+        }
+      } catch (e) {
+        console.log("Add map: " + e.message);
       }
     },
     MAP_REMOVE_BY_ID: (state, id) => {
@@ -76,7 +68,7 @@ export const maps = {
     MAP_UPDATE: (state, { id, params }) => {
       let map = state.content.find(e => e.id === id);
       if (map) {
-        map.name = params.name;
+        map.params = params;
         map.modified = true;
       }
     }
