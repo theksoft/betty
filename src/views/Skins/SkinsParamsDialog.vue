@@ -10,16 +10,16 @@
       <v-card-title class="title">Skin Parameters</v-card-title>
       <v-form ref="form" class="form" lazy-validation>
         <v-row>
-          <v-col cols="9">
+          <v-col cols="10">
             <v-text-field
               v-model="params.name"
               :rules="rules.name"
               label="Name"
               clearable
               required
+              dense
             ></v-text-field>
           </v-col>
-          <v-spacer />
           <v-col cols="2">
             <v-text-field
               v-model.number="params.version"
@@ -27,7 +27,19 @@
               :min="1"
               :rules="rules.version"
               prefix="v"
+              dense
             ></v-text-field>
+          </v-col>
+          <v-col cols="10">
+            <v-text-field v-if="gameLink" label="Boardgame" disabled :rules="rules.game" required dense>
+              {{ gameId }}
+            </v-text-field>
+          </v-col>
+          <v-col cols="2">
+            <v-btn-toggle mandatory v-model="gameLink">
+              <v-btn icon small><v-icon>mdi-link-box-outline</v-icon></v-btn>
+              <v-btn icon small><v-icon>mdi-file-link-outline</v-icon></v-btn>
+            </v-btn-toggle>
           </v-col>
         </v-row>
       </v-form>
@@ -47,14 +59,27 @@ export default {
     action: "new",
     params: {
       name: "",
-      version: 0
+      version: 0,
+      game: null
     },
     rules: {
       name: [v => !!v || "Name is required"],
-      version: [v => v >= 1 || "Must be greater than or equal to 1"]
+      version: [v => v >= 1 || "Must be greater than or equal to 1"],
+      game: [v => !!v || "Game must be assigned"]
     },
+    gameLink: undefined,
     width: 0
   }),
+  computed: {
+    gameId() {
+      return this.game ? this.game.id : undefined;
+    }
+  },
+  watch: {
+    gameLink(value) {
+      console.log(value);
+    }
+  },
   methods: {
     open(action, params, options) {
       this.show = true;

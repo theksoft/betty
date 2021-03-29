@@ -13,6 +13,7 @@ export default class Boardgame {
     this.params = params;
     this._type = _TYPE;
     this._id = uuid();
+    this._skins = [];
   }
 
   get type() {
@@ -53,6 +54,10 @@ export default class Boardgame {
   compare(params) {
     return this._name === params.name && this._version === params.version;
   }
+
+  /*
+    Class methods
+   */
 
   static defaultParams() {
     return {
@@ -95,5 +100,20 @@ export default class Boardgame {
     // WARNING Object.assign copies only enumerable properties!
     Object.assign(game, src);
     return game;
+  }
+
+  /*
+    Skin management
+   */
+
+  get skins() {
+    return this._skins;
+  }
+
+  // Add a skin to game only if its id is not already present and alreay assigned to correct instance
+  skinAdd(skin) {
+    if (!this._skins.find(e => e.id === skin.id) && skin.game === this) {
+      this._skins.push(skin);
+    }
   }
 }

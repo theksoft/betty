@@ -71,7 +71,7 @@ const _createFrom = obj => Skin.reload(obj);
 
 const SkinDesigner = {
   create: e => new Skin(e),
-  defaultParams: () => Skin.defaultParams(),
+  defaultParams: game => Skin.defaultParams(game),
   extension: () => _extension,
   filename: skin => skin.id + _extension,
 

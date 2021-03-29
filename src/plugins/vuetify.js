@@ -40,6 +40,7 @@ const vuetify = new Vuetify({
       itemLoad: "mdi-upload",
       itemNew: "mdi-plus",
       itemPreview: "mdi-eye-outline",
+      itemRemove: "mdi-delete",
       itemSave: "mdi-download",
       maps: "mdi-image-filter-hdr",
       modified: "mdi-sticker-alert-outline",

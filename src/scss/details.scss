@@ -40,3 +40,12 @@ $text: map-get($accent, lighten-2);
   font-style: italic;
   font-size: smaller;
 }
+
+.item-table {
+  color: $primary-text-light;
+}
+
+.item-table-action {
+  color: map-get($warning, lighten-3);
+  margin-right: $spacer;
+}

@@ -71,6 +71,13 @@ export const games = {
         game.params = params;
         game.modified = true;
       }
+    },
+    GAME_SKIN_ADD: (state, { id, skin }) => {
+      let game = state.content.find(e => e.id === id);
+      if (game) {
+        game.skinAdd(skin);
+        game.modified = true;
+      }
     }
   },
 
@@ -86,6 +93,9 @@ export const games = {
     },
     gameUpdateParams({ commit }, arg) {
       commit("GAME_UPDATE", arg);
+    },
+    gameSkinAdd({ commit }, arg) {
+      commit("GAME_SKIN_ADD", arg);
     }
   }
 };

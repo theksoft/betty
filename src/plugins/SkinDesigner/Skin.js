@@ -40,23 +40,38 @@ export default class Skin {
     return {
       name: this._name,
       id: this._id,
-      version: this._version
+      version: this._version,
+      game: this._game
     };
   }
 
   set params(params) {
     this._name = params.name;
     this._version = params.version;
+    if (params.game) {
+      this._game = params.game;
+    } else {
+      delete this._game;
+    }
   }
 
   compare(params) {
-    return this._name === params.name && this._version === params.version;
+    return (
+      this._name === params.name &&
+      this._version === params.version &&
+      this._game === params.game
+    );
   }
 
-  static defaultParams() {
+  /*
+    Class methods
+   */
+
+  static defaultParams(game) {
     return {
       name: "<untitled>",
-      version: 1
+      version: 1,
+      game
     };
   }
 
@@ -94,5 +109,13 @@ export default class Skin {
     // WARNING Object.assign copies only enumerable properties!
     Object.assign(skin, src);
     return skin;
+  }
+
+  /*
+    Boargame management
+   */
+
+  get game() {
+    return this._game;
   }
 }
